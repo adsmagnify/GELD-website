@@ -1,0 +1,514 @@
+/* Glowing Background Trails */
+.glowBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  /* 3D perspective for glowing background */
+  perspective: 1500px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+/* Subtly lit 3D perspective grid plane representing financial market structure */
+.grid3d {
+  position: absolute;
+  width: 200%;
+  height: 120%;
+  bottom: -45%;
+  left: -50%;
+  background-image: 
+    linear-gradient(rgba(59, 130, 246, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.12) 1px, transparent 1px);
+  background-size: 52px 52px;
+  transform: rotateX(70deg);
+  transform-origin: 50% 100%;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 75%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 75%);
+  pointer-events: none;
+  z-index: 2;
+  animation: gridFloat 16s infinite alternate ease-in-out;
+}
+
+/* High-precision coordinate overlay representing data node intersections */
+.gridOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+  background-size: 48px 48px;
+  background-position: center;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 80%);
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 80%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Floating Ticker Tape Ribbon */
+.tickerTape {
+  position: absolute;
+  top: 116px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 4, 11, 0) 0%,
+    rgba(255, 255, 255, 0.015) 15%,
+    rgba(255, 255, 255, 0.015) 85%,
+    rgba(2, 4, 11, 0) 100%
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 8px 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.tickerTrack {
+  display: inline-flex;
+  gap: 48px;
+  animation: tickerScroll 30s linear infinite;
+}
+
+.tickerTrack span {
+  display: inline-block;
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.22);
+  font-weight: 500;
+}
+
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Wealth Orbitals in 3D Space */
+.orbitalsContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 900px;
+  height: 900px;
+  transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg);
+  transform-style: preserve-3d;
+  pointer-events: none;
+  opacity: 0.35;
+  z-index: 2;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 70%);
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 70%);
+}
+
+.orbitalsSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.orbitRing1, .orbitRing2, .orbitRing3 {
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.orbitRing1 {
+  stroke: rgba(59, 130, 246, 0.08);
+}
+
+.orbitRing2 {
+  stroke: rgba(168, 85, 247, 0.06);
+  stroke-dasharray: 4 6;
+}
+
+.orbitRing3 {
+  stroke: rgba(6, 182, 212, 0.08);
+}
+
+.orbitNode1, .orbitNode2, .orbitNode3 {
+  transform-origin: 500px 500px;
+}
+
+.orbitNode1 {
+  fill: #3b82f6;
+  filter: drop-shadow(0 0 4px #3b82f6);
+  animation: rotateCW 24s linear infinite;
+}
+
+.orbitNode2 {
+  fill: #a855f7;
+  filter: drop-shadow(0 0 4px #a855f7);
+  animation: rotateCCW 18s linear infinite;
+}
+
+.orbitNode3 {
+  fill: #06b6d4;
+  filter: drop-shadow(0 0 4px #06b6d4);
+  animation: rotateCW 32s linear infinite;
+}
+
+@keyframes rotateCW {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateCCW {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Harmonic Market Curves */
+.harmonicWavesContainer {
+  position: absolute;
+  top: 15%;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.35;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 80%);
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 80%);
+}
+
+.harmonicSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.wave1, .wave2, .wave3 {
+  stroke-width: 1.5px;
+  fill: none;
+}
+
+.wave1 {
+  stroke: rgba(6, 182, 212, 0.12);
+  animation: waveDrift1 16s infinite alternate ease-in-out;
+}
+
+.wave2 {
+  stroke: rgba(59, 130, 246, 0.08);
+  animation: waveDrift2 22s infinite alternate ease-in-out;
+}
+
+.wave3 {
+  stroke: rgba(168, 85, 247, 0.1);
+  animation: waveDrift3 28s infinite alternate ease-in-out;
+}
+
+@keyframes waveDrift1 {
+  0% {
+    transform: translateY(-15px) scaleY(0.95);
+  }
+  100% {
+    transform: translateY(15px) scaleY(1.05);
+  }
+}
+
+@keyframes waveDrift2 {
+  0% {
+    transform: translateY(20px) scaleY(1.05);
+  }
+  100% {
+    transform: translateY(-20px) scaleY(0.95);
+  }
+}
+
+@keyframes waveDrift3 {
+  0% {
+    transform: translateY(-10px) scaleY(1.02);
+  }
+  100% {
+    transform: translateY(10px) scaleY(0.98);
+  }
+}
+
+/* Digital Horizon Scan Line */
+.scanLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0) 0%,
+    rgba(59, 130, 246, 0.15) 30%,
+    rgba(6, 182, 212, 0.25) 50%,
+    rgba(168, 85, 247, 0.15) 70%,
+    rgba(168, 85, 247, 0) 100%
+  );
+  box-shadow: 
+    0 0 8px rgba(6, 182, 212, 0.2),
+    0 0 16px rgba(59, 130, 246, 0.1);
+  opacity: 0.6;
+  z-index: 4;
+  pointer-events: none;
+  animation: scanVertical 12s infinite linear;
+}
+
+@keyframes scanVertical {
+  0% {
+    top: -5%;
+  }
+  100% {
+    top: 105%;
+  }
+}
+
+/* Global Finance Coordinates & Status Indicators */
+.cornerMetricTopLeft,
+.cornerMetricTopRight,
+.cornerMetricBottomLeft,
+.cornerMetricBottomRight {
+  position: absolute;
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 5;
+  text-transform: uppercase;
+}
+
+.cornerMetricTopLeft {
+  top: 24px;
+  left: 32px;
+}
+
+.cornerMetricTopRight {
+  top: 24px;
+  right: 32px;
+}
+
+.cornerMetricBottomLeft {
+  bottom: 24px;
+  left: 32px;
+}
+
+.cornerMetricBottomRight {
+  bottom: 24px;
+  right: 32px;
+}
+
+/* Liquidity Particle Flows */
+.liquidityParticle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  animation: particleDrift 14s infinite ease-in-out;
+}
+
+.p1 {
+  top: 20%;
+  left: 15%;
+  background-color: rgba(6, 182, 212, 0.25);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+  animation-duration: 16s;
+  animation-delay: 0s;
+}
+
+.p2 {
+  top: 40%;
+  left: 80%;
+  background-color: rgba(168, 85, 247, 0.2);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+  animation-duration: 20s;
+  animation-delay: -3s;
+}
+
+.p3 {
+  top: 70%;
+  left: 25%;
+  background-color: rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+  animation-duration: 18s;
+  animation-delay: -7s;
+}
+
+.p4 {
+  top: 85%;
+  left: 65%;
+  background-color: rgba(6, 182, 212, 0.25);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+  animation-duration: 15s;
+  animation-delay: -2s;
+}
+
+.p5 {
+  top: 15%;
+  left: 70%;
+  background-color: rgba(168, 85, 247, 0.15);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
+  animation-duration: 24s;
+  animation-delay: -5s;
+}
+
+@keyframes particleDrift {
+  0%, 100% {
+    transform: translate(0, 0) scale(0.8);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate(40px, -40px) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes gridFloat {
+  0% {
+    transform: rotateX(70deg) translateY(0);
+  }
+  100% {
+    transform: rotateX(68deg) translateY(-8px);
+  }
+}
+
+.glowLine1 {
+  position: absolute;
+  top: 10%;
+  left: -20%;
+  width: 140%;
+  height: 220px;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 182, 212, 0) 0%,
+    rgba(6, 182, 212, 0.4) 25%,
+    rgba(59, 130, 246, 0.5) 50%,
+    rgba(168, 85, 247, 0.3) 75%,
+    rgba(168, 85, 247, 0) 100%
+  );
+  filter: blur(100px);
+  transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(-10%, 150px, 80px);
+  animation: drift3d1 22s infinite alternate ease-in-out;
+}
+
+.glowLine2 {
+  position: absolute;
+  top: 25%;
+  left: -10%;
+  width: 130%;
+  height: 280px;
+  background: linear-gradient(
+    90deg,
+    rgba(168, 85, 247, 0) 0%,
+    rgba(168, 85, 247, 0.35) 20%,
+    rgba(59, 130, 246, 0.55) 45%,
+    rgba(6, 182, 212, 0.4) 70%,
+    rgba(6, 182, 212, 0) 100%
+  );
+  filter: blur(120px);
+  transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(5%, 280px, -60px);
+  animation: drift3d2 26s infinite alternate ease-in-out;
+}
+
+.glowLine3 {
+  position: absolute;
+  top: 35%;
+  left: -25%;
+  width: 150%;
+  height: 120px;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 182, 212, 0) 0%,
+    rgba(6, 182, 212, 0.65) 35%,
+    rgba(59, 130, 246, 0.6) 65%,
+    rgba(168, 85, 247, 0) 100%
+  );
+  filter: blur(60px);
+  transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(-15%, -20px, 140px);
+  animation: drift3d3 18s infinite alternate ease-in-out;
+}
+
+.glowLine4 {
+  position: absolute;
+  top: 45%;
+  left: -15%;
+  width: 140%;
+  height: 90px;
+  background: linear-gradient(
+    90deg,
+    rgba(236, 72, 153, 0) 0%,
+    rgba(236, 72, 153, 0.4) 30%,
+    rgba(168, 85, 247, 0.55) 60%,
+    rgba(59, 130, 246, 0) 100%
+  );
+  filter: blur(70px);
+  transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(0, 420px, -150px);
+  animation: drift3d4 28s infinite alternate ease-in-out;
+}
+
+@keyframes drift3d1 {
+  0% {
+    transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(-20%, 120px, 80px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: rotateX(58deg) rotateY(-6deg) rotateZ(-23deg) translate3d(10%, 180px, 120px);
+    opacity: 1;
+  }
+}
+
+@keyframes drift3d2 {
+  0% {
+    transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(15%, 280px, -60px);
+    opacity: 0.75;
+  }
+  100% {
+    transform: rotateX(62deg) rotateY(-10deg) rotateZ(-27deg) translate3d(-10%, 250px, -100px);
+    opacity: 0.95;
+  }
+}
+
+@keyframes drift3d3 {
+  0% {
+    transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(-25%, -40px, 140px);
+    height: 120px;
+  }
+  100% {
+    transform: rotateX(59deg) rotateY(-7deg) rotateZ(-24deg) translate3d(10%, 0, 180px);
+    height: 160px;
+  }
+}
+
+@keyframes drift3d4 {
+  0% {
+    transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(10%, 420px, -150px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: rotateX(61deg) rotateY(-9deg) rotateZ(-26deg) translate3d(-10%, 390px, -120px);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .cornerMetricTopLeft,
+  .cornerMetricTopRight,
+  .cornerMetricBottomLeft,
+  .cornerMetricBottomRight,
+  .tickerTape {
+    display: none;
+  }
+}

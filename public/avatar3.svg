@@ -1,0 +1,27 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="32" fill="url(#avatar3Grad)"/>
+  <defs>
+    <linearGradient id="avatar3Grad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4facfe" />
+      <stop offset="100%" stop-color="#00f2fe" />
+    </linearGradient>
+  </defs>
+  <!-- Face/Skin -->
+  <circle cx="32" cy="32" r="13" fill="#dfc09f" />
+  <!-- Beard/Stubble -->
+  <path d="M20 31C20 38 25 44 32 44C39 44 44 38 44 31C44 33 43 37 40 40C38 42 35 43 32 43C29 43 26 42 24 40C21 37 20 33 20 31Z" fill="#3D2B1F" />
+  <!-- Mustache -->
+  <path d="M26 36C28 35 30 35 32 36C34 35 36 35 38 36C38 37 36 38 32 38C28 38 26 37 26 36Z" fill="#3D2B1F" />
+  <!-- Eyes -->
+  <circle cx="28" cy="30" r="1.5" fill="#3D2B1F" />
+  <circle cx="36" cy="30" r="1.5" fill="#3D2B1F" />
+  <!-- Smile -->
+  <path d="M29 39C30 40.5 31 41 32 41C33 41 34 40.5 35 39" stroke="#dfc09f" stroke-width="1.2" stroke-linecap="round" />
+  <!-- Cap (Stylized cap/hat from mockup) -->
+  <path d="M19 25C19 21 23 18 32 18C41 18 45 21 45 25H19Z" fill="#1e293b" />
+  <path d="M16 25C18 25 20 23 32 23C44 23 46 25 48 25C50 25 51 26 46 26H18C13 26 14 25 16 25Z" fill="#0f172a" />
+  <!-- Neck -->
+  <rect x="29" y="42" width="6" height="8" fill="#dfc09f" />
+  <!-- Clothes -->
+  <path d="M16 54C16 46 22 44 32 44C42 44 48 46 48 54V64H16V54Z" fill="#ea580c" />
+</svg>

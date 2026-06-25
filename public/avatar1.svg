@@ -1,0 +1,24 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="32" fill="url(#avatar1Grad)"/>
+  <defs>
+    <linearGradient id="avatar1Grad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff7e5f" />
+      <stop offset="100%" stop-color="#feb47b" />
+    </linearGradient>
+  </defs>
+  <!-- Stylized Hair -->
+  <path d="M12 28C12 18 20 14 32 14C44 14 52 18 52 28C52 35 48 40 48 40C48 40 44 32 32 32C20 32 16 40 16 40C16 40 12 35 12 28Z" fill="#2d221e" />
+  <!-- Face/Skin -->
+  <circle cx="32" cy="31" r="13" fill="#ffdbb5" />
+  <!-- Hair front -->
+  <path d="M19 23C22 17 28 17 32 19C36 17 42 17 45 23C46 24 45 26 44 26C39 24 35 26 32 28C29 26 25 24 20 26C19 26 18 24 19 23Z" fill="#2d221e" />
+  <!-- Eyes -->
+  <circle cx="28" cy="30" r="1.5" fill="#2d221e" />
+  <circle cx="36" cy="30" r="1.5" fill="#2d221e" />
+  <!-- Smile -->
+  <path d="M28 35C29 37 31 38 32 38C33 38 35 37 36 35" stroke="#2d221e" stroke-width="1.5" stroke-linecap="round" />
+  <!-- Neck -->
+  <rect x="29" y="42" width="6" height="8" fill="#ffdbb5" />
+  <!-- Clothes -->
+  <path d="M16 54C16 46 22 44 32 44C42 44 48 46 48 54V64H16V54Z" fill="#7c3aed" />
+</svg>

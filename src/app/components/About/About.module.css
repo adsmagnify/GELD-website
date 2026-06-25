@@ -1,0 +1,128 @@
+/* About Us Section styling */
+.aboutSection {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  position: relative;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 40px;
+  overflow: hidden;
+  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.aboutContainer {
+  max-width: 960px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  margin-top: -120px; /* Shifts the entire block up */
+  opacity: 0;
+  transform: translateY(60px) scale(0.98);
+  filter: blur(10px);
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.revealed .aboutContainer {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* About Badge */
+.aboutBadge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.06) 0%,
+    rgba(168, 85, 247, 0.03) 100%
+  );
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  padding: 6px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.aboutBadgeText {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, #0b69ff 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* About Text */
+.aboutText {
+  font-size: 38px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: -0.8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Fade Text */
+.fadeText {
+  color: #94a3b8;
+  transition: opacity 1.2s ease, color 1.2s ease;
+}
+
+/* Serif Italic */
+.serifItalic {
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: #94a3b8;
+  transition: opacity 1.2s ease, color 1.2s ease;
+}
+
+/* Highlight Text Animation */
+.highlightText {
+  font-weight: 700;
+  display: inline;
+  background: linear-gradient(to right, #06b6d4 0%, #3b82f6 25%, #a855f7 50%, #94a3b8 50%, #94a3b8 100%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 2.5s cubic-bezier(0.16, 1, 0.3, 1) 1.0s;
+}
+
+.revealed .serifItalic,
+.revealed .fadeText {
+  background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.50; /* Faded light gradient effect */
+}
+
+.revealed .highlightText {
+  background-position: 0 0;
+}
+
+/* Responsiveness for About Us text */
+@media (max-width: 768px) {
+  .aboutSection {
+    padding: 60px 24px;
+  }
+  .aboutText {
+    font-size: 26px;
+    line-height: 1.5;
+    letter-spacing: -0.4px;
+  }
+  .aboutBadge {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+}
