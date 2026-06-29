@@ -1,43 +1,23 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import styles from "./page.module.css";
 import Background from "./components/Background/Background";
-import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer/Footer";
 import About from "./components/About/About";
+import Stats from "./components/Stats/Stats";
+import Testimonials from "./components/Testimonials/Testimonials";
+import Contact from "./components/Contact/Contact";
 
 export default function Home() {
   const aboutRef = useRef<HTMLElement>(null);
-  const [isAboutVisible, setIsAboutVisible] = useState(false);
+  const statsRef = useRef<HTMLElement>(null);
+  const testimonialsRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsAboutVisible(true);
-        }
-      },
-      {
-        threshold: 0.2, // Triggers when 20% of the section is visible
-      }
-    );
-
-    const currentRef = aboutRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
-  const handleScrollClick = () => {
-    aboutRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -45,19 +25,37 @@ export default function Home() {
       {/* Background & Grid Matrix */}
       <Background />
 
-      <div className={styles.wrapper}>
-        {/* Navigation Header */}
-        <Header onAboutClick={handleScrollClick} />
-
+      <div id="hero" className={styles.wrapper}>
         {/* Hero Landing */}
         <Hero />
 
-        {/* Footer Actions */}
-        <Footer onScrollClick={handleScrollClick} />
+        {/* Scroll-down cue scrolls to the About section */}
+        <Footer onScrollClick={() => scrollTo(aboutRef)} />
       </div>
 
-      {/* About Us Section */}
-      <About ref={aboutRef} isVisible={isAboutVisible} />
+      {/* About appears after the hero on scroll */}
+      <div id="about">
+        <About ref={aboutRef} onScrollDown={() => scrollTo(statsRef)} />
+      </div>
+
+      {/* Stats Section */}
+      <div id="stats">
+        <Stats ref={statsRef} onScrollDown={() => scrollTo(testimonialsRef)} />
+      </div>
+
+      {/* Testimonials Section */}
+      <div id="testimonials">
+        <Testimonials 
+          ref={testimonialsRef} 
+          isGoldenBg 
+          onScrollDown={() => scrollTo(contactRef)} 
+        />
+      </div>
+
+      {/* Contact Section */}
+      <div id="contact">
+        <Contact ref={contactRef} />
+      </div>
     </div>
   );
 }

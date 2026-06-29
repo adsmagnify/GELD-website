@@ -110,7 +110,7 @@
 .advisorLabel {
   font-size: 13px;
   font-weight: 600;
-  color: #60a5fa;
+  color: var(--accent-gold);
   padding-right: 14px;
 }
 

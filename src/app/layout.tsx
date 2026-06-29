@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import Header from "./components/Header/Header";
+import SiteFooter from "./components/SiteFooter/SiteFooter";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -26,8 +28,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${instrumentSerif.variable}`}>
-      <body>{children}</body>
+      <body>
+        <div className="app-layout-root">
+          <div className="app-header-container">
+            <Header />
+          </div>
+          <div className="page-scroll-container">
+            {children}
+            <SiteFooter />
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
+
 

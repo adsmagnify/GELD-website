@@ -1,26 +1,27 @@
 .header {
+  position: relative;
+  pointer-events: auto;
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
   height: 68px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 32px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
-  padding: 0 12px 0 28px;
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
   opacity: 0;
   animation: fadeInUp 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
   z-index: 30;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
+
 
 .logo {
   display: flex;
@@ -51,7 +52,20 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 32px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  padding: 12px 32px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .navLink {
@@ -83,22 +97,8 @@
   gap: 28px;
 }
 
-.loginBtn {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.loginBtn:hover {
-  color: #ffffff;
-}
-
-.signupBtn {
-  background-color: #ffffff;
+.contactBtn {
+  background: linear-gradient(135deg, #FEFE7B 0%, #CE953A 100%);
   color: #02040b;
   border: none;
   font-size: 14px;
@@ -106,13 +106,17 @@
   padding: 10px 24px;
   border-radius: 9999px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
-.signupBtn:hover {
-  background-color: #f1f5f9;
+.contactBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 15px rgba(206, 149, 58, 0.3);
+  filter: brightness(1.08);
 }
 
 @keyframes fadeInUp {
@@ -126,6 +130,11 @@
   }
 }
 
+.activeNavLink {
+  color: #FEFE7B !important;
+  text-shadow: 0 0 10px rgba(254, 254, 123, 0.45);
+}
+
 @media (max-width: 768px) {
   .nav {
     display: none; /* Hide nav links on smaller screens */
@@ -133,4 +142,43 @@
   .header {
     height: 80px;
   }
+}
+
+.headerDark .logo span {
+  color: #0a0602 !important;
+}
+
+.headerDark .nav {
+  border-color: rgba(10, 6, 2, 0.15) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 10px 30px rgba(10, 6, 2, 0.05) !important;
+}
+
+.headerDark .navLink {
+  color: rgba(10, 6, 2, 0.65) !important;
+}
+
+.headerDark .navLink:hover {
+  color: #0a0602 !important;
+}
+
+.headerDark .activeNavLink {
+  color: #0a0602 !important;
+  text-shadow: 0 0 8px rgba(10, 6, 2, 0.35) !important;
+}
+
+.headerDark .contactBtn {
+  background: #0a0602 !important;
+  color: #FEFE7B !important;
+  box-shadow: 0 4px 15px rgba(10, 6, 2, 0.15) !important;
+}
+
+.headerDark .contactBtn:hover {
+  filter: brightness(1.2) !important;
+}
+
+.headerHidden {
+  transform: translateY(-120px) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }

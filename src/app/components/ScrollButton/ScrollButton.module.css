@@ -1,0 +1,43 @@
+.scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  background: transparent;
+  user-select: none;
+  outline: none;
+}
+
+.scroll:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.darkText {
+  color: rgba(10, 6, 2, 0.5);
+}
+
+.darkText:hover {
+  color: rgba(10, 6, 2, 0.9);
+}
+
+.scrollArrow {
+  display: inline-block;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}

@@ -1,0 +1,294 @@
+.section {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 100px 40px 40px 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: auto 0;
+  opacity: 0;
+  transform: translateY(60px) scale(0.98);
+  filter: blur(10px);
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.container > section {
+  position: relative;
+  z-index: 10;
+  background-color: transparent;
+}
+
+.revealedContainer {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+.pillHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 130px;
+}
+
+.pill {
+  padding: 10px 20px;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.dashedLine {
+  width:1px;
+  height: 30px;
+  border-left: 1.5px dashed rgba(255, 255, 255, 0.15);
+}
+
+.archWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 9999px;
+  height: 340px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: visible;
+}
+
+.archSvg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.contentViewport {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slideContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  will-change: transform, opacity, filter;
+}
+
+.value {
+  font-size: 130px;
+  font-weight: 800;
+  letter-spacing: -4px;
+  line-height: 1;
+  background: linear-gradient(180deg, #FEFE7B 0%, #CE953A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 45px rgba(254, 254, 123, 0.15);
+  margin: 0;
+}
+
+.label {
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 14px;
+  letter-spacing: -0.5px;
+}
+
+.sublabel {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 10px;
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+@keyframes scrollDots {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.archPath {
+  animation: scrollDots 15s linear infinite;
+}
+
+/* Horizontal text animations */
+.exiting .value {
+  animation: statFadeOutLeft 0.3s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+.exiting .label {
+  animation: statFadeOutLeft 0.3s cubic-bezier(0.76, 0, 0.24, 1) 0.05s forwards;
+}
+.exiting .sublabel {
+  animation: statFadeOutLeft 0.3s cubic-bezier(0.76, 0, 0.24, 1) 0.1s forwards;
+}
+
+.entering .value {
+  animation: statFadeInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.entering .label {
+  animation: statFadeInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
+}
+.entering .sublabel {
+  animation: statFadeInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards;
+}
+
+@keyframes statFadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes statFadeOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-40px);
+    filter: blur(4px);
+  }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  z-index: 10;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dot:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.activeDot {
+  background-color: #CE953A;
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(206, 149, 58, 0.4);
+}
+
+.scrollWrapper {
+  width: 100%;
+  max-width: 1360px;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -15px;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeIn 1s ease 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .value {
+    font-size: 80px;
+  }
+  .label {
+    font-size: 18px;
+  }
+  .archWrapper {
+    height: 220px;
+  }
+  .contentViewport {
+    height: 160px;
+  }
+}
+
+.valueWrapper {
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FEFE7B, #CE953A);
+  box-shadow: 0 0 6px rgba(254, 254, 123, 0.45);
+  pointer-events: none;
+  opacity: 0;
+  animation-name: powderFlow;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  z-index: 5;
+}
+
+@keyframes powderFlow {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1);
+    filter: blur(0px);
+  }
+  15% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.3);
+    filter: blur(1.5px);
+  }
+}

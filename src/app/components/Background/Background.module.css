@@ -12,6 +12,11 @@
   perspective: 1500px;
   perspective-origin: 50% 50%;
   transform-style: preserve-3d;
+  background: linear-gradient(
+    135deg,
+    #0c0c0c 0%,
+    #020202 100%
+  );
 }
 
 /* Subtly lit 3D perspective grid plane representing financial market structure */
@@ -22,8 +27,8 @@
   bottom: -45%;
   left: -50%;
   background-image: 
-    linear-gradient(rgba(59, 130, 246, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.12) 1px, transparent 1px);
+    linear-gradient(rgba(206, 149, 58, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(206, 149, 58, 0.05) 1px, transparent 1px);
   background-size: 52px 52px;
   transform: rotateX(70deg);
   transform-origin: 50% 100%;
@@ -123,16 +128,16 @@
 }
 
 .orbitRing1 {
-  stroke: rgba(59, 130, 246, 0.08);
+  stroke: rgba(206, 149, 58, 0.06);
 }
 
 .orbitRing2 {
-  stroke: rgba(168, 85, 247, 0.06);
+  stroke: rgba(255, 255, 255, 0.04);
   stroke-dasharray: 4 6;
 }
 
 .orbitRing3 {
-  stroke: rgba(6, 182, 212, 0.08);
+  stroke: rgba(156, 121, 36, 0.06);
 }
 
 .orbitNode1, .orbitNode2, .orbitNode3 {
@@ -140,20 +145,20 @@
 }
 
 .orbitNode1 {
-  fill: #3b82f6;
-  filter: drop-shadow(0 0 4px #3b82f6);
+  fill: #CE953A;
+  filter: drop-shadow(0 0 4px #CE953A);
   animation: rotateCW 24s linear infinite;
 }
 
 .orbitNode2 {
-  fill: #a855f7;
-  filter: drop-shadow(0 0 4px #a855f7);
+  fill: #ffffff;
+  filter: drop-shadow(0 0 4px #ffffff);
   animation: rotateCCW 18s linear infinite;
 }
 
 .orbitNode3 {
-  fill: #06b6d4;
-  filter: drop-shadow(0 0 4px #06b6d4);
+  fill: #9C7924;
+  filter: drop-shadow(0 0 4px #9C7924);
   animation: rotateCW 32s linear infinite;
 }
 
@@ -200,17 +205,17 @@
 }
 
 .wave1 {
-  stroke: rgba(6, 182, 212, 0.12);
+  stroke: rgba(206, 149, 58, 0.08);
   animation: waveDrift1 16s infinite alternate ease-in-out;
 }
 
 .wave2 {
-  stroke: rgba(59, 130, 246, 0.08);
+  stroke: rgba(255, 255, 255, 0.04);
   animation: waveDrift2 22s infinite alternate ease-in-out;
 }
 
 .wave3 {
-  stroke: rgba(168, 85, 247, 0.1);
+  stroke: rgba(156, 121, 36, 0.06);
   animation: waveDrift3 28s infinite alternate ease-in-out;
 }
 
@@ -250,16 +255,16 @@
   height: 1px;
   background: linear-gradient(
     90deg,
-    rgba(59, 130, 246, 0) 0%,
-    rgba(59, 130, 246, 0.15) 30%,
-    rgba(6, 182, 212, 0.25) 50%,
-    rgba(168, 85, 247, 0.15) 70%,
-    rgba(168, 85, 247, 0) 100%
+    rgba(206, 149, 58, 0) 0%,
+    rgba(206, 149, 58, 0.08) 30%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(156, 121, 36, 0.08) 70%,
+    rgba(156, 121, 36, 0) 100%
   );
   box-shadow: 
-    0 0 8px rgba(6, 182, 212, 0.2),
-    0 0 16px rgba(59, 130, 246, 0.1);
-  opacity: 0.6;
+    0 0 8px rgba(255, 255, 255, 0.05),
+    0 0 16px rgba(206, 149, 58, 0.04);
+  opacity: 0.4;
   z-index: 4;
   pointer-events: none;
   animation: scanVertical 12s infinite linear;
@@ -323,8 +328,8 @@
 .p1 {
   top: 20%;
   left: 15%;
-  background-color: rgba(6, 182, 212, 0.25);
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+  background-color: rgba(206, 149, 58, 0.2);
+  box-shadow: 0 0 10px rgba(206, 149, 58, 0.3);
   animation-duration: 16s;
   animation-delay: 0s;
 }
@@ -332,8 +337,8 @@
 .p2 {
   top: 40%;
   left: 80%;
-  background-color: rgba(168, 85, 247, 0.2);
-  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
   animation-duration: 20s;
   animation-delay: -3s;
 }
@@ -341,8 +346,8 @@
 .p3 {
   top: 70%;
   left: 25%;
-  background-color: rgba(59, 130, 246, 0.2);
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+  background-color: rgba(156, 121, 36, 0.15);
+  box-shadow: 0 0 12px rgba(156, 121, 36, 0.25);
   animation-duration: 18s;
   animation-delay: -7s;
 }
@@ -350,8 +355,8 @@
 .p4 {
   top: 85%;
   left: 65%;
-  background-color: rgba(6, 182, 212, 0.25);
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+  background-color: rgba(206, 149, 58, 0.2);
+  box-shadow: 0 0 10px rgba(206, 149, 58, 0.3);
   animation-duration: 15s;
   animation-delay: -2s;
 }
@@ -359,8 +364,8 @@
 .p5 {
   top: 15%;
   left: 70%;
-  background-color: rgba(168, 85, 247, 0.15);
-  box-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
+  background-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
   animation-duration: 24s;
   animation-delay: -5s;
 }
@@ -393,13 +398,13 @@
   height: 220px;
   background: linear-gradient(
     90deg,
-    rgba(6, 182, 212, 0) 0%,
-    rgba(6, 182, 212, 0.4) 25%,
-    rgba(59, 130, 246, 0.5) 50%,
-    rgba(168, 85, 247, 0.3) 75%,
-    rgba(168, 85, 247, 0) 100%
+    rgba(206, 149, 58, 0) 0%,
+    rgba(206, 149, 58, 0.06) 25%,
+    rgba(156, 121, 36, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%,
+    rgba(255, 255, 255, 0) 100%
   );
-  filter: blur(100px);
+  filter: blur(120px);
   transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(-10%, 150px, 80px);
   animation: drift3d1 22s infinite alternate ease-in-out;
 }
@@ -412,13 +417,13 @@
   height: 280px;
   background: linear-gradient(
     90deg,
-    rgba(168, 85, 247, 0) 0%,
-    rgba(168, 85, 247, 0.35) 20%,
-    rgba(59, 130, 246, 0.55) 45%,
-    rgba(6, 182, 212, 0.4) 70%,
-    rgba(6, 182, 212, 0) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.03) 20%,
+    rgba(206, 149, 58, 0.06) 45%,
+    rgba(156, 121, 36, 0.05) 70%,
+    rgba(156, 121, 36, 0) 100%
   );
-  filter: blur(120px);
+  filter: blur(140px);
   transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(5%, 280px, -60px);
   animation: drift3d2 26s infinite alternate ease-in-out;
 }
@@ -431,12 +436,12 @@
   height: 120px;
   background: linear-gradient(
     90deg,
-    rgba(6, 182, 212, 0) 0%,
-    rgba(6, 182, 212, 0.65) 35%,
-    rgba(59, 130, 246, 0.6) 65%,
-    rgba(168, 85, 247, 0) 100%
+    rgba(156, 121, 36, 0) 0%,
+    rgba(156, 121, 36, 0.08) 35%,
+    rgba(206, 149, 58, 0.06) 65%,
+    rgba(206, 149, 58, 0) 100%
   );
-  filter: blur(60px);
+  filter: blur(80px);
   transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(-15%, -20px, 140px);
   animation: drift3d3 18s infinite alternate ease-in-out;
 }
@@ -449,12 +454,12 @@
   height: 90px;
   background: linear-gradient(
     90deg,
-    rgba(236, 72, 153, 0) 0%,
-    rgba(236, 72, 153, 0.4) 30%,
-    rgba(168, 85, 247, 0.55) 60%,
-    rgba(59, 130, 246, 0) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(206, 149, 58, 0.04) 30%,
+    rgba(156, 121, 36, 0.05) 60%,
+    rgba(156, 121, 36, 0) 100%
   );
-  filter: blur(70px);
+  filter: blur(90px);
   transform: rotateX(60deg) rotateY(-8deg) rotateZ(-25deg) translate3d(0, 420px, -150px);
   animation: drift3d4 28s infinite alternate ease-in-out;
 }

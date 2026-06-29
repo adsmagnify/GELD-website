@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -145,7 +146,7 @@ export default function Hero() {
           Empowering financial institutions with innovation, trust, and seamless digital experiences.
         </p>
         <div className={styles.heroActions}>
-          <a href="#" className={styles.primaryCta}>Start Free trial</a>
+          <Link href="/webinar" className={styles.primaryCta}>Attend Weekly Webinar</Link>
           <div className={styles.divider}></div>
           <a href="#" className={styles.secondaryCta}>Learn more</a>
         </div>
@@ -200,17 +201,15 @@ export default function Hero() {
               >
                 <defs>
                   <linearGradient id="sparklineGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(59, 130, 246, 0.3)" />
-                    <stop offset="100%" stopColor="rgba(59, 130, 246, 0.0)" />
+                    <stop offset="0%" stopColor="rgba(10, 6, 2, 0.25)" />
+                    <stop offset="100%" stopColor="rgba(10, 6, 2, 0.0)" />
                   </linearGradient>
                   
                   {/* Seamless flowing gradient for the line stroke */}
                   <linearGradient id="sparklineLineGrad" x1="0" y1="0" x2="314" y2="0" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="25%" stopColor="#06b6d4" />
-                    <stop offset="50%" stopColor="#a855f7" />
-                    <stop offset="75%" stopColor="#06b6d4" />
-                    <stop offset="100%" stopColor="#3b82f6" />
+                    <stop offset="0%" stopColor="#0a0602" />
+                    <stop offset="50%" stopColor="#2c1a08" />
+                    <stop offset="100%" stopColor="#0a0602" />
                     <animateTransform
                       attributeName="gradientTransform"
                       type="translate"

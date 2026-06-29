@@ -19,7 +19,10 @@
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -2px;
-  color: #ffffff;
+  background: linear-gradient(135deg, #FEFE7B 0%, #CE953A 50%, #9C7924 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   opacity: 0;
   animation: fadeInUp 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
 }
@@ -33,7 +36,9 @@
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   font-weight: 400;
   font-style: italic;
-  color: #ffffff;
+  background: linear-gradient(135deg, #FEFE7B 0%, #CE953A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   position: relative;
   display: inline-block;
   padding-bottom: 2px;
@@ -46,7 +51,7 @@
   right: 0;
   bottom: 0;
   height: 2px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%);
+  background: linear-gradient(90deg, rgba(254, 254, 123, 0.6) 0%, rgba(254, 254, 123, 0.1) 100%);
 }
 
 .subtitle {
@@ -113,18 +118,19 @@
   max-width: 370px;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.015) 100%
+    #FEFE7B 0%,
+    #CE953A 50%,
+    #9C7924 100%
   );
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #FEFE7B;
   border-radius: 24px;
   padding: 28px;
   box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.4),
     0 25px 50px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -135,12 +141,12 @@
 
 .card:hover {
   transform: translateY(-8px) scale(1.015);
-  border-color: rgba(255, 255, 255, 0.14);
+  border-color: #ffffff;
   box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.5),
+    0 15px 40px rgba(0, 0, 0, 0.5),
     0 35px 70px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(59, 130, 246, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    0 0 35px rgba(254, 254, 123, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .cardHeader {
@@ -154,25 +160,25 @@
   align-items: center;
   gap: 8px;
   font-size: 15px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  color: #0a0602;
   letter-spacing: 0.2px;
 }
 
 .trendIcon {
-  color: #60a5fa;
+  color: #0a0602;
   display: flex;
   align-items: center;
 }
 
 .cardMenu {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(10, 6, 2, 0.6);
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .cardMenu:hover {
-  color: #ffffff;
+  color: #0a0602;
 }
 
 .cardBody {
@@ -183,16 +189,16 @@
 
 .cardValue {
   font-size: 44px;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 800;
+  color: #0a0602;
   letter-spacing: -1px;
   line-height: 1;
 }
 
 .cardSubvalue {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(10, 6, 2, 0.6);
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 4px;
   align-self: flex-end;
 }
@@ -208,7 +214,7 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 4px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(10, 6, 2, 0.15);
   padding-top: 18px;
 }
 
@@ -224,9 +230,9 @@
 }
 
 .changeText {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(10, 6, 2, 0.6);
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 /* Custom visual chart decoration */
@@ -250,15 +256,15 @@
 }
 
 .sparklineDot {
-  fill: #3b82f6;
+  fill: #0a0602;
   stroke: #ffffff;
   stroke-width: 1.5px;
-  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
+  filter: drop-shadow(0 0 6px rgba(10, 6, 2, 0.8));
   transition: cx 0.15s cubic-bezier(0.25, 1, 0.5, 1), cy 0.15s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
 }
 
 .guideLine {
-  stroke: rgba(255, 255, 255, 0.15);
+  stroke: rgba(10, 6, 2, 0.25);
   stroke-width: 1px;
   stroke-dasharray: 3 3;
   transition: x1 0.15s cubic-bezier(0.25, 1, 0.5, 1), x2 0.15s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
@@ -266,10 +272,10 @@
 
 .tooltip {
   position: absolute;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(20, 15, 5, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(206, 149, 58, 0.3);
   color: #ffffff;
   padding: 4px 10px;
   border-radius: 6px;
@@ -278,7 +284,7 @@
   pointer-events: none;
   transform: translateX(-50%);
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   z-index: 10;
   transition: left 0.15s cubic-bezier(0.25, 1, 0.5, 1), bottom 0.15s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
 }
