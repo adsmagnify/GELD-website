@@ -292,3 +292,46 @@
     filter: blur(1.5px);
   }
 }
+
+.goldenBg {
+  background: linear-gradient(
+    135deg,
+    #FEFE7B 0%,
+    #CE953A 50%,
+    #9C7924 100%
+  );
+  border-top: none;
+}
+
+.goldenBg .pill {
+  border-color: rgba(10, 6, 2, 0.12);
+  background: rgba(10, 6, 2, 0.06);
+  color: rgba(10, 6, 2, 0.8);
+}
+
+.goldenBg .dashedLine {
+  border-left-color: rgba(10, 6, 2, 0.2);
+}
+
+.goldenBg .value {
+  background: linear-gradient(180deg, #0a0602 0%, #3d2a0a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+.goldenBg .label {
+  color: rgba(10, 6, 2, 0.75);
+}
+
+.goldenBg .dot {
+  background-color: rgba(10, 6, 2, 0.15);
+}
+
+.goldenBg .activeDot {
+  background-color: #0a0602;
+}
+
+.goldenBg .archPath {
+  stroke: rgba(10, 6, 2, 0.25);
+}

@@ -8,12 +8,13 @@ import Background from "../Background/Background";
 interface StatsProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
+  isGoldenBg?: boolean;
 }
 
 const slides = [
-  { value: 3, decimals: 0, prefix: "", suffix: "M", label: "User worldwide" },
-  { value: 1000, decimals: 0, prefix: "", suffix: "", label: "Transactions per day" },
-  { value: 70, decimals: 0, prefix: "", suffix: "%", label: "Average users saved" }
+  { value: 39, decimals: 0, prefix: "", suffix: "Years", label: "Combined market experience leading our advisory" },
+  { value: 2500, decimals: 0, prefix: "", suffix: "+", label: "Investors guided across India" },
+  { value: 100, decimals: 0, prefix: "", suffix: "%", label: "Regulator compliant" }
 ];
 
 interface Particle {
@@ -27,7 +28,7 @@ interface Particle {
   duration: number;
 }
 
-export default function Stats({ ref, onScrollDown }: StatsProps) {
+export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
   const [isVisible, setIsVisible] = useState(false);
   const fallbackRef = useRef<HTMLElement>(null);
   const activeRef = ref || fallbackRef;
@@ -138,8 +139,8 @@ export default function Stats({ ref, onScrollDown }: StatsProps) {
   const formattedNumber = `${currentSlideData.prefix}${animatedValue.toFixed(currentSlideData.decimals)}${currentSlideData.suffix}`;
 
   return (
-    <section ref={activeRef as any} className={styles.section}>
-      <Background />
+    <section ref={activeRef as any} className={`${styles.section} ${isGoldenBg ? styles.goldenBg : ""}`}>
+      {!isGoldenBg && <Background />}
       <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
         
         {/* Header Pill */}
@@ -207,7 +208,7 @@ export default function Stats({ ref, onScrollDown }: StatsProps) {
 
       {onScrollDown && (
         <div className={styles.scrollWrapper}>
-          <ScrollButton onClick={onScrollDown} />
+          <ScrollButton onClick={onScrollDown} darkText={isGoldenBg} />
         </div>
       )}
     </section>

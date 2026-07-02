@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -9,7 +7,7 @@ import ScrollButton from "../ScrollButton/ScrollButton";
 interface FundManagersProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
-  isSubpage?: boolean;
+  [key: string]: any;
 }
 
 export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
@@ -24,7 +22,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
           setIsVisible(true);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.05 }
     );
 
     const current = activeRef.current;
@@ -41,76 +39,146 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
 
   const managers = [
     {
-      name: "Marcus Vance",
-      role: "Chief Investment Architect",
-      specialty: "Algorithmic Wealth Orbitals",
-      bio: "Marcus has over 15 years of quantitative finance experience at leading institutions. He designs GELD's core orbital allocation strategies and automated rebalancing models.",
-      stat: "+26.4% YoY",
-      statLabel: "Average Strategy Yield",
-      avatar: "/avatar1.svg"
+      name: "Raamdeo Agrawal",
+      role: "Chairman & Co-Founder",
+      company: "Motilal Oswal (MOSL)",
+      specialty: "Value Investing",
+      bio: "Co-founder of MOSL and pioneer of the QGLP investing framework.",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&h=256&q=80",
+      linkedin: "https://www.linkedin.com/in/raamdeo-agrawal-38600b12/"
     },
     {
-      name: "Helena Rhee",
-      role: "Lead Systems Engineer",
-      specialty: "Decentralized Ledger Cryptography",
-      bio: "Helena oversees ledger synchronization, secure asset custody overlays, and military-grade vault encryption. Formerly led core cryptographic security teams in Silicon Valley.",
-      stat: "100%",
-      statLabel: "Vault Security Uptime",
-      avatar: "/avatar2.svg"
+      name: "Chandan Taparia",
+      role: "Head - Derivatives & Technicals",
+      company: "Motilal Oswal (MOSL)",
+      specialty: "Derivatives Desk",
+      bio: "Renowned derivatives strategist and momentum research lead.",
+      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&h=256&q=80",
+      linkedin: "https://www.linkedin.com/in/chandan-taparia-b7001438/"
     },
     {
-      name: "Devon Pierce",
-      role: "Senior Wealth Advisor",
-      specialty: "Liquidity Stream Allocation",
-      bio: "Devon coordinates client relations and optimizes liquidity stream distributions, aligning GELD's high-yield vaults directly with long-term wealth protection goals.",
-      stat: "$1.4B+",
-      statLabel: "Assets Managed",
-      avatar: "/avatar3.svg"
+      name: "Sailesh Saraf",
+      role: "Founder & Director",
+      company: "Dynamic Equities",
+      specialty: "Multi-Asset PMS",
+      bio: "Creator of algorithmic allocation and capital indexing models.",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80",
+      linkedin: "https://www.linkedin.com/in/sailesh-saraf-57a66914"
+    },
+    {
+      name: "Sunil Singhania",
+      role: "Founder",
+      company: "Abakkus Asset Manager",
+      specialty: "Equity Alpha",
+      bio: "Celebrated fund manager with multi-billion dollar track records.",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&h=256&q=80",
+      linkedin: "https://www.linkedin.com/in/sunilsinghania/"
+    },
+    {
+      name: "Pankaj Murarka",
+      role: "Founder & CIO",
+      company: "Renaissance Investment",
+      specialty: "Growth Portfolios",
+      bio: "Over 25 years of institutional equity management experience.",
+      avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=256&h=256&q=80",
+      linkedin: "https://www.linkedin.com/in/pankaj-murarka-60a63110"
+    },
+    {
+      name: "Shailendra Kumar",
+      role: "Founder & CIO",
+      company: "Narnolia",
+      specialty: "Quantitative PMS",
+      bio: "Architect of advanced absolute return models and indexes.",
+      avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&h=256&q=80",
+      linkedin: "https://www.linkedin.com/in/shailendra-kumar-9b16124"
+    },
+    {
+      name: "Vikas Khemani",
+      role: "Founder",
+      company: "Carnelian Advisors",
+      specialty: "Thematic Equity",
+      bio: "Former CEO of Edelweiss Securities, managing thematic alpha.",
+      avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&h=256&q=80",
+      linkedin: "https://www.linkedin.com/in/vikaskhemani/"
+    },
+    {
+      name: "Madhu Runawat",
+      role: "Founder & Managing Director",
+      company: "Wealth Co",
+      specialty: "Private Wealth",
+      bio: "Crafts customized estate structures and private capital vaults.",
+      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&h=256&q=80",
+      linkedin: "https://www.linkedin.com/in/madhu-runawat-9014164b"
     }
   ];
 
   return (
-    <section ref={activeRef} className={styles.section}>
-      <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
-        <div className={styles.heroSection}>
-          <h2 className={styles.title}>
-            Meet the <span className={styles.goldText}>Architects</span>
-          </h2>
-          <p className={styles.subtitle}>
-            Our financial experts and systems engineers align years of quantitative trading with core ledger security.
+    <section ref={activeRef} className={`${styles.aboutSection} ${isVisible ? styles.revealed : ""}`}>
+      {/* 1. Centered Editorial Statement (Formatting exact match to About Us) */}
+      <div className={styles.statementWrapper}>
+        <div className={styles.aboutContainer}>
+          {/* Badge */}
+          <div className={styles.aboutBadge}>
+            <span className={styles.aboutBadgeText}>Investment Architects</span>
+          </div>
+
+          {/* Main Paragraph */}
+          <p className={styles.aboutText}>
+            <span className={styles.serifItalic}>Great portfolios require visionary minds.</span>{" "}
+            <span className={styles.fadeText}>Guided by legends like Raamdeo Agrawal and Sunil Singhania,</span>{" "}
+            <span className={styles.highlightText}>
+              our fund management panel brings over 150 combined years of market-beating expertise.
+            </span>{" "}
+            <span className={styles.fadeText}>
+              Connecting your ambition directly with the architects of Indian wealth creation.
+            </span>
           </p>
         </div>
+      </div>
 
-        <div className={styles.grid}>
-          {managers.map((m, idx) => (
-            <div key={idx} className={styles.card} style={{ transitionDelay: `${idx * 100}ms` }}>
-              <div className={styles.cardHeader}>
-                <div className={styles.avatar}>
+      {/* 2. Grid of Luxurious Cards (Directly below) */}
+      <div className={styles.cardsWrapper}>
+        <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
+          <div className={styles.grid}>
+            {managers.map((m, idx) => (
+              <div key={idx} className={styles.card} style={{ transitionDelay: `${idx * 80}ms` }}>
+                <div className={styles.avatarWrapper}>
                   <img src={m.avatar} alt={m.name} className={styles.avatarImg} />
+                  <div className={styles.avatarGlow}></div>
                 </div>
+                
                 <div className={styles.titles}>
                   <h3 className={styles.name}>{m.name}</h3>
+                  <p className={styles.company}>{m.company}</p>
                   <p className={styles.role}>{m.role}</p>
-                  <p className={styles.specialty}>{m.specialty}</p>
                 </div>
+
+                <div className={styles.divider}></div>
+                
+                <p className={styles.bio}>{m.bio}</p>
+                
+                <div className={styles.specialtyBadge}>
+                  <span>{m.specialty}</span>
+                </div>
+
+                <button 
+                  className={styles.linkedinBtn}
+                  onClick={() => window.open(m.linkedin, "_blank")}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" className={styles.linkedinIcon}>
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  </svg>
+                  <span>Connect on LinkedIn</span>
+                </button>
               </div>
-
-              <p className={styles.bio}>{m.bio}</p>
-
-              <div className={styles.statContainer}>
-                <h4 className={styles.stat}>{m.stat}</h4>
-                <p className={styles.statLabel}>{m.statLabel}</p>
-              </div>
-
-              <button className={styles.consultBtn}>Review your Portfolio</button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
       {onScrollDown && (
         <div className={styles.scrollWrapper}>
-          <ScrollButton onClick={onScrollDown} />
+          <ScrollButton onClick={onScrollDown} darkText={false} />
         </div>
       )}
     </section>

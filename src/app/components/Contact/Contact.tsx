@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, forwardRef } from "react";
+import React, { useState, forwardRef, useEffect, useRef } from "react";
 import styles from "./Contact.module.css";
 import Background from "../Background/Background";
 
@@ -13,6 +13,32 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const fallbackRef = useRef<HTMLElement>(null);
+  const activeRef = (ref as React.RefObject<HTMLElement | null>) || fallbackRef;
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    const current = activeRef.current;
+    if (current) {
+      observer.observe(current);
+    }
+
+    return () => {
+      if (current) {
+        observer.unobserve(current);
+      }
+    };
+  }, [activeRef]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +48,7 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
   return (
     <section ref={ref} className={styles.section}>
       <Background />
-      <div className={styles.container}>
+      <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
         <div className={styles.head}>
           <span className={styles.label}>GET IN TOUCH</span>
           <h2 className={styles.title}>

@@ -11,7 +11,10 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState("hero");
   const [visibleSection, setVisibleSection] = useState("hero");
   const [showHeader, setShowHeader] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   // Auto-hide/reveal scroll listener
   useEffect(() => {
@@ -26,8 +29,10 @@ export default function Header() {
       if (currentScrollY < 50) {
         setShowHeader(true);
       } else if (currentScrollY > lastScrollY.current) {
-        // Scrolling down (content goes up) -> hide
-        setShowHeader(false);
+        // Scrolling down (content goes up) -> hide (only if mobile menu is closed)
+        if (!isMobileMenuOpen) {
+          setShowHeader(false);
+        }
       } else if (currentScrollY < lastScrollY.current - 5) {
         // Scrolling up (content goes down) -> show (with small tolerance threshold)
         setShowHeader(true);
@@ -39,7 +44,18 @@ export default function Header() {
     return () => {
       scrollContainer.removeEventListener("scroll", handleScroll);
     };
-  }, [pathname]);
+  }, [pathname, isMobileMenuOpen]);
+
+  // Handle window resizing to close mobile drawer when scaling back to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1240) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Highlight the nav item matching the current route.
   // On the home page ("/") we scroll-spy the hero; on every other route
@@ -88,9 +104,20 @@ export default function Header() {
   const isHeaderDark = (pathname === "/" && (visibleSection === "about" || visibleSection === "testimonials")) || pathname === "/about";
 
   return (
-    <header className={`${styles.header} ${isHeaderDark ? styles.headerDark : ""} ${showHeader ? "" : styles.headerHidden}`}>
-      <Link href="/" className={styles.logo}>
-        <span>GELD</span>
+    <header className={`${styles.header} ${isHeaderDark ? styles.headerDark : ""} ${showHeader ? "" : styles.headerHidden} ${isMobileMenuOpen ? styles.headerMobileOpen : ""}`}>
+      <Link href="/" className={styles.logoLink} onClick={() => setIsMobileMenuOpen(false)}>
+        <div className={styles.logoWrapper}>
+          <img 
+            src="/geld_logo_g.png" 
+            alt="G" 
+            className={styles.logoG} 
+          />
+          <img 
+            src="/geld_logo_text.png" 
+            alt="ELD WEALTH" 
+            className={styles.logoText} 
+          />
+        </div>
       </Link>
 
       <nav className={styles.nav}>
@@ -110,14 +137,25 @@ export default function Header() {
           href="/about"
           className={`${styles.navLink} ${isLinkActive("about") ? styles.activeNavLink : ""}`}
         >
-          About us
+          Why GELD exists
         </Link>
-        <Link
-          href="/products"
-          className={`${styles.navLink} ${isLinkActive("products") ? styles.activeNavLink : ""}`}
-        >
-          Products
-        </Link>
+        <div className={styles.navDropdownWrapper}>
+          <Link
+            href="/products"
+            className={`${styles.navLink} ${isLinkActive("products") ? styles.activeNavLink : ""}`}
+          >
+            Products
+            <svg width="8" height="5" viewBox="0 0 8 5" fill="none" className={styles.navArrow}>
+              <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </Link>
+          <div className={styles.navDropdown}>
+            <Link href="/products/iap" className={styles.navDropdownItem}>IAP (Intelligent Advisory Portfolio)</Link>
+            <Link href="/products/pms" className={styles.navDropdownItem}>PMS (Portfolio Management Services)</Link>
+            <Link href="/products/aif" className={styles.navDropdownItem}>AIF (Alternative Investment Fund)</Link>
+            <Link href="/products/mutual-funds" className={styles.navDropdownItem}>Mutual Funds</Link>
+          </div>
+        </div>
         <Link
           href="/fund-managers"
           className={`${styles.navLink} ${isLinkActive("fund-managers") ? styles.activeNavLink : ""}`}
@@ -169,6 +207,113 @@ export default function Header() {
         >
           Contact us
         </Link>
+
+        {/* Hamburger menu button for small screen viewports */}
+        <button 
+          className={`${styles.hamburgerBtn} ${isMobileMenuOpen ? styles.hamburgerActive : ""}`}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          <span className={styles.hamburgerLine}></span>
+          <span className={styles.hamburgerLine}></span>
+          <span className={styles.hamburgerLine}></span>
+        </button>
+      </div>
+
+      {/* Mobile Drawer Overlay */}
+      <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ""}`}>
+        <nav className={styles.mobileNavLinks}>
+          <Link
+            href="/"
+            className={`${styles.mobileNavLink} ${isLinkActive("hero") ? styles.activeNavLink : ""}`}
+            onClick={(e) => {
+              setIsMobileMenuOpen(false);
+              if (pathname === "/") {
+                e.preventDefault();
+                document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            className={`${styles.mobileNavLink} ${isLinkActive("about") ? styles.activeNavLink : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            About us
+          </Link>
+          <div className={styles.mobileDropdownWrapper}>
+            <Link
+              href="/products"
+              className={`${styles.mobileNavLink} ${isLinkActive("products") ? styles.activeNavLink : ""}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Products
+            </Link>
+            <div className={styles.mobileSublinks}>
+              <Link href="/products/iap" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>IAP</Link>
+              <Link href="/products/pms" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>PMS</Link>
+              <Link href="/products/aif" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>AIF</Link>
+              <Link href="/products/mutual-funds" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>Mutual Funds</Link>
+            </div>
+          </div>
+          <Link
+            href="/fund-managers"
+            className={`${styles.mobileNavLink} ${isLinkActive("fund-managers") ? styles.activeNavLink : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Fund Managers
+          </Link>
+          <Link
+            href="/performance"
+            className={`${styles.mobileNavLink} ${isLinkActive("performance") ? styles.activeNavLink : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Performance
+          </Link>
+          <Link
+            href="/webinar"
+            className={`${styles.mobileNavLink} ${isLinkActive("webinar") ? styles.activeNavLink : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Webinar
+          </Link>
+          <Link
+            href="/testimonials"
+            className={`${styles.mobileNavLink} ${isLinkActive("testimonials") ? styles.activeNavLink : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Testimonials
+          </Link>
+          <Link
+            href="/blog"
+            className={`${styles.mobileNavLink} ${isLinkActive("blog") ? styles.activeNavLink : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Blog
+          </Link>
+          <Link
+            href="/docs"
+            className={`${styles.mobileNavLink} ${isLinkActive("docs") ? styles.activeNavLink : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Docs(Privacy Policy)
+          </Link>
+          <Link
+            href="/#contact"
+            className={`${styles.mobileNavLink} ${styles.mobileContactLink}`}
+            onClick={(e) => {
+              setIsMobileMenuOpen(false);
+              if (pathname === "/") {
+                e.preventDefault();
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            Contact us
+          </Link>
+        </nav>
       </div>
     </header>
   );

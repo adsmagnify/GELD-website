@@ -232,3 +232,39 @@
 .footerDark .bottomLinks a:hover {
   color: var(--accent-gold) !important;
 }
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 60px 20px 30px 20px;
+  }
+  .container {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .brandCol {
+    max-width: 100%;
+  }
+  .linksGrid {
+    flex-wrap: wrap;
+    gap: 40px 60px;
+  }
+  .bottomBar {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+    padding-top: 24px;
+  }
+  .bottomLinks {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .linksGrid {
+    flex-direction: column;
+    gap: 32px;
+  }
+}

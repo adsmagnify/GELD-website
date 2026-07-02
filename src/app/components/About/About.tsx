@@ -41,17 +41,17 @@ export default function About({ ref, onScrollDown }: AboutProps) {
       <div className={styles.aboutContainer}>
         {/* Badge */}
         <div className={styles.aboutBadge}>
-          <span className={styles.aboutBadgeText}>About GELD</span>
+          <span className={styles.aboutBadgeText}>Why GELD exists</span>
         </div>
 
         {/* Main Paragraph */}
         <p className={styles.aboutText}>
-          <span className={styles.serifItalic}>We believe the future of banking is digital,</span>{" "}
-          <span className={styles.fadeText}>transparent, and customer-first.</span>{" "}
-          <span className={styles.highlightText}>Our platform empowers financial institutions</span>{" "}
+          <span className={styles.serifItalic}>Markets never stand still, and neither do we</span>{" "}
+          <span className={styles.highlightText}>At Geld, we track every shift, decode every opportunity, 
+          and make sure your wealth is always working in the right direction,</span>{" "}
+          <span className={styles.fadeText}>across every asset class, not just equities.</span>{" "}
           <span className={styles.fadeText}>
-            to transform traditional operations into seamless digital experiences
-            enhancing trust, efficiency, and innovation at every level.
+            You focus on building your kingdom. We make sure your money keeps pace with your ambition.
           </span>
         </p>
       </div>

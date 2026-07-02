@@ -1,22 +1,23 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Performance.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
 
 interface PerformanceProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
-  isSubpage?: boolean;
+  [key: string]: any;
 }
+
+type PeriodType = "Inception" | "3Yr" | "1Yr" | "6M" | "3M" | "1M";
 
 export default function Performance({ ref, onScrollDown }: PerformanceProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>("Inception");
+  
   const fallbackRef = useRef<HTMLElement>(null);
   const activeRef = ref || fallbackRef;
-
-  const [metric, setMetric] = useState<"aum" | "yield">("aum");
-  const [timeframe, setTimeframe] = useState<"5y" | "1y">("5y");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -25,7 +26,7 @@ export default function Performance({ ref, onScrollDown }: PerformanceProps) {
           setIsVisible(true);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.05 }
     );
 
     const current = activeRef.current;
@@ -40,190 +41,247 @@ export default function Performance({ ref, onScrollDown }: PerformanceProps) {
     };
   }, [activeRef]);
 
-  // Multi-dimensional financial data sets
-  const chartData = {
-    aum: {
-      "5y": [
-        { label: "2022", value: "$280M", x: 10, y: 80 },
-        { label: "2023", value: "$450M", x: 70, y: 65 },
-        { label: "2024", value: "$790M", x: 130, y: 48 },
-        { label: "2025", value: "$1.1B", x: 190, y: 30 },
-        { label: "2026", value: "$1.4B", x: 250, y: 15 }
-      ],
-      "1y": [
-        { label: "Q1 26", value: "$1.15B", x: 10, y: 60 },
-        { label: "Q2 26", value: "$1.22B", x: 70, y: 50 },
-        { label: "Q3 26", value: "$1.30B", x: 130, y: 40 },
-        { label: "Q4 26", value: "$1.36B", x: 190, y: 25 },
-        { label: "Present", value: "$1.40B", x: 250, y: 15 }
-      ]
-    },
-    yield: {
-      "5y": [
-        { label: "2022", value: "+14.8%", x: 10, y: 70 },
-        { label: "2023", value: "+18.2%", x: 70, y: 55 },
-        { label: "2024", value: "+21.5%", x: 130, y: 35 },
-        { label: "2025", value: "+24.8%", x: 190, y: 20 },
-        { label: "2026", value: "+26.4%", x: 250, y: 15 }
-      ],
-      "1y": [
-        { label: "Q1 26", value: "+25.1%", x: 10, y: 55 },
-        { label: "Q2 26", value: "+25.4%", x: 70, y: 45 },
-        { label: "Q3 26", value: "+25.9%", x: 130, y: 35 },
-        { label: "Q4 26", value: "+26.1%", x: 190, y: 25 },
-        { label: "Present", value: "+26.4%", x: 250, y: 15 }
-      ]
-    }
+  // Performance data from the document
+  const returnsData = {
+    Inception: [
+      { name: "Bluechip Strategy", value: 325.63, isStrategy: true },
+      { name: "Nifty 750 Total Market", value: 103.29, isStrategy: false },
+      { name: "Nifty 500 Index", value: 99.53, isStrategy: false },
+      { name: "Nifty 50 Index", value: 71.13, isStrategy: false }
+    ],
+    "3Yr": [
+      { name: "Bluechip Strategy", value: 145.39, isStrategy: true },
+      { name: "Nifty 750 Total Market", value: 45.12, isStrategy: false },
+      { name: "Nifty 500 Index", value: 43.70, isStrategy: false },
+      { name: "Nifty 50 Index", value: 27.05, isStrategy: false }
+    ],
+    "1Yr": [
+      { name: "Bluechip Strategy", value: 18.56, isStrategy: true },
+      { name: "Nifty 750 Total Market", value: -0.57, isStrategy: false },
+      { name: "Nifty 500 Index", value: -0.64, isStrategy: false },
+      { name: "Nifty 50 Index", value: -4.86, isStrategy: false }
+    ],
+    "6M": [
+      { name: "Bluechip Strategy", value: 13.58, isStrategy: true },
+      { name: "Nifty 750 Total Market", value: -5.04, isStrategy: false },
+      { name: "Nifty 500 Index", value: -5.33, isStrategy: false },
+      { name: "Nifty 50 Index", value: -10.13, isStrategy: false }
+    ],
+    "3M": [
+      { name: "Bluechip Strategy", value: 14.46, isStrategy: true },
+      { name: "Nifty 750 Total Market", value: -1.72, isStrategy: false },
+      { name: "Nifty 500 Index", value: -2.20, isStrategy: false },
+      { name: "Nifty 50 Index", value: -6.48, isStrategy: false }
+    ],
+    "1M": [
+      { name: "Bluechip Strategy", value: 7.61, isStrategy: true },
+      { name: "Nifty 750 Total Market", value: 0.01, isStrategy: false },
+      { name: "Nifty 500 Index", value: -0.12, isStrategy: false },
+      { name: "Nifty 50 Index", value: -1.87, isStrategy: false }
+    ]
   };
 
-  const points = chartData[metric][timeframe];
+  const activeBars = returnsData[selectedPeriod];
 
-  // Calculate bezier path
-  let bezierPath = `M ${points[0].x} ${points[0].y}`;
-  for (let i = 1; i < points.length; i++) {
-    const pPrev = points[i - 1];
-    const pCurr = points[i];
-    const cp1x = pPrev.x + (pCurr.x - pPrev.x) / 2;
-    const cp1y = pPrev.y;
-    const cp2x = pPrev.x + (pCurr.x - pPrev.x) / 2;
-    const cp2y = pCurr.y;
-    bezierPath += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${pCurr.x} ${pCurr.y}`;
-  }
-  const areaPath = `${bezierPath} L 250 95 L 10 95 Z`;
+  // Helper to find min/max values to calculate relative height/widths
+  const maxVal = Math.max(...activeBars.map(b => Math.abs(b.value)), 100);
 
   return (
-    <section ref={activeRef} className={styles.section}>
-      <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
-        <div className={styles.heroSection}>
-          <h2 className={styles.title}>
-            Performance & <span className={styles.goldText}>Metrics</span>
-          </h2>
-          <p className={styles.subtitle}>
-            GELD maintains audited transparency on all yield payouts and capital reserves.
+    <section ref={activeRef} className={`${styles.aboutSection} ${isVisible ? styles.revealed : ""}`} id="performance-view">
+      
+      {/* 1. Centered Editorial Statement (Same formatting as About Us) */}
+      <div className={styles.statementWrapper}>
+        <div className={styles.aboutContainer}>
+          <div className={styles.aboutBadge}>
+            <span className={styles.aboutBadgeText}>Performance Track Record</span>
+          </div>
+          <p className={styles.aboutText}>
+            <span className={styles.serifItalic}>Consistent outperformance is not a coincidence.</span>{" "}
+            <span className={styles.fadeText}>By tracking shift dynamics and active risk hedges,</span>{" "}
+            <span className={styles.highlightText}>our multi-cap portfolios have consistently outperformed key equity benchmarks since inception.</span>{" "}
+            <span className={styles.fadeText}>Review our audited monthly statements and historical yield metrics.</span>
           </p>
         </div>
+      </div>
 
-        <div className={styles.grid}>
-          {/* Chart Control Card */}
-          <div className={styles.chartCard}>
-            <div className={styles.chartHeader}>
-              <div className={styles.tabs}>
+      {/* 2. Graphical Performance Section */}
+      <div className={styles.dashboardContainer}>
+        
+        {/* Left Side: Custom Interactive Bar Chart */}
+        <div className={styles.chartBlock}>
+          <div className={styles.chartHeader}>
+            <h3 className={styles.chartTitle}>Managed Portfolio vs <span className={styles.goldText}>Benchmarks</span></h3>
+            <div className={styles.periodTabs}>
+              {(["Inception", "3Yr", "1Yr", "6M", "3M", "1M"] as PeriodType[]).map((p) => (
                 <button
-                  className={`${styles.tab} ${metric === "aum" ? styles.activeTab : ""}`}
-                  onClick={() => setMetric("aum")}
+                  key={p}
+                  className={`${styles.tabBtn} ${selectedPeriod === p ? styles.tabBtnActive : ""}`}
+                  onClick={() => setSelectedPeriod(p)}
                 >
-                  AUM Growth
+                  {p === "Inception" ? "Since Inception" : p === "3Yr" ? "3 Year" : p === "1Yr" ? "1 Year" : p}
                 </button>
-                <button
-                  className={`${styles.tab} ${metric === "yield" ? styles.activeTab : ""}`}
-                  onClick={() => setMetric("yield")}
-                >
-                  Yield Performance
-                </button>
-              </div>
-
-              <div className={styles.timeframeTabs}>
-                <button
-                  className={`${styles.tTab} ${timeframe === "5y" ? styles.activeTTab : ""}`}
-                  onClick={() => setTimeframe("5y")}
-                >
-                  5 Years
-                </button>
-                <button
-                  className={`${styles.tTab} ${timeframe === "1y" ? styles.activeTTab : ""}`}
-                  onClick={() => setTimeframe("1y")}
-                >
-                  1 Year
-                </button>
-              </div>
-            </div>
-
-            {/* Graphic Chart Wrapper */}
-            <div className={styles.chartWrapper}>
-              <svg viewBox="0 0 260 100" fill="none" className={styles.chartSvg} preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(206, 149, 58, 0.22)" />
-                    <stop offset="100%" stopColor="rgba(206, 149, 58, 0)" />
-                  </linearGradient>
-                </defs>
-
-                <line x1="0" y1="20" x2="260" y2="20" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
-                <line x1="0" y1="50" x2="260" y2="50" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
-                <line x1="0" y1="80" x2="260" y2="80" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
-
-                <path d={areaPath} fill="url(#chartGrad)" />
-                <path d={bezierPath} stroke="#CE953A" strokeWidth="1.5" strokeLinecap="round" />
-
-                {points.map((p, idx) => (
-                  <g key={idx}>
-                    <circle cx={p.x} cy={p.y} r="2.5" fill="#FEFE7B" stroke="#0c0c0c" strokeWidth="0.75" />
-                    <text x={p.x} y={p.y - 6} className={styles.chartValText} textAnchor="middle">
-                      {p.value}
-                    </text>
-                    <text x={p.x} y={92} className={styles.chartLabelText} textAnchor="middle">
-                      {p.label}
-                    </text>
-                  </g>
-                ))}
-              </svg>
+              ))}
             </div>
           </div>
 
-          {/* Performance Sidebar Stats */}
-          <div className={styles.statsCard}>
-            <div className={styles.statBox} style={{ transitionDelay: "100ms" }}>
-              <span className={styles.statIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="12" y1="19" x2="12" y2="5"></line>
-                  <polyline points="5 12 12 5 19 12"></polyline>
-                </svg>
-              </span>
-              <div>
-                <h4 className={styles.statTitle}>Historical Yield</h4>
-                <p className={styles.statValue}>+26.4% APY</p>
-                <p className={styles.statMeta}>Consistent audit returns</p>
-              </div>
-            </div>
+          {/* Bar Chart Graphics */}
+          <div className={styles.chartCanvas}>
+            {activeBars.map((bar, i) => {
+              // Calculate width percentage relative to max absolute value
+              const widthPct = (Math.abs(bar.value) / maxVal) * 80; // scale to 80% max
+              const isNegative = bar.value < 0;
 
-            <div className={styles.statBox} style={{ transitionDelay: "200ms" }}>
-              <span className={styles.statIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                </svg>
-              </span>
-              <div>
-                <h4 className={styles.statTitle}>Asset Vault Custody</h4>
-                <p className={styles.statValue}>100% Backed</p>
-                <p className={styles.statMeta}>Fully liquid reserves</p>
-              </div>
-            </div>
+              return (
+                <div key={i} className={styles.barRow}>
+                  <div className={styles.barLabel}>{bar.name}</div>
+                  <div className={styles.barTrack}>
+                    <div 
+                      className={`${styles.barFill} ${bar.isStrategy ? styles.strategyBar : isNegative ? styles.negativeBar : styles.benchmarkBar}`}
+                      style={{ 
+                        width: `${widthPct}%`,
+                        transform: `scaleX(1)`
+                      }}
+                    >
+                      <span className={styles.barValue}>{bar.value > 0 ? `+${bar.value}%` : `${bar.value}%`}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
 
-            <div className={styles.statBox} style={{ transitionDelay: "300ms" }}>
-              <span className={styles.statIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-              </span>
-              <div>
-                <h4 className={styles.statTitle}>Audit Reports</h4>
-                <p className={styles.statValue}>Quarterly Audited</p>
-                <p className={styles.statMeta}>Verified by top global partners</p>
-              </div>
+          <p className={styles.chartNote}>* Gross Returns calculated as on 30th May 2026. Inception Date: 18 Dec 2020.</p>
+        </div>
+
+        {/* Right Side: Key Portfolio & Volatility Metrics Dashboard */}
+        <div className={styles.metricsBlock}>
+          <h3 className={styles.metricsTitle}>Strategy <span className={styles.goldText}>Parameters</span></h3>
+          
+          <div className={styles.metricsGrid}>
+            <div className={styles.metricCard}>
+              <span className={styles.metricVal}>34.88%</span>
+              <span className={styles.metricLbl}>3 Year CAGR</span>
+            </div>
+            <div className={styles.metricCard}>
+              <span className={styles.metricVal}>1.75</span>
+              <span className={styles.metricLbl}>Treynor Ratio</span>
+            </div>
+            <div className={styles.metricCard}>
+              <span className={styles.metricVal}>0.84</span>
+              <span className={styles.metricLbl}>Sharpe Ratio</span>
+            </div>
+            <div className={styles.metricCard}>
+              <span className={styles.metricVal}>1.09</span>
+              <span className={styles.metricLbl}>Beta vs Nifty</span>
+            </div>
+            <div className={styles.metricCard}>
+              <span className={styles.metricVal}>0.81</span>
+              <span className={styles.metricLbl}>Portfolio PEG</span>
+            </div>
+            <div className={styles.metricCard}>
+              <span className={styles.metricVal}>35.30%</span>
+              <span className={styles.metricLbl}>Sales Growth YoY</span>
+            </div>
+            <div className={styles.metricCard}>
+              <span className={styles.metricVal}>53.89%</span>
+              <span className={styles.metricLbl}>Profit Growth YoY</span>
+            </div>
+            <div className={styles.metricCard}>
+              <span className={styles.metricVal}>25 Stocks</span>
+              <span className={styles.metricLbl}>Portfolio Size</span>
             </div>
           </div>
         </div>
+      </div>
 
+      {/* 3. Detailed Data Table (SEBI Compliance) */}
+      <div className={styles.tableSection}>
+        <h3 className={styles.tableTitle}>Historical <span className={styles.goldText}>Performance Matrix</span></h3>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Strategy / Index Name</th>
+                <th>Inception (18 Dec 2020)</th>
+                <th>3 Year</th>
+                <th>1 Year</th>
+                <th>6 Month</th>
+                <th>3 Month</th>
+                <th>1 Month</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className={styles.tableHighlight}>Bluechip High Growth Strategy</td>
+                <td>325.63%</td>
+                <td>145.39%</td>
+                <td>18.56%</td>
+                <td>13.58%</td>
+                <td>14.46%</td>
+                <td>7.61%</td>
+              </tr>
+              <tr>
+                <td>Nifty 750 Total Market</td>
+                <td>103.29%</td>
+                <td>45.12%</td>
+                <td>-0.57%</td>
+                <td>-5.04%</td>
+                <td>-1.72%</td>
+                <td>0.01%</td>
+              </tr>
+              <tr>
+                <td>Nifty 500 Index</td>
+                <td>99.53%</td>
+                <td>43.70%</td>
+                <td>-0.64%</td>
+                <td>-5.33%</td>
+                <td>-2.20%</td>
+                <td>-0.12%</td>
+              </tr>
+              <tr>
+                <td>Nifty 50 Index</td>
+                <td>71.13%</td>
+                <td>27.05%</td>
+                <td>-4.86%</td>
+                <td>-10.13%</td>
+                <td>-6.48%</td>
+                <td>-1.87%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* 4. SEBI Regulatory & Fund Manager details */}
+      <div className={styles.sebiSection}>
+        <div className={styles.sebiGrid}>
+          <div className={styles.sebiBlock}>
+            <h4>Fund Manager Details</h4>
+            <p><strong>Manager:</strong> Mr. Shailesh Saraf</p>
+            <p>Managing Director - Dynamic Equities Pvt Limited. Certification on Value Investing from Columbia University. Over 25 Years of institutional market experience.</p>
+          </div>
+          <div className={styles.sebiBlock}>
+            <h4>Registered Address</h4>
+            <p><strong>Dynamic Equities Pvt. Ltd</strong></p>
+            <p>Technopolis, 14th Floor, Plot No. BP-4, Sector V, Salt Lake, Kolkata- 700091</p>
+            <p><strong>SEBI Reg No:</strong> INA300002022 | <strong>BASL Member ID:</strong> BASL1505</p>
+          </div>
+          <div className={styles.sebiBlock}>
+            <h4>Grievance Redressal</h4>
+            <p><strong>Principal Officer:</strong> Rishav Roy (Contact: 8240771478)</p>
+            <p><strong>Compliance Officer:</strong> Mr. Jibachh Prasad (Contact: 9874421921)</p>
+          </div>
+        </div>
+
+        <div className={styles.disclaimerText}>
+          <p><strong>STANDARD WARNING:</strong> Investment in securities market is subject to market risks. Read all the related documents carefully before investing.</p>
+          <p><strong>DISCLAIMER:</strong> The performance data presented herein are not verified by Past Risk and Return Verification Agency (PaRRVA) or any other agency recognized by SEBI for this purpose. Past performance is no guarantee of future results.</p>
+        </div>
       </div>
 
       {onScrollDown && (
         <div className={styles.scrollWrapper}>
-          <ScrollButton onClick={onScrollDown} />
+          <ScrollButton onClick={onScrollDown} darkText={false} />
         </div>
       )}
     </section>

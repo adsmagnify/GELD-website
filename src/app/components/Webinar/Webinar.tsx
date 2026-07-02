@@ -1,32 +1,19 @@
-
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import styles from "./Webinar.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
 
 interface WebinarProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
-  isSubpage?: boolean;
+  [key: string]: any;
 }
 
 export default function Webinar({ ref, onScrollDown }: WebinarProps) {
   const [isVisible, setIsVisible] = useState(false);
   const fallbackRef = useRef<HTMLElement>(null);
   const activeRef = ref || fallbackRef;
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const posters = [
-    { src: "/webinar_poster_1.png", alt: "The Future of Banking: Digital Transformation" },
-    { src: "/webinar_poster_2.png", alt: "Ledger Security & Digital Assets" },
-    { src: "/webinar_poster_3.png", alt: "Scaling Liquidity & Real-Time Markets" },
-  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,7 +22,7 @@ export default function Webinar({ ref, onScrollDown }: WebinarProps) {
           setIsVisible(true);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.05 }
     );
 
     const current = activeRef.current;
@@ -50,144 +37,134 @@ export default function Webinar({ ref, onScrollDown }: WebinarProps) {
     };
   }, [activeRef]);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % posters.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [posters.length]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % posters.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + posters.length) % posters.length);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsRegistered(true);
-  };
+  const features = [
+    {
+      title: "How to identify high probability trades",
+      desc: "Learn the core triggers to spot and execute trades with high win rates."
+    },
+    {
+      title: "Derivatives decoded • F&O without confusion",
+      desc: "Understand futures & options trading simplified for consistent returns."
+    },
+    {
+      title: "How to manage risk before it manages you",
+      desc: "Implement professional risk parameters to protect your capital."
+    },
+    {
+      title: "Reading the market like a professional",
+      desc: "Analyze charts, technical indicators, and volume trends like a pro."
+    },
+    {
+      title: "Live Q&A • your questions, answered by Chandan",
+      desc: "Get direct answers and feedback on your specific trading queries."
+    }
+  ];
 
   return (
-    <section ref={activeRef as any} className={styles.section}>
-      <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
-        <div className={styles.heroSection}>
-          <h2 className={styles.title}>
-            The Digital Banking <span className={styles.goldText}>Revolution</span>
-          </h2>
-          <p className={styles.subtitle}>
-            Join our leading investment and tech architects for a live, interactive demonstration of GELD's custom wealth management analytics, real-time liquidity streams, and asset allocation tools.
+    <section ref={activeRef} className={`${styles.section} ${isVisible ? styles.revealed : ""}`}>
+      <div className={styles.webinarContainer}>
+        
+        {/* 1. Header Titles (Centered, Top) */}
+        <div className={styles.headerBlock}>
+          <h2 className={styles.mainTitle}>Join GELD's <span className={styles.goldText}>FREE Weekend Webinar</span></h2>
+          <p className={styles.goldSubtitle}>
+            Ask The Expert, Trade Smarter
+          </p>
+          <p className={styles.subSubtitle}>
+            Join a live session with one of India's most watched market voices — and get your trading questions answered directly.
+          </p>
+          <div className={styles.dividerLine}></div>
+        </div>
+
+        {/* 2. Split Columns Content */}
+        <div className={styles.contentSplit}>
+          
+          {/* Left Column: Speaker Portrait & Credentials */}
+          <div className={styles.speakerColumn}>
+            <div className={styles.imageFrame}>
+              <img 
+                src="/webinar_poster.png" 
+                alt="GELD Weekend Webinar poster" 
+                className={styles.posterImg} 
+              />
+            </div>
+            
+            <div className={styles.speakerBio}>
+              {/* <h3 className={styles.speakerName}>Meet Your Speaker – Chandan Taparia</h3>
+              <p className={styles.speakerTagline}>Head of Derivatives & Technical Research, Motilal Oswal Financial Services</p>
+              <p className={styles.speakerExp}>Seen daily on CNBC TV18 • ET Now • Zee Business</p> */}
+              
+              {/* Host/Partner Row */}
+              {/* <div className={styles.hostWrapper}>
+                <img 
+                  src="/aastha_jha.png" 
+                  alt="Aastha Jha - Partner" 
+                  className={styles.hostAvatar} 
+                />
+                <div className={styles.hostMeta}>
+                  <span className={styles.hostLabel}>IN CONVERSATION WITH</span>
+                  <span className={styles.hostName}>AASTHA JHA</span>
+                  <span className={styles.hostTitle}>PARTNER, GELD</span>
+                </div>
+              </div> */}
+            </div>
+          </div>
+
+          {/* Right Column: Wealth Masterclass Features & Button */}
+          <div className={styles.featuresColumn}>
+            <h3 className={styles.featuresHeading}>Exclusive 60-Minute Wealth Masterclass</h3>
+            
+            <div className={styles.featuresList}>
+              {features.map((item, idx) => (
+                <div key={idx} className={styles.featureItem}>
+                  <div className={styles.checkmarkWrapper}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className={styles.checkmarkIcon}>
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div className={styles.featureText}>
+                    <h4 className={styles.featureTitle}>{item.title}</h4>
+                    <p className={styles.featureDesc}>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Micro schedule summary line */}
+            <div className={styles.miniScheduleLine}>
+              <span className={styles.scheduleBadge}>MONDAY, 13TH JULY 2026</span>
+              <span className={styles.scheduleBadge}>7:30 PM ONWARDS</span>
+              <span className={styles.scheduleBadge}>ONLINE • FREE TO ATTEND</span>
+            </div>
+
+            {/* Call to Actions */}
+            <div className={styles.ctaBlock}>
+              <button 
+                className={styles.reserveBtn}
+                onClick={() => window.open("https://us06web.zoom.us/meeting/register/c_aXknaCTjKhfQDFje_WhQ", "_blank")}
+              >
+                Reserve Your Seat Now !!
+              </button>
+              <a href="mailto:Support@geldwealth.com" className={styles.supportLink}>
+                For zoom registration as well as other queries, contact Support@geldwealth.com
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        {/* 3. Disclaimers (Centered, Bottom) */}
+        <div className={styles.disclaimerWrapper}>
+          <p className={styles.disclaimerText}>
+            This webinar is for educational purposes only. Views expressed are of the speaker and do not constitute investment advice. Securities market investments are subject to market risks. Please read all related documents carefully before investing. Gold Wealth is a SEBI Registered Investment Advisor.
           </p>
         </div>
 
-        <div className={styles.content}>
-          <div className={styles.carouselCol}>
-            <div className={styles.carouselContainer}>
-              <div className={styles.carousel}>
-                <button className={`${styles.carouselArrow} ${styles.prev}`} onClick={prevSlide} aria-label="Previous slide">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-
-                <div className={styles.carouselViewport}>
-                  <div className={styles.carouselTrack} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                    {posters.map((poster, index) => (
-                      <div key={index} className={styles.slide}>
-                        <img src={poster.src} alt={poster.alt} className={styles.posterImage} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <button className={`${styles.carouselArrow} ${styles.next}`} onClick={nextSlide} aria-label="Next slide">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
-              </div>
-
-              <div className={styles.carouselDots}>
-                {posters.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`${styles.carouselDot} ${currentSlide === index ? styles.activeDot : ""}`}
-                    onClick={() => setCurrentSlide(index)}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.cardCol}>
-            <div className={styles.card}>
-              {!isRegistered ? (
-                <>
-                  <div className={styles.cardHeader}>
-                    <h2 className={styles.cardTitle}>Reserve Your Seat</h2>
-                    <p className={styles.cardSubtitle}>Webinar access link will be emailed to you</p>
-                  </div>
-
-                  <form className={styles.form} onSubmit={handleSubmit}>
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label} htmlFor="webinar-name">Full Name</label>
-                      <input
-                        id="webinar-name"
-                        type="text"
-                        className={styles.input}
-                        placeholder="John Doe"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label} htmlFor="webinar-email">Email Address</label>
-                      <input
-                        id="webinar-email"
-                        type="email"
-                        className={styles.input}
-                        placeholder="name@company.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    <button type="submit" className={styles.submitBtn}>
-                      Register Now
-                    </button>
-                  </form>
-                </>
-              ) : (
-                <div className={styles.successState}>
-                  <div className={styles.successIcon}>
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                  </div>
-                  <h2 className={styles.cardTitle}>You're Registered!</h2>
-                  <p className={styles.successSubtitle}>
-                    Thank you, {name}. We have sent your webinar calendar invite to <strong>{email}</strong>.
-                  </p>
-                  <Link href="/" className={styles.returnBtn}>
-                    Return to Home
-                  </Link>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
 
       {onScrollDown && (
         <div className={styles.scrollWrapper}>
-          <ScrollButton onClick={onScrollDown} />
+          <ScrollButton onClick={onScrollDown} darkText={false} />
         </div>
       )}
     </section>

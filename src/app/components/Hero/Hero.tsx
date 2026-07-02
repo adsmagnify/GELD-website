@@ -137,13 +137,13 @@ export default function Hero() {
       {/* Left Side: Title and Subtitle */}
       <div className={styles.heroLeft}>
         <h1 className={styles.title}>
-          We create bright
+          Steady <span className={styles.serifText}> Advice.</span>
           <span className={styles.subtitleRow}>
-            future for <span className={styles.serifText}> Banking</span>
+            Every Market 
           </span>
         </h1>
         <p className={styles.subtitle}>
-          Empowering financial institutions with innovation, trust, and seamless digital experiences.
+          We help your money find direction no matter what the market is doing.
         </p>
         <div className={styles.heroActions}>
           <Link href="/webinar" className={styles.primaryCta}>Attend Weekly Webinar</Link>

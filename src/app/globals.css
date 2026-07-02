@@ -83,6 +83,19 @@ a {
   padding: 0 40px;
   z-index: 100;
   pointer-events: none;
+  transition: padding 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+  .app-header-container {
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header-container {
+    padding: 0 16px;
+  }
 }
 
 .page-scroll-container {

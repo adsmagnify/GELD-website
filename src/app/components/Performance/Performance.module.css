@@ -1,32 +1,44 @@
-.section {
+.aboutSection {
   min-height: 100vh;
   width: 100%;
-  position: relative;
   background-color: var(--background-dark);
+  position: relative;
+  z-index: 20;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 60px 40px 16px 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0 40px;
+  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
 }
 
-.container {
-  max-width: 1200px;
+.statementWrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.aboutContainer {
+  max-width: 960px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin: auto 0;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
   opacity: 0;
-  transform: translateY(50px);
-  filter: blur(5px);
+  transform: translateY(30px);
+  filter: blur(4px);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
               transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
               filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.revealedContainer {
+.revealed .aboutContainer {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
@@ -37,7 +49,7 @@
   max-width: 1360px;
   display: flex;
   justify-content: flex-start;
-  margin-top: -15px;
+  margin-top: 50px;
   z-index: 10;
   opacity: 0;
   animation: fadeIn 1s ease 1s forwards;
@@ -49,37 +61,113 @@
   }
 }
 
-
-.heroSection {
-  display: flex;
-  flex-direction: column;
+.aboutBadge {
+  display: inline-flex;
   align-items: center;
-  text-align: center;
-  gap: 16px;
-  max-width: 650px;
-  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.badge {
-  background: rgba(206, 149, 58, 0.15);
-  color: #FEFE7B;
-  border: 1px solid rgba(206, 149, 58, 0.2);
-  padding: 6px 14px;
-  border-radius: 9999px;
+.aboutBadgeText {
+  font-family: monospace;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-top:60px;
+  letter-spacing: 3px;
+  color: #FEFE7B;
 }
 
-.title {
-  font-size: 44px;
+.aboutText {
+  font-size: 38px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: -0.8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.fadeText {
+  color: rgba(255, 255, 255, 0.25);
+  transition: color 1.2s ease;
+}
+
+.serifItalic {
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.25);
+  transition: color 1.2s ease;
+}
+
+.highlightText {
+  font-weight: 700;
+  display: inline;
+  color: rgba(255, 255, 255, 0.15);
+  transition: color 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+
+.revealed .serifItalic,
+.revealed .fadeText {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.revealed .highlightText {
+  color: #FEFE7B;
+}
+
+/* Graphical Performance Dashboard styling */
+.dashboardContainer {
+  width: 100%;
+  max-width: 1280px;
+  margin: -100px auto 80px auto;
+  display: flex;
+  gap: 40px;
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(4px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  box-sizing: border-box;
+}
+
+.revealed .dashboardContainer {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Left side: Custom Interactive Chart */
+.chartBlock {
+  flex: 1.2;
+  background: rgba(20, 20, 20, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(212, 175, 55, 0.15);
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.chartHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chartTitle {
+  font-size: 26px;
   font-weight: 700;
   color: #ffffff;
-  line-height: 1.15;
-  letter-spacing: -1.5px;
-  margin-top: 60px;
+  letter-spacing: -0.5px;
 }
 
 .goldText {
@@ -88,293 +176,312 @@
   -webkit-text-fill-color: transparent;
 }
 
-.subtitle {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.55);
+.periodTabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tabBtn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.tabBtn:hover {
+  background: rgba(212, 175, 55, 0.05);
+  color: #FEFE7B;
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.tabBtnActive {
+  background: linear-gradient(135deg, #FEFE7B 0%, #CE953A 100%);
+  border-color: transparent;
+  color: #0c0d12;
+  box-shadow: 0 4px 15px rgba(206, 149, 58, 0.3);
+  font-weight: 700;
+}
+
+.chartCanvas {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.barRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.barLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.barTrack {
+  width: 100%;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+  border-radius: 6px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  min-width: 45px;
+  box-sizing: border-box;
+}
+
+.strategyBar {
+  background: linear-gradient(90deg, #CE953A 0%, #FEFE7B 100%);
+  box-shadow: 0 4px 15px rgba(206, 149, 58, 0.2);
+}
+
+.benchmarkBar {
+  background: rgba(255, 255, 255, 0.08);
+  border-right: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.negativeBar {
+  background: rgba(239, 68, 68, 0.12);
+  border-right: 2px solid rgba(239, 68, 68, 0.55);
+}
+
+.barValue {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.strategyBar .barValue {
+  color: #0c0d12;
+}
+
+.chartNote {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.4;
+}
+
+/* Right side: Growth & Volatility Cards Grid */
+.metricsBlock {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.metricsTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.metricCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.metricCard:hover {
+  border-color: rgba(212, 175, 55, 0.25);
+  background: rgba(212, 175, 55, 0.03);
+  transform: translateY(-2px);
+}
+
+.metricVal {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FEFE7B;
+  letter-spacing: -0.5px;
+}
+
+.metricLbl {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+/* Compliance Data Table Section */
+.tableSection {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto 80px auto;
+  box-sizing: border-box;
+}
+
+.tableTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: rgba(10, 10, 10, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+  min-width: 600px;
+}
+
+.table th, .table td {
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.table th {
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.table td {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tableHighlight {
+  color: #FEFE7B !important;
+  font-weight: 700;
+}
+
+/* SEBI details Section */
+.sebiSection {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto 100px auto;
+  padding-top: 50px;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  box-sizing: border-box;
+}
+
+.sebiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.sebiBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.5);
   line-height: 1.6;
 }
 
-.grid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-  width: 100%;
-}
-
-.chartCard {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 24px;
-  width: 100%;
-  max-width: 640px;
-  box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.revealedContainer .chartCard {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.chartHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  padding-bottom: 24px;
-}
-
-.tabs {
-  display: flex;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 4px;
-  gap: 4px;
-}
-
-.tab {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  outline: none;
-}
-
-.activeTab {
-  background: rgba(206, 149, 58, 0.15);
-  border: 1px solid rgba(206, 149, 58, 0.25);
-  color: #FEFE7B;
-}
-
-.timeframeTabs {
-  display: flex;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 9999px;
-  padding: 3px;
-  gap: 2px;
-}
-
-.tTab {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  outline: none;
-}
-
-.activeTTab {
-  background: #ffffff;
-  color: #02040b;
-}
-
-.chartWrapper {
-  width: 100%;
-  aspect-ratio: 3.6/1;
-  display: flex;
-  align-items: stretch;
-}
-
-.chartSvg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.chartValText {
-  font-size: 5px;
-  font-family: monospace;
+.sebiBlock h4 {
+  font-size: 12.5px;
   font-weight: 700;
-  fill: #FEFE7B;
-}
-
-.chartLabelText {
-  font-size: 4.5px;
-  font-family: monospace;
-  font-weight: 600;
-  fill: rgba(255, 255, 255, 0.4);
-}
-
-.statsCard {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 16px;
-  width: 100%;
-  max-width: 640px;
-}
-
-.statBox {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex: 1;
-  gap: 12px;
-  align-items: center;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: border-color 0.3s ease,
-              opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.revealedContainer .statBox {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.statBox:hover {
-  border-color: rgba(206, 149, 58, 0.2);
-}
-
-.statIcon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: rgba(206, 149, 58, 0.1);
-  border: 1px solid rgba(206, 149, 58, 0.2);
   color: #FEFE7B;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.statIcon svg {
-  width: 18px !important;
-  height: 18px !important;
-}
-
-.statTitle {
-  font-size: 9px;
-  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: rgba(255, 255, 255, 0.45);
-  margin-bottom: 2px;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
 }
 
-.statValue {
-  font-size: 15px;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 2px;
+.disclaimerText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 24px;
 }
 
-.statMeta {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-@media (max-width: 900px) {
-  .section {
-    padding: 60px 24px;
-  }
-  .grid {
-    gap: 24px;
-  }
-  .statsCard {
+/* Responsive configurations */
+@media (max-width: 1024px) {
+  .dashboardContainer {
     flex-direction: column;
-  }
-  .title {
-    font-size: 40px;
-  }
-  .chartCard {
-    padding: 24px;
-  }
-}
-
-@media (max-width: 600px) {
-  .chartHeader {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .tabs, .timeframeTabs {
-    width: 100%;
-  }
-  .tab, .tTab {
-    flex: 1;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .title {
-    font-size: 32px;
-    letter-spacing: -1px;
-  }
-}
-
-@media (max-height: 850px) {
-  .section {
-    padding: 60px 40px 30px 40px;
-  }
-  .container {
     gap: 30px;
   }
-  .grid {
-    gap: 20px;
-  }
-  .chartCard {
-    padding: 24px;
-    gap: 20px;
-  }
-  .chartHeader {
-    padding-bottom: 16px;
-  }
-  .statBox {
-    padding: 16px 20px;
-    gap: 16px;
-  }
-  .statValue {
-    font-size: 18px;
-    margin-bottom: 2px;
-  }
-  .title {
-    font-size: 42px;
-  }
-  .subtitle {
-    font-size: 14px;
+  .sebiGrid {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 }
 
+@media (max-width: 768px) {
+  .aboutSection {
+    padding: 0 24px;
+  }
+  .aboutText {
+    font-size: 26px;
+    line-height: 1.5;
+    letter-spacing: -0.4px;
+  }
+  .aboutBadge {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+  .dashboardContainer {
+    margin-top: -60px;
+  }
+  .chartBlock {
+    padding: 24px;
+  }
+  .chartTitle {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 580px) {
+  .periodTabs {
+    gap: 6px;
+  }
+  .tabBtn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}
