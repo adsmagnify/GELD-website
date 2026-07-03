@@ -8,6 +8,7 @@ import Footer from "./components/Footer/Footer";
 import About from "./components/About/About";
 import HomeProducts from "./components/HomeProducts/HomeProducts";
 import Stats from "./components/Stats/Stats";
+import Webinar from "./components/Webinar/Webinar";
 import Testimonials from "./components/Testimonials/Testimonials";
 import Contact from "./components/Contact/Contact";
 
@@ -15,6 +16,7 @@ export default function Home() {
   const aboutRef = useRef<HTMLElement>(null);
   const productsRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
+  const webinarRef = useRef<HTMLElement>(null);
   const testimonialsRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
 
@@ -45,8 +47,12 @@ export default function Home() {
       </div>
 
       {/* Stats Section */}
-      <div id="stats">
-        <Stats ref={statsRef} isGoldenBg onScrollDown={() => scrollTo(testimonialsRef)} />
+      <div id="stats" className={styles.fullSection}>
+        <Stats ref={statsRef} isGoldenBg onScrollDown={() => scrollTo(webinarRef)} />
+      </div>
+
+      <div id="webinar">
+        <Webinar ref={webinarRef} onScrollDown={() => scrollTo(testimonialsRef)} />
       </div>
 
       {/* Testimonials Section */}

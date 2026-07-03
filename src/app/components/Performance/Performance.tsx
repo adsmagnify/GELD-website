@@ -255,11 +255,11 @@ export default function Performance({ ref, onScrollDown }: PerformanceProps) {
       {/* 4. SEBI Regulatory & Fund Manager details */}
       <div className={styles.sebiSection}>
         <div className={styles.sebiGrid}>
-          <div className={styles.sebiBlock}>
+          {/* <div className={styles.sebiBlock}>
             <h4>Fund Manager Details</h4>
             <p><strong>Manager:</strong> Mr. Shailesh Saraf</p>
             <p>Managing Director - Dynamic Equities Pvt Limited. Certification on Value Investing from Columbia University. Over 25 Years of institutional market experience.</p>
-          </div>
+          </div> */}
           <div className={styles.sebiBlock}>
             <h4>Registered Address</h4>
             <p><strong>Dynamic Equities Pvt. Ltd</strong></p>

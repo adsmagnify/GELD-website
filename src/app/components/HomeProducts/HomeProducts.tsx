@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./HomeProducts.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
-import { catalogProducts, featuredCatalogProducts } from "../../data/catalogProducts";
+import ProductChargesNote from "../ProductChargesNote/ProductChargesNote";
+import { catalogProducts, featuredCatalogProducts, MINI_STOCK_PORTFOLIOS_NAME } from "../../data/catalogProducts";
 
 interface HomeProductsProps {
   ref?: React.RefObject<HTMLElement | null>;
@@ -19,7 +20,7 @@ const productMeta: Record<
     tagline: "Disciplined SIP wealth building for every earner",
     tierLabel: "Entry",
   },
-  IAP: {
+  [MINI_STOCK_PORTFOLIOS_NAME]: {
     tagline: "Expert stock portfolios from India's finest managers",
     tierLabel: "Growth",
   },
@@ -181,6 +182,8 @@ export default function HomeProducts({ ref, onScrollDown }: HomeProductsProps) {
             ))}
           </div>
         </div>
+
+        <ProductChargesNote />
       </div>
 
       {onScrollDown && (

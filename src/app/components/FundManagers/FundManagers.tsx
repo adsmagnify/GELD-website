@@ -44,7 +44,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       company: "Motilal Oswal (MOSL)",
       specialty: "Value Investing",
       bio: "Co-founder of MOSL and pioneer of the QGLP investing framework.",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&h=256&q=80",
+      avatar: "/ramdeoagrawal1.jpg",
       linkedin: "https://www.linkedin.com/in/raamdeo-agrawal-38600b12/"
     },
     {
@@ -53,7 +53,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       company: "Motilal Oswal (MOSL)",
       specialty: "Derivatives Desk",
       bio: "Renowned derivatives strategist and momentum research lead.",
-      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&h=256&q=80",
+      avatar: "/chandantaparia.jpg",
       linkedin: "https://www.linkedin.com/in/chandan-taparia-b7001438/"
     },
     {
@@ -62,7 +62,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       company: "Dynamic Equities",
       specialty: "Multi-Asset PMS",
       bio: "Creator of algorithmic allocation and capital indexing models.",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80",
+      avatar: "/ShaileshSaraf.jpg",
       linkedin: "https://www.linkedin.com/in/sailesh-saraf-57a66914"
     },
     {
@@ -71,7 +71,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       company: "Abakkus Asset Manager",
       specialty: "Equity Alpha",
       bio: "Celebrated fund manager with multi-billion dollar track records.",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&h=256&q=80",
+      avatar: "/Sunil Singhania.jpg",
       linkedin: "https://www.linkedin.com/in/sunilsinghania/"
     },
     {
@@ -80,7 +80,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       company: "Renaissance Investment",
       specialty: "Growth Portfolios",
       bio: "Over 25 years of institutional equity management experience.",
-      avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=256&h=256&q=80",
+      avatar: "/Pankaj Murarka.jpg",
       linkedin: "https://www.linkedin.com/in/pankaj-murarka-60a63110"
     },
     {
@@ -89,7 +89,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       company: "Narnolia",
       specialty: "Quantitative PMS",
       bio: "Architect of advanced absolute return models and indexes.",
-      avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&h=256&q=80",
+      avatar: "/Shailendra Kumar.jpg",
       linkedin: "https://www.linkedin.com/in/shailendra-kumar-9b16124"
     },
     {
@@ -98,7 +98,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       company: "Carnelian Advisors",
       specialty: "Thematic Equity",
       bio: "Former CEO of Edelweiss Securities, managing thematic alpha.",
-      avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&h=256&q=80",
+      avatar: "/Vikas Khemani.jpeg",
       linkedin: "https://www.linkedin.com/in/vikaskhemani/"
     },
     {
@@ -107,7 +107,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       company: "Wealth Co",
       specialty: "Private Wealth",
       bio: "Crafts customized estate structures and private capital vaults.",
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&h=256&q=80",
+      avatar: "/Madhu Runawat.jpg",
       linkedin: "https://www.linkedin.com/in/madhu-runawat-9014164b"
     }
   ];

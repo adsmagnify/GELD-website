@@ -9,6 +9,8 @@ export type CatalogProduct = {
   bullets: string[];
 };
 
+export const MINI_STOCK_PORTFOLIOS_NAME = "Mini stock portfolios (Professionally managed)";
+
 export const catalogProducts: CatalogProduct[] = [
   {
     name: "Mutual Funds",
@@ -24,7 +26,7 @@ export const catalogProducts: CatalogProduct[] = [
     ],
   },
   {
-    name: "IAP",
+    name: MINI_STOCK_PORTFOLIOS_NAME,
     slug: "iap",
     iconType: "crown",
     badge: "Lumpsum Investment",

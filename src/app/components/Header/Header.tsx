@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
+import { MINI_STOCK_PORTFOLIOS_NAME } from "../../data/catalogProducts";
 
 export default function Header() {
   const pathname = usePathname();
@@ -150,7 +151,7 @@ export default function Header() {
             </svg>
           </Link>
           <div className={styles.navDropdown}>
-            <Link href="/products/iap" className={styles.navDropdownItem}>IAP (Intelligent Advisory Portfolio)</Link>
+            <Link href="/products/iap" className={styles.navDropdownItem}>{MINI_STOCK_PORTFOLIOS_NAME}</Link>
             <Link href="/products/pms" className={styles.navDropdownItem}>PMS (Portfolio Management Services)</Link>
             <Link href="/products/aif" className={styles.navDropdownItem}>AIF (Alternative Investment Fund)</Link>
             <Link href="/products/mutual-funds" className={styles.navDropdownItem}>Mutual Funds</Link>
@@ -252,7 +253,7 @@ export default function Header() {
               Products
             </Link>
             <div className={styles.mobileSublinks}>
-              <Link href="/products/iap" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>IAP</Link>
+              <Link href="/products/iap" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>{MINI_STOCK_PORTFOLIOS_NAME}</Link>
               <Link href="/products/pms" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>PMS</Link>
               <Link href="/products/aif" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>AIF</Link>
               <Link href="/products/mutual-funds" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>Mutual Funds</Link>

@@ -1,0 +1,40 @@
+.note {
+  width: 100%;
+  padding: 24px 28px;
+  border-radius: 18px;
+  border: 1px solid rgba(206, 149, 58, 0.22);
+  background: linear-gradient(
+    135deg,
+    rgba(206, 149, 58, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.label {
+  margin: 0 0 10px;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #ce953a;
+}
+
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 920px;
+}
+
+@media (max-width: 768px) {
+  .note {
+    padding: 20px 18px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
+}

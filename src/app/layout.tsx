@@ -3,6 +3,7 @@ import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header";
 import SiteFooter from "./components/SiteFooter/SiteFooter";
+import SocialRail from "./components/SocialRail/SocialRail";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
           <div className="app-header-container">
             <Header />
           </div>
+          <SocialRail />
           <div className="page-scroll-container">
             {children}
             <SiteFooter />

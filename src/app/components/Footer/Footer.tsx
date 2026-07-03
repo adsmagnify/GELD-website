@@ -5,6 +5,12 @@ interface FooterProps {
   onScrollClick: () => void;
 }
 
+const advisorAvatars = [
+  { name: "Raamdeo Agrawal", photo: "/ramdeoagrawal1.jpg" },
+  { name: "Sunil Singhania", photo: "/Sunil Singhania.jpg" },
+  { name: "Pankaj Murarka", photo: "/Pankaj Murarka.jpg" },
+];
+
 export default function Footer({ onScrollClick }: FooterProps) {
   return (
     <footer className={styles.footer}>
@@ -28,15 +34,11 @@ export default function Footer({ onScrollClick }: FooterProps) {
       <div className={styles.advisorBadge}>
         <span className={styles.advisorText}>Meet with 10+ financial advisors</span>
         <div className={styles.avatarsGroup}>
-          <div className={styles.avatar}>
-            <img src="/avatar1.svg" alt="Advisor 1" className={styles.avatarImage} />
-          </div>
-          <div className={styles.avatar}>
-            <img src="/avatar2.svg" alt="Advisor 2" className={styles.avatarImage} />
-          </div>
-          <div className={styles.avatar}>
-            <img src="/avatar3.svg" alt="Advisor 3" className={styles.avatarImage} />
-          </div>
+          {advisorAvatars.map((advisor) => (
+            <div key={advisor.name} className={styles.avatar}>
+              <img src={advisor.photo} alt={advisor.name} className={styles.avatarImage} />
+            </div>
+          ))}
         </div>
         <span className={styles.advisorLabel}>Finance experts</span>
       </div>

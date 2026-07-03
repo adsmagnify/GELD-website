@@ -1,319 +1,434 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./Hero.module.css";
+import {
+  HERO_CAGR_3Y,
+  HERO_INCEPTION_RETURN,
+  HERO_STRATEGY_NAME,
+  heroIndexSeries,
+  heroPerformanceSeries,
+} from "../../data/performanceData";
+
+const CHART_WIDTH = 314;
+const CHART_HEIGHT = 48;
+const DRAW_DURATION_MS = 2400;
+const LOOP_DURATION_MS = 5200;
+
+function easeInOutCubic(t: number) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function buildChartPoints(
+  values: number[],
+  labels: readonly { label: string }[],
+  min: number,
+  max: number
+) {
+  const range = max - min || 1;
+
+  return values.map((value, idx) => {
+    const x = (idx / (values.length - 1)) * CHART_WIDTH;
+    const rawY = CHART_HEIGHT - 4 - ((value - min) / range) * (CHART_HEIGHT - 8);
+    const y = Math.max(2, Math.min(CHART_HEIGHT - 2, rawY));
+    return { x, y, value, label: labels[idx].label };
+  });
+}
+
+function buildBezierPath(points: { x: number; y: number }[]) {
+  let path = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i - 1];
+    const curr = points[i];
+    const cp1x = prev.x + (curr.x - prev.x) / 2;
+    path += ` C ${cp1x} ${prev.y}, ${cp1x} ${curr.y}, ${curr.x} ${curr.y}`;
+  }
+  return path;
+}
 
 export default function Hero() {
-  const [prices, setPrices] = useState(() => 
-    Array.from({ length: 30 }, (_, i) => {
-      const base = 8000 + (7000 * i) / 29;
-      const wave = Math.sin((i / 29) * Math.PI * 2.5) * 800;
-      const noise = Math.sin(i * 1.5) * 200;
-      return Math.round(base + wave + noise);
-    })
-  );
-  
-  const [activeIndex, setActiveIndex] = useState(29); // Default to the latest price (Day 30)
-  const [isSparklineRevealed, setIsSparklineRevealed] = useState(false);
+  const pathRef = useRef<SVGPathElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isHoveredRef = useRef(false);
+  const prefersReducedMotionRef = useRef(false);
+  const drawReadyRef = useRef(false);
+  const drawStartRef = useRef<number | null>(null);
+  const [pathLength, setPathLength] = useState(0);
+  const [drawProgress, setDrawProgress] = useState(0);
+  const [travelPhase, setTravelPhase] = useState(0);
+  const [loopPoint, setLoopPoint] = useState({ x: 0, y: CHART_HEIGHT, index: 0 });
+  const [activeIndex, setActiveIndex] = useState(heroPerformanceSeries.length - 1);
   const [isHovered, setIsHovered] = useState(false);
+  const [headPoint, setHeadPoint] = useState({ x: 0, y: CHART_HEIGHT });
 
-  // Persistent market regime tracker (bear panic, recovery crawl, bull run, stagnant consolidation)
-  const marketState = useRef({
-    regime: "recovery",
-    duration: 20,
-    drift: 0.004
-  });
+  const portfolioReturns = heroPerformanceSeries.map((point) => point.return);
+  const indexReturns = heroIndexSeries.map((point) => point.return);
+  const chartMin = Math.min(...portfolioReturns, ...indexReturns);
+  const chartMax = Math.max(...portfolioReturns, ...indexReturns);
+
+  const points = buildChartPoints(portfolioReturns, heroPerformanceSeries, chartMin, chartMax);
+  const indexPoints = buildChartPoints(indexReturns, heroIndexSeries, chartMin, chartMax);
+  const bezierPath = buildBezierPath(points);
+  const indexBezierPath = buildBezierPath(indexPoints);
+  const areaPath = `${bezierPath} L ${CHART_WIDTH} ${CHART_HEIGHT} L 0 ${CHART_HEIGHT} Z`;
+  const activePoint = points[activeIndex];
+  const activeIndexPoint = indexPoints[activeIndex];
+  const strokeOffset = pathLength * (1 - drawProgress);
+  const showInteractive = drawProgress >= 1;
+  const isLooping = showInteractive && !isHovered && !prefersReducedMotionRef.current;
+  const loopIndex = loopPoint.index;
+  const idlePoint = points[loopIndex];
+  const idleIndexPoint = indexPoints[loopIndex];
+  const displayPoint = showInteractive
+    ? isHovered
+      ? activePoint
+      : idlePoint
+    : headPoint;
+  const displayIndexPoint = showInteractive
+    ? isHovered
+      ? activeIndexPoint
+      : idleIndexPoint
+    : indexPoints[0];
+
+  const formatReturn = (value: number) =>
+    `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`;
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSparklineRevealed(true);
-    }, 3400); // 1.2s delay + 2.2s duration
-    return () => clearTimeout(timer);
+    prefersReducedMotionRef.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotionRef.current) {
+      drawReadyRef.current = true;
+    }
   }, []);
 
-  // Live stock market ticker simulation (continuous scrolling with regime switching)
   useEffect(() => {
-    if (isHovered || !isSparklineRevealed) return;
-    
-    const interval = setInterval(() => {
-      setPrices((prevPrices) => {
-        const lastPrice = prevPrices[prevPrices.length - 1];
-        
-        // Update market regime state machine
-        const current = marketState.current;
-        current.duration--;
-        if (current.duration <= 0) {
-          const regimes = ["bear", "recovery", "bull", "stagnant"];
-          const newRegime = regimes[Math.floor(Math.random() * regimes.length)];
-          current.regime = newRegime;
-          
-          if (newRegime === "bear") {
-            current.duration = Math.floor(Math.random() * 8) + 4; // 4 to 12 ticks
-            current.drift = -0.015 - Math.random() * 0.02; // -1.5% to -3.5% per tick (sharp drops)
-          } else if (newRegime === "recovery") {
-            current.duration = Math.floor(Math.random() * 20) + 15; // 15 to 35 ticks
-            current.drift = 0.002 + Math.random() * 0.004; // +0.2% to +0.6% per tick (slow climb)
-          } else if (newRegime === "bull") {
-            current.duration = Math.floor(Math.random() * 15) + 8; // 8 to 23 ticks
-            current.drift = 0.01 + Math.random() * 0.015; // +1.0% to +2.5% per tick (rapid runs)
-          } else { // stagnant
-            current.duration = Math.floor(Math.random() * 25) + 15; // 15 to 40 ticks
-            current.drift = 0; // flat consolidation
-          }
+    const card = cardRef.current;
+    if (!card || prefersReducedMotionRef.current) return;
+
+    const beginDraw = () => {
+      drawReadyRef.current = true;
+    };
+
+    const onAnimStart = (event: AnimationEvent) => {
+      if (event.animationName === "fadeInUp") beginDraw();
+    };
+
+    card.addEventListener("animationstart", onAnimStart);
+
+    requestAnimationFrame(() => {
+      if (card.getAnimations().length > 0) beginDraw();
+    });
+
+    return () => card.removeEventListener("animationstart", onAnimStart);
+  }, []);
+
+  useEffect(() => {
+    const path = pathRef.current;
+    if (!path) return;
+    const length = path.getTotalLength();
+    setPathLength(length);
+    const start = path.getPointAtLength(0);
+    setHeadPoint({ x: start.x, y: start.y });
+  }, [bezierPath]);
+
+  useEffect(() => {
+    if (!pathLength) return;
+
+    let frameId = 0;
+    let loopAnchor: number | null = null;
+
+    const tick = (now: number) => {
+      if (!drawReadyRef.current) {
+        frameId = requestAnimationFrame(tick);
+        return;
+      }
+
+      if (drawStartRef.current === null) {
+        drawStartRef.current = now;
+      }
+
+      const elapsed = now - drawStartRef.current;
+      const path = pathRef.current;
+
+      if (elapsed < DRAW_DURATION_MS) {
+        const rawProgress = elapsed / DRAW_DURATION_MS;
+        const eased = easeInOutCubic(rawProgress);
+        setDrawProgress(eased);
+
+        if (path) {
+          const point = path.getPointAtLength(pathLength * eased);
+          setHeadPoint({ x: point.x, y: point.y });
         }
+      } else {
+        setDrawProgress(1);
 
-        // Apply drift + random noise
-        const noise = (Math.random() - 0.5) * (current.regime === "stagnant" ? 0.0015 : 0.006);
-        const change = current.drift + noise;
-        const nextPrice = Math.max(1000, Math.round(lastPrice * (1 + change)));
-        
-        // Shift prices to the left continuously (creates smooth scroll effect)
-        return [...prevPrices.slice(1), nextPrice];
-      });
-    }, 150);
+        if (!prefersReducedMotionRef.current && !isHoveredRef.current && path) {
+          if (loopAnchor === null) loopAnchor = now;
 
-    return () => clearInterval(interval);
-  }, [isHovered, isSparklineRevealed]);
+          const loopElapsed = (now - loopAnchor) % LOOP_DURATION_MS;
+          const phase = loopElapsed / LOOP_DURATION_MS;
+          setTravelPhase(phase);
 
-  // If not hovered, always highlight the latest price
+          const lengthAt = pathLength * phase;
+          const point = path.getPointAtLength(lengthAt);
+          const index = Math.max(
+            0,
+            Math.min(points.length - 1, Math.round(phase * (points.length - 1)))
+          );
+          setLoopPoint({ x: point.x, y: point.y, index });
+        }
+      }
+
+      frameId = requestAnimationFrame(tick);
+    };
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, [pathLength, points.length]);
+
   useEffect(() => {
     if (!isHovered) {
-      setActiveIndex(29);
+      setActiveIndex(heroPerformanceSeries.length - 1);
     }
-  }, [isHovered, prices]);
+  }, [isHovered]);
 
-  // Calculate coordinates dynamically (auto-scaling based on the 30-day window)
-  const minPrice = Math.min(...prices) * 0.95;
-  const maxPrice = Math.max(...prices) * 1.05;
-  const priceRange = maxPrice - minPrice || 1;
-  const xCoords = Array.from({ length: 30 }, (_, i) => (i / 29) * 314);
-  const days = Array.from({ length: 30 }, (_, i) => `Day ${i + 1} status`);
-
-  const points = prices.map((price, idx) => {
-    // scale y coordinate to be between 2 and 45
-    const rawY = 45 - ((price - minPrice) / priceRange) * 40;
-    const y = Math.max(2, Math.min(45, rawY)); // Clamp to keep inside SVG bounds
-    return {
-      day: days[idx],
-      valueString: `$${price.toLocaleString()}`,
-      x: xCoords[idx],
-      y
-    };
-  });
-
-  // Calculate dynamic bezier path strings
-  let bezierPath = `M ${points[0].x} ${points[0].y}`;
-  for (let i = 1; i < points.length; i++) {
-    const pPrev = points[i - 1];
-    const pCurr = points[i];
-    const cp1x = pPrev.x + (pCurr.x - pPrev.x) / 2;
-    const cp1y = pPrev.y;
-    const cp2x = pPrev.x + (pCurr.x - pPrev.x) / 2;
-    const cp2y = pCurr.y;
-    bezierPath += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${pCurr.x} ${pCurr.y}`;
-  }
-  const areaPath = `${bezierPath} L 314 48 L 0 48 Z`;
-
-  // Calculate percentage change for the badge
-  const startPrice = prices[0];
-  const currentPrice = prices[29];
-  const percentageChange = ((currentPrice - startPrice) / startPrice) * 100;
-  const isPositive = percentageChange >= 0;
-  const badgeText = `${isPositive ? "+" : ""}${percentageChange.toFixed(0)}%`;
-
-  // Handle interactive hover positioning on the SVG
   const handleMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    if (!showInteractive) return;
+
     const svg = e.currentTarget;
     const rect = svg.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
-    const percentage = mouseX / rect.width;
-    const index = Math.max(0, Math.min(29, Math.round(percentage * 29)));
+    const ratio = mouseX / rect.width;
+    const index = Math.max(
+      0,
+      Math.min(points.length - 1, Math.round(ratio * (points.length - 1)))
+    );
     setActiveIndex(index);
   };
 
   return (
     <main className={styles.hero}>
-      {/* Left Side: Title and Subtitle */}
       <div className={styles.heroLeft}>
         <h1 className={styles.title}>
           Steady <span className={styles.serifText}> Advice.</span>
-          <span className={styles.subtitleRow}>
-            Every Market 
-          </span>
+          <span className={styles.subtitleRow}>Every Market</span>
         </h1>
         <p className={styles.subtitle}>
           We help your money find direction no matter what the market is doing.
         </p>
         <div className={styles.heroActions}>
-          <Link href="/webinar" className={styles.primaryCta}>Attend Weekly Webinar</Link>
+          <Link href="/webinar" className={styles.primaryCta}>
+            Attend Weekly Webinar
+          </Link>
           <div className={styles.divider}></div>
-          <a href="#" className={styles.secondaryCta}>Learn more</a>
+          <a href="#" className={styles.secondaryCta}>
+            Learn more
+          </a>
         </div>
       </div>
 
-      {/* Right Side: Glassmorphism Revenue Widget */}
       <div className={styles.heroRight}>
-        <div 
+        <div
+          ref={cardRef}
           className={styles.card}
-          onMouseEnter={() => setIsHovered(true)}
+          onMouseEnter={() => {
+            isHoveredRef.current = true;
+            setIsHovered(true);
+          }}
           onMouseLeave={() => {
+            isHoveredRef.current = false;
             setIsHovered(false);
-            setActiveIndex(29);
+            setActiveIndex(heroPerformanceSeries.length - 1);
           }}
         >
           <div className={styles.cardHeader}>
             <div className={styles.cardTitle}>
               <span className={styles.trendIcon}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M23 6L13.5 15.5L8.5 10.5L1 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M17 6H23V12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path
+                    d="M23 6L13.5 15.5L8.5 10.5L1 18"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M17 6H23V12"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </span>
-              <span>Revenue</span>
+              <span>Performance</span>
             </div>
-            <div className={styles.cardMenu}>
-              <svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="2" cy="2" r="2" fill="currentColor" />
-                <circle cx="9" cy="2" r="2" fill="currentColor" />
-                <circle cx="16" cy="2" r="2" fill="currentColor" />
+            <Link href="/performance" className={styles.performanceLink}>
+              Full report
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
-            </div>
+            </Link>
           </div>
 
           <div className={styles.cardBody}>
             <div className={styles.valueRow}>
-              <span className={styles.cardValue}>{points[activeIndex].valueString}</span>
-              <span className={styles.cardSubvalue}>{points[activeIndex].day}</span>
+              <span className={styles.cardValue}>{HERO_CAGR_3Y.toFixed(2)}%</span>
+              <span className={styles.cardSubvalue}>3 Year CAGR</span>
             </div>
+            <p className={styles.strategyName}>{HERO_STRATEGY_NAME}</p>
 
-            {/* Elegant SVG Sparkline to make card feel premium */}
             <div className={styles.sparkline}>
-              <svg 
-                width="100%" 
-                height="100%" 
-                viewBox="0 0 314 48" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg" 
+              <svg
+                width="100%"
+                height="100%"
+                viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
                 onMouseMove={handleMouseMove}
-                style={{ cursor: "crosshair" }}
+                style={{ cursor: showInteractive ? "crosshair" : "default" }}
               >
                 <defs>
                   <linearGradient id="sparklineGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(10, 6, 2, 0.25)" />
-                    <stop offset="100%" stopColor="rgba(10, 6, 2, 0.0)" />
-                  </linearGradient>
-                  
-                  {/* Seamless flowing gradient for the line stroke */}
-                  <linearGradient id="sparklineLineGrad" x1="0" y1="0" x2="314" y2="0" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#0a0602" />
-                    <stop offset="50%" stopColor="#2c1a08" />
-                    <stop offset="100%" stopColor="#0a0602" />
-                    <animateTransform
-                      attributeName="gradientTransform"
-                      type="translate"
-                      values="0; -314"
-                      dur="5s"
-                      repeatCount="indefinite"
-                    />
+                    <stop offset="0%" stopColor="rgba(10, 6, 2, 0.2)" />
+                    <stop offset="100%" stopColor="rgba(10, 6, 2, 0)" />
                   </linearGradient>
 
-                  <clipPath id="sparklineClip">
-                    <rect x="0" y="0" width="0" height="48">
-                      <animate
-                        attributeName="width"
-                        from="0"
-                        to="314"
-                        dur="2.2s"
-                        begin="1.2s"
-                        fill="freeze"
-                        calcMode="spline"
-                        keySplines="0.25 1 0.5 1"
-                      />
-                    </rect>
+                  <linearGradient id="lineShimmer" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
+                    <stop offset="50%" stopColor="rgba(255, 255, 255, 0.85)" />
+                    <stop offset="100%" stopColor="rgba(255, 255, 255, 0)" />
+                  </linearGradient>
+
+                  <clipPath id="chartRevealClip">
+                    <rect x="0" y="0" width={CHART_WIDTH * drawProgress} height={CHART_HEIGHT} rx="4" />
                   </clipPath>
                 </defs>
 
-                {/* Wrap sparkline elements in a clipped group that moves upward on load */}
-                <g clipPath="url(#sparklineClip)">
-                  <g>
-                    <animateTransform
-                      attributeName="transform"
-                      type="translate"
-                      from="0 15"
-                      to="0 0"
-                      dur="2.2s"
-                      begin="1.2s"
-                      fill="freeze"
-                      calcMode="spline"
-                      keySplines="0.25 1 0.5 1"
-                    />
-                    
-                    {/* Gradient area fill */}
-                    <path
-                      className={styles.sparklineArea}
-                      d={areaPath}
-                      fill="url(#sparklineGrad)"
-                    />
+                <g clipPath="url(#chartRevealClip)">
+                  <path
+                    className={styles.sparklineArea}
+                    d={areaPath}
+                    fill="url(#sparklineGrad)"
+                    style={{ opacity: 0.2 + drawProgress * 0.75 }}
+                  />
 
-                    {/* Dotted Guide Line */}
-                    <line
-                      x1={points[activeIndex].x}
-                      y1="0"
-                      x2={points[activeIndex].x}
-                      y2="48"
-                      className={styles.guideLine}
-                      opacity={isSparklineRevealed ? 1 : 0}
-                    />
+                  <path
+                    className={styles.sparklineIndexPath}
+                    d={indexBezierPath}
+                  />
 
-                    {/* Flowing animated line */}
+                  <path
+                    ref={pathRef}
+                    className={styles.sparklinePath}
+                    d={bezierPath}
+                    stroke="#0a0602"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    strokeDasharray={pathLength || undefined}
+                    strokeDashoffset={strokeOffset}
+                  />
+
+                  {showInteractive && pathLength > 0 && (
                     <path
-                      className={styles.sparklinePath}
+                      className={styles.sparklineShimmer}
                       d={bezierPath}
-                      stroke="url(#sparklineLineGrad)"
-                      strokeWidth="2.5"
+                      stroke="url(#lineShimmer)"
+                      strokeWidth="3"
                       strokeLinecap="round"
+                      fill="none"
+                      strokeDasharray={`${pathLength * 0.14} ${pathLength * 0.86}`}
+                      strokeDashoffset={-travelPhase * pathLength}
+                      style={{ opacity: isLooping ? 0.75 : 0 }}
                     />
-
-                    {/* Glowing indicator dot */}
-                    <circle
-                      cx={points[activeIndex].x}
-                      cy={points[activeIndex].y}
-                      r="5"
-                      className={styles.sparklineDot}
-                      opacity={isSparklineRevealed ? 1 : 0}
-                    />
-                  </g>
+                  )}
                 </g>
+
+                {showInteractive && isHovered && (
+                  <line
+                    x1={activePoint.x}
+                    y1="0"
+                    x2={activePoint.x}
+                    y2={CHART_HEIGHT}
+                    className={styles.guideLine}
+                  />
+                )}
+
+                {points.map((point, idx) => {
+                  const nodeThreshold = idx / (points.length - 1);
+                  const isVisible = drawProgress >= nodeThreshold - 0.02;
+                  const isActive =
+                    showInteractive && (isHovered ? idx === activeIndex : idx === loopIndex);
+
+                  return (
+                    <circle
+                      key={point.label}
+                      cx={point.x}
+                      cy={point.y}
+                      r={isActive ? 4.5 : 2.5}
+                      className={styles.sparklineNode}
+                      style={{ opacity: isVisible ? (isActive ? 1 : 0.35) : 0 }}
+                    />
+                  );
+                })}
+
+                {isLooping && (
+                  <circle
+                    cx={displayPoint.x}
+                    cy={displayPoint.y}
+                    r="7"
+                    className={styles.sparklineDotRing}
+                  />
+                )}
+
+                <circle
+                  cx={displayPoint.x}
+                  cy={displayPoint.y}
+                  r="4"
+                  className={`${styles.sparklineDot} ${isLooping ? styles.sparklineDotPulse : ""}`}
+                  style={{ opacity: drawProgress > 0.02 ? 1 : 0 }}
+                />
+
+                <circle
+                  cx={displayIndexPoint.x}
+                  cy={displayIndexPoint.y}
+                  r="3"
+                  className={styles.sparklineIndexDot}
+                  style={{ opacity: drawProgress > 0.02 ? 0.9 : 0 }}
+                />
               </svg>
 
-              {/* Floating Tooltip Bubble */}
-              <div
-                className={styles.tooltip}
-                style={{
-                  left: `${(points[activeIndex].x / 314) * 100}%`,
-                  bottom: `${((48 - points[activeIndex].y) / 48) * 100 + 15}%`,
-                  opacity: isSparklineRevealed ? 1 : 0
-                }}
-              >
-                {points[activeIndex].valueString}
-              </div>
+              {showInteractive && isHovered && (
+                <div
+                  className={styles.tooltip}
+                  style={{
+                    left: `${(activePoint.x / CHART_WIDTH) * 100}%`,
+                    bottom: `${((CHART_HEIGHT - activePoint.y) / CHART_HEIGHT) * 100 + 18}%`,
+                  }}
+                >
+                  {`${activePoint.label}: ${formatReturn(activePoint.value)} · Index ${formatReturn(activeIndexPoint.value)}`}
+                </div>
+              )}
             </div>
           </div>
 
           <div className={styles.cardFooter}>
-            <span 
-              className={styles.badge} 
-              style={{
-                backgroundColor: isPositive ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)",
-                color: isPositive ? "#10b981" : "#ef4444",
-                boxShadow: isPositive ? "0 4px 12px rgba(16, 185, 129, 0.15)" : "0 4px 12px rgba(239, 68, 68, 0.15)"
-              }}
-            >
-              {badgeText}
-            </span>
-            <span className={styles.changeText}>Since previous 30 days</span>
+            <span className={styles.badge}>+{HERO_INCEPTION_RETURN.toFixed(2)}%</span>
+            <Link href="/performance" className={styles.changeText}>
+              Since inception →
+            </Link>
           </div>
         </div>
       </div>

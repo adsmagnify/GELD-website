@@ -51,16 +51,20 @@
 
 .topRow {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 32px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
 }
 
 .headerCopy {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 14px;
-  max-width: 620px;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .badge {
@@ -102,7 +106,7 @@
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.5);
   margin: 0;
-  max-width: 520px;
+  max-width: 560px;
 }
 
 .catalogLink {
@@ -402,6 +406,7 @@
 .moreRow {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
   padding-top: 8px;
@@ -460,8 +465,7 @@
 
 @media (max-width: 960px) {
   .topRow {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .ladderNodes {
@@ -502,6 +506,11 @@
 
   .moreRow {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
+  }
+
+  .moreLinks {
+    justify-content: center;
   }
 }

@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import styles from "./Products.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
-import { catalogProducts } from "../../data/catalogProducts";
+import ProductChargesNote from "../ProductChargesNote/ProductChargesNote";
+import { catalogProducts, MINI_STOCK_PORTFOLIOS_NAME } from "../../data/catalogProducts";
 
 interface ProductsProps {
   mode?: "catalog" | "detail" | "all";
@@ -14,12 +15,13 @@ interface ProductsProps {
   [key: string]: any;
 }
 
-type ProductType = "IAP" | "PMS" | "AIF" | "Mutual Funds";
+const PRODUCT_TYPES = [MINI_STOCK_PORTFOLIOS_NAME, "PMS", "AIF", "Mutual Funds"] as const;
+type ProductType = (typeof PRODUCT_TYPES)[number];
 
 export default function Products({ mode = "all", defaultProduct, ref, onScrollDown }: ProductsProps) {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
-  const [activeProduct, setActiveProduct] = useState<ProductType>(defaultProduct || "IAP");
+  const [activeProduct, setActiveProduct] = useState<ProductType>(defaultProduct || MINI_STOCK_PORTFOLIOS_NAME);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   const fallbackRef = useRef<HTMLElement>(null);
@@ -38,8 +40,10 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
   // Sync active product from legacy query params if applicable
   useEffect(() => {
     if (selectParam) {
-      const matched = ["IAP", "PMS", "AIF", "Mutual Funds"].find(
-        (p) => p.toLowerCase() === selectParam.toLowerCase()
+      const matched = PRODUCT_TYPES.find(
+        (p) =>
+          p.toLowerCase() === selectParam.toLowerCase() ||
+          (selectParam.toLowerCase() === "iap" && p === MINI_STOCK_PORTFOLIOS_NAME)
       );
       if (matched) {
         setActiveProduct(matched as ProductType);
@@ -74,10 +78,10 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
     
     if (mode === "detail" || mode === "catalog") {
       const slugMap: Record<ProductType, string> = {
-        "IAP": "iap",
-        "PMS": "pms",
-        "AIF": "aif",
-        "Mutual Funds": "mutual-funds"
+        [MINI_STOCK_PORTFOLIOS_NAME]: "iap",
+        PMS: "pms",
+        AIF: "aif",
+        "Mutual Funds": "mutual-funds",
       };
       router.push(`/products/${slugMap[prod]}`);
     } else {
@@ -86,15 +90,28 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
     }
   };
 
-  const productData = {
-    IAP: {
+  const productData: Record<
+    ProductType,
+    {
+      title: string;
+      subtitle: string;
+      paragraph: string;
+      badge: string;
+      primaryCta: string;
+      secondaryCta: string;
+      anchorId: string;
+    }
+  > = {
+    [MINI_STOCK_PORTFOLIOS_NAME]: {
       title: "High Returns, Low Stress",
-      subtitle: "IAP: India's Top Fund Managers, Known For Buffett-Like Returns",
-      paragraph: "Starting at just ₹2 lakhs, your money is invested in a focused portfolio of 20-30 Best stocks—giving you expert management without the hassle of doing it yourself.",
-      badge: "Intelligent Advisory Portfolio",
-      primaryCta: "Start My IAP Journey",
+      subtitle:
+        "Mini stock portfolios: India's Top Fund Managers, Known For Buffett-Like Returns",
+      paragraph:
+        "Starting at just ₹2 lakhs, your money is invested in a focused portfolio of 20-30 Best stocks—giving you expert management without the hassle of doing it yourself.",
+      badge: MINI_STOCK_PORTFOLIOS_NAME,
+      primaryCta: "Start My Portfolio Journey",
       secondaryCta: "Review My Portfolio Today",
-      anchorId: "iap-section"
+      anchorId: "mini-stock-portfolios-section",
     },
     PMS: {
       title: "Why Settle For Average When You Can Have The Best?",
@@ -171,7 +188,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
 
               {isDropdownOpen && (
                 <ul className={styles.dropdownMenu} role="listbox" aria-labelledby="product-dropdown-trigger">
-                  {(["IAP", "PMS", "AIF", "Mutual Funds"] as ProductType[]).map((prod) => (
+                  {PRODUCT_TYPES.map((prod) => (
                     <li 
                       key={prod} 
                       className={`${styles.dropdownItem} ${activeProduct === prod ? styles.dropdownItemActive : ""}`}
@@ -209,7 +226,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
             </div>
 
             <div className={styles.explorerRight}>
-              {activeProduct === "IAP" && (
+              {activeProduct === MINI_STOCK_PORTFOLIOS_NAME && (
                 /* Three-manager overlapping stack layout with AMC logos */
                 <div className={styles.managerStack}>
                   <div className={styles.stackMember} style={{ transform: "translateY(0) scale(1)", zIndex: 3 }}>
@@ -372,6 +389,8 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
               </article>
             ))}
           </div>
+
+          <ProductChargesNote />
         </div>
       )}
 

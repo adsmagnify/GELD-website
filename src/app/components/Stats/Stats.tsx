@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./Stats.module.css";
@@ -12,10 +12,51 @@ interface StatsProps {
 }
 
 const slides = [
-  { value: 39, decimals: 0, prefix: "", suffix: "Years", label: "Combined market experience leading our advisory" },
+  { value: 39, decimals: 0, prefix: "", suffix: " Years", label: "Combined market experience leading our advisory" },
   { value: 2500, decimals: 0, prefix: "", suffix: "+", label: "Investors guided across India" },
   { value: 100, decimals: 0, prefix: "", suffix: "%", label: "Regulator compliant" }
 ];
+
+const ARC_CX = 500;
+const ARC_CY = 390;
+
+const ARC_RX = 430;
+const ARC_RY = 330;
+const SEGMENT_GAP = 0.07;
+
+function getArcPoint(angle: number) {
+  return {
+    x: ARC_CX + ARC_RX * Math.cos(angle),
+    y: ARC_CY - ARC_RY * Math.sin(angle),
+  };
+}
+
+function getArcSegmentPath(startAngle: number, endAngle: number) {
+  const start = getArcPoint(startAngle);
+  const end = getArcPoint(endAngle);
+  return `M ${start.x.toFixed(1)} ${start.y.toFixed(1)} A ${ARC_RX} ${ARC_RY} 0 0 1 ${end.x.toFixed(1)} ${end.y.toFixed(1)}`;
+}
+
+const ARCH_BOUNDARIES = [Math.PI, (2 * Math.PI) / 3, Math.PI / 3, 0];
+
+const SEGMENT_RANGES: [number, number][] = [
+  [ARCH_BOUNDARIES[0] + SEGMENT_GAP, ARCH_BOUNDARIES[1] - SEGMENT_GAP],
+  [ARCH_BOUNDARIES[1] + SEGMENT_GAP, ARCH_BOUNDARIES[2] - SEGMENT_GAP],
+  [ARCH_BOUNDARIES[2] + SEGMENT_GAP, ARCH_BOUNDARIES[3] - SEGMENT_GAP],
+];
+
+const SEGMENT_CENTERS = SEGMENT_RANGES.map(([start, end]) => (start + end) / 2);
+const SEGMENT_HALF_WIDTH = (SEGMENT_RANGES[0][1] - SEGMENT_RANGES[0][0]) / 2;
+
+const ARCH_SEGMENT_PATHS = SEGMENT_RANGES.map(([start, end]) =>
+  getArcSegmentPath(start, end)
+);
+
+function getHighlightPath(center: number) {
+  return getArcSegmentPath(center - SEGMENT_HALF_WIDTH, center + SEGMENT_HALF_WIDTH);
+}
+
+const HIGHLIGHT_SLIDE_MS = 550;
 
 interface Particle {
   id: number;
@@ -38,6 +79,9 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [animatedValue, setAnimatedValue] = useState(0);
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [highlightCenter, setHighlightCenter] = useState(SEGMENT_CENTERS[0]);
+  const highlightCenterRef = useRef(SEGMENT_CENTERS[0]);
+  const highlightAnimRef = useRef<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,6 +98,42 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
       if (current) observer.unobserve(current);
     };
   }, [activeRef]);
+
+  // Slide highlight along the arc when the active stat changes
+  useEffect(() => {
+    const targetCenter = SEGMENT_CENTERS[currentSlide];
+    const fromCenter = highlightCenterRef.current;
+    const startTime = performance.now();
+
+    if (highlightAnimRef.current !== null) {
+      cancelAnimationFrame(highlightAnimRef.current);
+    }
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / HIGHLIGHT_SLIDE_MS, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const nextCenter = fromCenter + (targetCenter - fromCenter) * eased;
+
+      highlightCenterRef.current = nextCenter;
+      setHighlightCenter(nextCenter);
+
+      if (progress < 1) {
+        highlightAnimRef.current = requestAnimationFrame(tick);
+      } else {
+        highlightCenterRef.current = targetCenter;
+        setHighlightCenter(targetCenter);
+        highlightAnimRef.current = null;
+      }
+    };
+
+    highlightAnimRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (highlightAnimRef.current !== null) {
+        cancelAnimationFrame(highlightAnimRef.current);
+      }
+    };
+  }, [currentSlide]);
 
   // Count-up animation
   useEffect(() => {
@@ -129,7 +209,7 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     return () => clearInterval(timer);
   }, [currentSlide, triggerTransition, isVisible]);
 
-  const handleDotClick = (index: number) => {
+  const handleSegmentClick = (index: number) => {
     if (isTransitioning || index === currentSlide) return;
     setCurrentSlide(index);
     triggerTransition(index);
@@ -142,32 +222,52 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     <section ref={activeRef as any} className={`${styles.section} ${isGoldenBg ? styles.goldenBg : ""}`}>
       {!isGoldenBg && <Background />}
       <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
-        
-        {/* Header Pill */}
-        <div className={styles.pillHeader}>
-          <div className={styles.pill}>THE NUMBERS SPEAK</div>
-          <div className={styles.dashedLine}></div>
-        </div>
+        <div className={styles.statsStage}>
+          <div className={styles.pillHeader}>
+            <div className={styles.pill}>THE NUMBERS SPEAK</div>
+            <div className={styles.dashedLine}></div>
+          </div>
 
-        {/* Arch & Numbers Wrapper */}
-        <div className={styles.archWrapper}>
-          {/* Dotted Arch SVG */}
-          <svg className={styles.archSvg} viewBox="0 0 1000 500" fill="none">
-            <path 
-              d="M 100 480 A 400 380 0 0 1 900 480" 
-              className={styles.archPath}
-              stroke="rgba(206, 149, 58, 0.45)" 
-              strokeWidth="1.5" 
-              strokeDasharray="6 8" 
+          <div className={styles.archWrapper}>
+          <svg className={styles.archSvg} viewBox="0 0 1000 420" 
+          preserveAspectRatio="xMidYMid meet"
+          fill="none" aria-label="Stat navigation">
+            <defs>
+              <linearGradient id="archSegmentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#FEFE7B" />
+                <stop offset="100%" stopColor="#CE953A" />
+              </linearGradient>
+            </defs>
+
+            {ARCH_SEGMENT_PATHS.map((d, i) => (
+              <g
+                key={i}
+                className={styles.archSegmentGroup}
+                onClick={() => handleSegmentClick(i)}
+                aria-label={`Show stat ${i + 1}`}
+              >
+                <path d={d} className={styles.archSegmentHit} />
+                <path d={d} className={styles.archSegment} />
+              </g>
+            ))}
+
+            <path
+              d={getHighlightPath(highlightCenter)}
+              className={styles.archHighlight}
+              pointerEvents="none"
             />
           </svg>
 
           {/* Slide Text Content */}
           <div className={styles.contentViewport}>
             <div 
-              className={`${styles.slideContent} ${
-                isTransitioning ? styles.exiting : styles.entering
-              }`}
+               className={styles.slideContent}
+    style={{
+        position: "absolute",
+        left: "50%",
+        top: "52%",
+        transform: "translate(-50%, -50%)"
+    }}
             >
               <div className={styles.valueWrapper}>
                 <div className={styles.value}>{formattedNumber}</div>
@@ -191,18 +291,7 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
               <div className={styles.label}>{currentSlideData.label}</div>
             </div>
           </div>
-        </div>
-
-        {/* Carousel Indicator Dots */}
-        <div className={styles.dots}>
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              className={`${styles.dot} ${displaySlide === i ? styles.activeDot : ""}`}
-              onClick={() => handleDotClick(i)}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
+          </div>
         </div>
       </div>
 
