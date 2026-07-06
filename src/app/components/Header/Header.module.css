@@ -334,11 +334,36 @@
 
 @media (max-width: 768px) {
   .header {
-    height: 80px;
+    height: 64px;
+    margin-top: 20px;
+  }
+
+  .logoG {
+    height: 32px;
+    margin-top: -4px;
+    margin-right: -2px;
+  }
+
+  .logoText {
+    height: 26px;
+    width: auto;
   }
 }
 
 @media (max-width: 500px) {
+  .header {
+    height: 56px;
+    margin-top: 16px;
+  }
+
+  .logoG {
+    height: 28px;
+  }
+
+  .logoText {
+    height: 22px;
+  }
+
   .contactBtn {
     display: none; /* Hide on mobile to avoid header overflow */
   }

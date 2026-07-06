@@ -915,7 +915,7 @@
 .detailModeView {
   min-height: 100vh;
   min-height: 100dvh;
-  justify-content: flex-start;
+  justify-content: center;
   margin-bottom: 0;
   padding: 180px 0 100px 0;
 }

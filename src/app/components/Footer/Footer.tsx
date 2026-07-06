@@ -4,6 +4,7 @@ import styles from "./Footer.module.css";
 
 interface FooterProps {
   onScrollClick: () => void;
+  centerScroll?: boolean;
 }
 
 const advisorAvatars = [
@@ -12,9 +13,9 @@ const advisorAvatars = [
   { name: "Pankaj Murarka", photo: "/Pankaj Murarka.jpg" },
 ];
 
-export default function Footer({ onScrollClick }: FooterProps) {
+export default function Footer({ onScrollClick, centerScroll = false }: FooterProps) {
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} ${centerScroll ? styles.footerCentered : ""}`}>
       {/* Scroll Indicator */}
       <div 
         className={styles.scroll} 

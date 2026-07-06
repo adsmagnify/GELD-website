@@ -114,6 +114,18 @@
   padding-right: 14px;
 }
 
+.footerCentered {
+  justify-content: center;
+  position: relative;
+}
+
+.footerCentered .advisorBadge {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -132,7 +144,19 @@
     height: auto;
     padding: 20px 0 40px 0;
     align-items: center;
+    justify-content: center;
   }
+
+  .scroll {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footerCentered .advisorBadge {
+    position: static;
+    transform: none;
+  }
+
   .advisorBadge {
     padding: 5px 6px 5px 16px;
     gap: 12px;

@@ -116,6 +116,7 @@ export default function Header() {
             width={45}
             height={45}
             priority
+            sizes="(max-width: 768px) 32px, 45px"
           />
           <Image
             src="/geld_logo_text.png"
@@ -124,6 +125,7 @@ export default function Header() {
             width={140}
             height={38}
             priority
+            sizes="(max-width: 768px) 100px, 140px"
           />
         </div>
       </Link>

@@ -101,7 +101,7 @@ export default function Hero() {
     ).matches;
     isMobileRef.current = window.matchMedia("(max-width: 768px)").matches;
 
-    if (prefersReducedMotionRef.current || isMobileRef.current) {
+    if (prefersReducedMotionRef.current) {
       drawReadyRef.current = true;
       setDrawProgress(1);
     }
@@ -141,9 +141,8 @@ export default function Hero() {
     if (!pathLength) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const mobile = window.matchMedia("(max-width: 768px)").matches;
 
-    if (reduced || mobile) {
+    if (reduced) {
       setDrawProgress(1);
       const path = pathRef.current;
       if (path) {

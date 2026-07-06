@@ -219,7 +219,7 @@ export default function Webinar({ ref, onScrollDown, isSubpage }: WebinarProps) 
       </div>
 
       {onScrollDown && (
-        <div className={styles.scrollWrapper}>
+        <div className={`${styles.scrollWrapper} scrollWrapperCentered`}>
           <ScrollButton onClick={onScrollDown} darkText={false} />
         </div>
       )}

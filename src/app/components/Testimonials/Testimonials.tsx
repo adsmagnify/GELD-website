@@ -298,7 +298,7 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
       </div>
 
       {onScrollDown && (
-        <div className={styles.scrollWrapper}>
+        <div className={`${styles.scrollWrapper} scrollWrapperCentered`}>
           <ScrollButton onClick={onScrollDown} />
         </div>
       )}

@@ -32,7 +32,7 @@ export default function Home() {
 
       <div id="hero" className={styles.wrapper}>
         <Hero />
-        <Footer onScrollClick={() => scrollTo(aboutRef)} />
+        <Footer onScrollClick={() => scrollTo(aboutRef)} centerScroll />
       </div>
 
       <div id="about" className="deferredSection">

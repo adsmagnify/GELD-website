@@ -307,7 +307,7 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
       </div>
 
       {onScrollDown && (
-        <div className={styles.scrollWrapper}>
+        <div className={`${styles.scrollWrapper} scrollWrapperCentered`}>
           <ScrollButton onClick={onScrollDown} darkText={isGoldenBg} />
         </div>
       )}

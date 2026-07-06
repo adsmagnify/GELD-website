@@ -57,7 +57,7 @@ export default function About({ ref, onScrollDown }: AboutProps) {
       </div>
 
       {onScrollDown && (
-        <div className={styles.scrollWrapper}>
+        <div className={`${styles.scrollWrapper} scrollWrapperCentered`}>
           <ScrollButton onClick={onScrollDown} darkText={true} />
         </div>
       )}
