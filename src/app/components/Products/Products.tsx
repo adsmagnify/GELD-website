@@ -235,54 +235,37 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
 
             <div className={styles.explorerRight}>
               {activeProduct === MINI_STOCK_PORTFOLIOS_NAME && (
-                /* Three-manager overlapping stack layout with AMC logos */
-                <div className={styles.managerStack}>
-                  <div className={styles.stackMember} style={{ transform: "translateY(0) scale(1)", zIndex: 3 }}>
-                    <Image src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} width={120} height={120} loading="lazy" />
-                    <div className={styles.stackBadge}>BUOYANT</div>
+                /* High-end structured asset-class grid cards representation for IAP */
+                <div className={styles.aifAssetGrid}>
+                  <div className={`${styles.assetBlock} ${styles.goldGlow}`}>
+                    <span className={styles.blockVal}>₹2 Lakhs+</span>
+                    <span className={styles.blockLbl}>Minimum Ticket</span>
                   </div>
-                  <div className={styles.stackMember} style={{ transform: "translate(-50px, 40px) scale(0.95)", zIndex: 2 }}>
-                    <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} width={120} height={120} loading="lazy" />
-                    <div className={styles.stackBadge}>ALFACCURATE</div>
+                  <div className={styles.assetBlock}>
+                    <span className={styles.blockVal}>20-30</span>
+                    <span className={styles.blockLbl}>Curated Best Stocks</span>
                   </div>
-                  <div className={styles.stackMember} style={{ transform: "translate(50px, 60px) scale(0.9)", zIndex: 1 }}>
-                    <Image src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} width={120} height={120} loading="lazy" />
-                    <div className={styles.stackBadge}>RENAISSANCE</div>
-                  </div>
-                  <div className={styles.whatsappConnect} onClick={goToContact} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && goToContact()}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm5.835-3.32c1.62.962 3.197 1.47 4.757 1.47 5.293 0 9.593-4.299 9.596-9.591.002-2.561-1.002-4.971-2.81-6.78-1.808-1.808-4.218-2.81-6.784-2.812-5.282 0-9.585 4.301-9.588 9.594-.001 1.706.467 3.328 1.399 4.75L1.139 21.94l4.753-1.26z"/>
-                    </svg>
-                    <span>Connect Now</span>
+                  <div className={styles.assetBlock}>
+                    <span className={styles.blockVal}>Active</span>
+                    <span className={styles.blockLbl}>Expert Rebalancing</span>
                   </div>
                 </div>
               )}
 
               {activeProduct === "PMS" && (
-                /* Rotating AMC logos dial surrounding a central manager portrait */
-                <div className={styles.pmsDialContainer}>
-                  <div className={styles.centralPortraitWrapper}>
-                    <Image src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&h=256&q=80" alt="CIO Portrait" className={styles.centralPortraitImg} width={160} height={160} loading="lazy" />
+                /* High-end structured asset-class grid cards representation for PMS */
+                <div className={styles.aifAssetGrid}>
+                  <div className={`${styles.assetBlock} ${styles.goldGlow}`}>
+                    <span className={styles.blockVal}>₹50 Lakhs+</span>
+                    <span className={styles.blockLbl}>Minimum Ticket</span>
                   </div>
-                  
-                  {/* Orbital Rotating Ring */}
-                  <div className={styles.orbitalRing}>
-                    {amcPartners.map((name, i) => {
-                      const angle = (360 / amcPartners.length) * i;
-                      return (
-                        <div 
-                          key={name} 
-                          className={styles.orbitalBadgeWrapper}
-                          style={{
-                            transform: `rotate(${angle}deg) translate(115px)`
-                          }}
-                        >
-                          <div className={styles.orbitalBadgeInner}>
-                            {name.toUpperCase()}
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <div className={styles.assetBlock}>
+                    <span className={styles.blockVal}>Bespoke</span>
+                    <span className={styles.blockLbl}>Tailored Portfolios</span>
+                  </div>
+                  <div className={styles.assetBlock}>
+                    <span className={styles.blockVal}>Institutional</span>
+                    <span className={styles.blockLbl}>AMC Execution</span>
                   </div>
                 </div>
               )}

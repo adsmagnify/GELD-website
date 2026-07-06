@@ -206,7 +206,7 @@ export default function Header() {
 
       <div className={styles.headerActions}>
         <Link 
-          href="/#contact" 
+          href="/contact" 
           className={styles.contactBtn}
           onClick={(e) => {
             if (pathname === "/") {
@@ -311,7 +311,7 @@ export default function Header() {
             Docs(Privacy Policy)
           </Link>
           <Link
-            href="/#contact"
+            href="/contact"
             className={`${styles.mobileNavLink} ${styles.mobileContactLink}`}
             onClick={(e) => {
               setIsMobileMenuOpen(false);

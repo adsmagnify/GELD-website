@@ -73,7 +73,8 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       specialty: "Equity Alpha",
       bio: "Celebrated fund manager with multi-billion dollar track records.",
       avatar: "/Sunil Singhania.jpg",
-      linkedin: "https://www.linkedin.com/in/sunilsinghania/"
+      linkedin: "https://www.linkedin.com/in/sunilsinghania/",
+      objectPosition: "top"
     },
     {
       name: "Pankaj Murarka",
@@ -109,7 +110,8 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
       specialty: "Private Wealth",
       bio: "Crafts customized estate structures and private capital vaults.",
       avatar: "/Madhu Runawat.jpg",
-      linkedin: "https://www.linkedin.com/in/madhu-runawat-9014164b"
+      linkedin: "https://www.linkedin.com/in/madhu-runawat-9014164b",
+      objectPosition: "top"
     }
   ];
 
@@ -151,6 +153,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
                     width={88}
                     height={88}
                     loading="lazy"
+                    style={m.objectPosition ? { objectPosition: m.objectPosition } : undefined}
                   />
                   <div className={styles.avatarGlow}></div>
                 </div>

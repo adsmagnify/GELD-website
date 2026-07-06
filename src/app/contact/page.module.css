@@ -88,6 +88,9 @@
   align-items: stretch;
   gap: 28px;
   z-index: 2;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: slideInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .header {
@@ -236,4 +239,17 @@
   background-color: #f1f5f9;
   transform: translateY(-1px);
   box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }

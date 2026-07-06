@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./Footer.module.css";
 
 interface FooterProps {
@@ -33,7 +34,7 @@ export default function Footer({ onScrollClick, centerScroll = false }: FooterPr
       </div>
 
       {/* Advisors Bubble Stack */}
-      <div className={styles.advisorBadge}>
+      <Link href="/fund-managers" className={styles.advisorBadge}>
         <span className={styles.advisorText}>Meet with 10+ financial advisors</span>
         <div className={styles.avatarsGroup}>
           {advisorAvatars.map((advisor) => (
@@ -50,7 +51,7 @@ export default function Footer({ onScrollClick, centerScroll = false }: FooterPr
           ))}
         </div>
         <span className={styles.advisorLabel}>Finance experts</span>
-      </div>
+      </Link>
     </footer>
   );
 }

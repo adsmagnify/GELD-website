@@ -239,9 +239,9 @@ export default function Hero() {
             Attend Weekly Webinar
           </Link>
           <div className={styles.divider}></div>
-          <a href="#" className={styles.secondaryCta}>
+          <Link href="/products" className={styles.secondaryCta}>
             Learn more
-          </a>
+          </Link>
         </div>
       </div>
 

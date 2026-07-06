@@ -319,8 +319,13 @@
     padding: 6px 14px;
     font-size: 12px;
   }
+  .statementWrapper {
+    min-height: auto;
+    padding: 100px 0 40px 0;
+  }
   .cardsWrapper {
     padding: 0px 0 100px 0;
+    margin-top: 0;
   }
 }
 
