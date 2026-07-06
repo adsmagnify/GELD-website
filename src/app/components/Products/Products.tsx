@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import styles from "./Products.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
@@ -72,6 +73,8 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
       }
     };
   }, [activeRef]);
+
+  const goToContact = () => router.push("/contact");
 
   const selectProduct = (prod: ProductType) => {
     setIsDropdownOpen(false);
@@ -167,7 +170,8 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
 
       {/* 2. Interactive Product Explorer with Dropdown (Only shown in detail or all mode) */}
       {(mode === "all" || mode === "detail") && (
-        <div className={`${styles.explorerSection} ${mode === "detail" ? styles.detailModeView : ""}`} id="explorer-view">
+        <div className={`${styles.explorerSection} ${mode === "detail" ? styles.detailModeView : ""}`}
+        id="explorer-view">
           <div className={styles.explorerHeader}>
             <h3 className={styles.sectionTitle}>Explore Our <span className={styles.goldText}>Offerings</span></h3>
             
@@ -220,8 +224,12 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
               <p className={styles.productDesc}>{productData[activeProduct].paragraph}</p>
               
               <div className={styles.productActions}>
-                <button className={styles.primaryCtaBtn}>{productData[activeProduct].primaryCta}</button>
-                <button className={styles.secondaryCtaBtn}>{productData[activeProduct].secondaryCta}</button>
+                <button type="button" className={styles.primaryCtaBtn} onClick={goToContact}>
+                  {productData[activeProduct].primaryCta}
+                </button>
+                <button type="button" className={styles.secondaryCtaBtn} onClick={goToContact}>
+                  {productData[activeProduct].secondaryCta}
+                </button>
               </div>
             </div>
 
@@ -230,18 +238,18 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
                 /* Three-manager overlapping stack layout with AMC logos */
                 <div className={styles.managerStack}>
                   <div className={styles.stackMember} style={{ transform: "translateY(0) scale(1)", zIndex: 3 }}>
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} />
+                    <Image src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} width={120} height={120} loading="lazy" />
                     <div className={styles.stackBadge}>BUOYANT</div>
                   </div>
                   <div className={styles.stackMember} style={{ transform: "translate(-50px, 40px) scale(0.95)", zIndex: 2 }}>
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} />
+                    <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} width={120} height={120} loading="lazy" />
                     <div className={styles.stackBadge}>ALFACCURATE</div>
                   </div>
                   <div className={styles.stackMember} style={{ transform: "translate(50px, 60px) scale(0.9)", zIndex: 1 }}>
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} />
+                    <Image src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&h=256&q=80" alt="Manager" className={styles.stackImg} width={120} height={120} loading="lazy" />
                     <div className={styles.stackBadge}>RENAISSANCE</div>
                   </div>
-                  <div className={styles.whatsappConnect}>
+                  <div className={styles.whatsappConnect} onClick={goToContact} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && goToContact()}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm5.835-3.32c1.62.962 3.197 1.47 4.757 1.47 5.293 0 9.593-4.299 9.596-9.591.002-2.561-1.002-4.971-2.81-6.78-1.808-1.808-4.218-2.81-6.784-2.812-5.282 0-9.585 4.301-9.588 9.594-.001 1.706.467 3.328 1.399 4.75L1.139 21.94l4.753-1.26z"/>
                     </svg>
@@ -254,7 +262,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
                 /* Rotating AMC logos dial surrounding a central manager portrait */
                 <div className={styles.pmsDialContainer}>
                   <div className={styles.centralPortraitWrapper}>
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&h=256&q=80" alt="CIO Portrait" className={styles.centralPortraitImg} />
+                    <Image src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&h=256&q=80" alt="CIO Portrait" className={styles.centralPortraitImg} width={160} height={160} loading="lazy" />
                   </div>
                   
                   {/* Orbital Rotating Ring */}
@@ -311,7 +319,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
           {/* Bottom call strip */}
           <div className={styles.callStrip}>
             <span className={styles.callText}>Call Our Wealth Managers Now!</span>
-            <button className={styles.callBtn} onClick={() => window.open("tel:+919999999999")}>
+            <button type="button" className={styles.callBtn} onClick={goToContact}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className={styles.phoneIcon}>
                 <path d="M20 22.622l-8-5.32c-3.197-2.128-5.457-4.457-7.585-7.585l-5.32-8h5.604c.966 0 1.75.79 1.75 1.764v2.476c0 .966-.784 1.75-1.75 1.75h-.622c.962 1.62 1.47 3.197 1.47 4.757 0 5.293 4.299 9.593 9.591 9.596v-.622c0-.966.784-1.75 1.75-1.75h2.476c.966 0 1.75.784 1.75 1.75v5.604z"/>
               </svg>

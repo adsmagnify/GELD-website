@@ -5,6 +5,9 @@
   --accent-gold-hover: #FEFE7B;
   --accent-gold-dark: #9C7924;
   --accent-gold-glow: rgba(254, 254, 123, 0.25);
+  --bp-desktop: 1024px;
+  --bp-tablet: 768px;
+  --bp-mobile: 480px;
   
   --font-sans-fallback: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-serif-fallback: Georgia, Cambria, "Times New Roman", Times, serif;
@@ -18,6 +21,21 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 html,
@@ -70,6 +88,7 @@ a {
 .app-layout-root {
   position: relative;
   height: 100vh;
+  height: 100dvh;
   width: 100%;
   overflow: hidden;
 }
@@ -105,6 +124,13 @@ a {
   overflow-x: hidden;
   position: relative;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+.deferredSection {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100dvh;
 }
 
 

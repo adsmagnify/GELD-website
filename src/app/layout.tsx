@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import SiteFooter from "./components/SiteFooter/SiteFooter";
 import SocialRail from "./components/SocialRail/SocialRail";
 
@@ -18,8 +19,14 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Cirform — We create bright future for Banking",
-  description: "Empowering financial institutions with innovation, trust, and seamless digital experiences.",
+  title: "GELD Wealth — Precision instruments for capital expansion",
+  description: "Empowering investors with expert portfolio management, alternative funds, and tailored wealth strategies.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#030303",
 };
 
 export default function RootLayout({
@@ -36,6 +43,7 @@ export default function RootLayout({
           </div>
           <SocialRail />
           <div className="page-scroll-container">
+            <ScrollToTop />
             {children}
             <SiteFooter />
           </div>

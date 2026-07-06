@@ -513,7 +513,53 @@
   .cornerMetricTopRight,
   .cornerMetricBottomLeft,
   .cornerMetricBottomRight,
-  .tickerTape {
+  .tickerTape,
+  .orbitalsContainer,
+  .harmonicWavesContainer,
+  .liquidityParticle {
     display: none;
+  }
+
+  .grid3d,
+  .gridOverlay {
+    opacity: 0.35;
+  }
+}
+
+@media (max-width: 768px) {
+  .glowBg {
+    height: 100dvh;
+    perspective: none;
+  }
+
+  .glowLine1,
+  .glowLine2,
+  .glowLine3,
+  .glowLine4 {
+    opacity: 0.35;
+    animation: none !important;
+  }
+
+  .grid3d,
+  .gridOverlay,
+  .orbitalsContainer,
+  .harmonicWavesContainer,
+  .liquidityParticle,
+  .tickerTape {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid3d,
+  .tickerTrack,
+  .orbitalsSvg,
+  .harmonicSvg,
+  .liquidityParticle,
+  .glowLine1,
+  .glowLine2,
+  .glowLine3,
+  .glowLine4 {
+    animation: none !important;
   }
 }

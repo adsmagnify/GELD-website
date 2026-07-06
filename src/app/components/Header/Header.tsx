@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
 import { MINI_STOCK_PORTFOLIOS_NAME } from "../../data/catalogProducts";
@@ -108,15 +109,21 @@ export default function Header() {
     <header className={`${styles.header} ${isHeaderDark ? styles.headerDark : ""} ${showHeader ? "" : styles.headerHidden} ${isMobileMenuOpen ? styles.headerMobileOpen : ""}`}>
       <Link href="/" className={styles.logoLink} onClick={() => setIsMobileMenuOpen(false)}>
         <div className={styles.logoWrapper}>
-          <img 
-            src="/geld_logo_g.png" 
-            alt="G" 
-            className={styles.logoG} 
+          <Image
+            src="/geld_logo_g.png"
+            alt="G"
+            className={styles.logoG}
+            width={45}
+            height={45}
+            priority
           />
-          <img 
-            src="/geld_logo_text.png" 
-            alt="ELD WEALTH" 
-            className={styles.logoText} 
+          <Image
+            src="/geld_logo_text.png"
+            alt="ELD WEALTH"
+            className={styles.logoText}
+            width={140}
+            height={38}
+            priority
           />
         </div>
       </Link>

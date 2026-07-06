@@ -1,5 +1,7 @@
-﻿.section {
-  min-height: 100vh;
+﻿/* .section {
+  height: 100vh;
+  height:100dvh;
+  scroll-snap-align: start;
   min-height: 100dvh;
   width: 100%;
   position: relative;
@@ -12,7 +14,25 @@
   padding: 0 40px;
   box-sizing: border-box;
   flex-shrink: 0;
+} */
+
+.section {
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  position: relative;
+  z-index: 20;
+  background-color: transparent;
+  display: grid;
+  /* place-items: center; */
+  padding: 0 40px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
+
 
 /* .container {
   position: relative;
@@ -60,8 +80,14 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-bottom:110px;
 }
 
+@media (max-width:768px){
+  .statsStage {
+    padding-bottom: 92px;
+  }
+}
 .revealedContainer {
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -72,7 +98,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 80px;
   margin-bottom: 0;
 }
 
@@ -86,12 +112,15 @@
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  margin-top:80px;
 }
 
 .dashedLine {
   width: 1px;
   height: 52px;
   border-left: 1.5px dashed rgba(255, 255, 255, 0.15);
+  margin-top: -50px;
+  margin-bottom: 10px;
 }
 
 /* .archWrapper {
@@ -107,7 +136,7 @@
   position: relative;
   width: 100%;
   max-width: 1400px;
-  height: 420px;
+  height: 430px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -230,7 +259,7 @@
 
   pointer-events: auto;
 
-  transform: translateY(-35px);
+  transform: translateY(50px);
 
   will-change: transform, opacity;
 }
@@ -354,16 +383,14 @@
 }
 
 .scrollWrapper {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+  position:relative;
   width: 100%;
   max-width: 1360px;
   display: flex;
   justify-content: flex-start;
-  padding: 0 40px;
-  box-sizing: border-box;
+  padding: 0 80px;
+  margin-top: -90px;
+  margin-bottom: 20px;
   z-index: 10;
   opacity: 0;
   animation: fadeIn 1s ease 1s forwards;
@@ -393,7 +420,7 @@
     font-size: 18px;
   }
   .archWrapper {
-    height: 220px;
+    height: 260px;
   }
   .contentViewport {
     inset: 0 0 18px 0;
@@ -403,6 +430,9 @@
   }
   .archHighlight {
     stroke-width: 3.5;
+  }
+  .slideContent {
+    transform:translate(18px);
   }
 }
 

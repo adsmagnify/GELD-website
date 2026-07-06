@@ -52,6 +52,7 @@ export default function Hero() {
   const cardRef = useRef<HTMLDivElement>(null);
   const isHoveredRef = useRef(false);
   const prefersReducedMotionRef = useRef(false);
+  const isMobileRef = useRef(false);
   const drawReadyRef = useRef(false);
   const drawStartRef = useRef<number | null>(null);
   const [pathLength, setPathLength] = useState(0);
@@ -98,9 +99,11 @@ export default function Hero() {
     prefersReducedMotionRef.current = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    isMobileRef.current = window.matchMedia("(max-width: 768px)").matches;
 
-    if (prefersReducedMotionRef.current) {
+    if (prefersReducedMotionRef.current || isMobileRef.current) {
       drawReadyRef.current = true;
+      setDrawProgress(1);
     }
   }, []);
 
@@ -137,6 +140,19 @@ export default function Hero() {
   useEffect(() => {
     if (!pathLength) return;
 
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mobile = window.matchMedia("(max-width: 768px)").matches;
+
+    if (reduced || mobile) {
+      setDrawProgress(1);
+      const path = pathRef.current;
+      if (path) {
+        const point = path.getPointAtLength(pathLength);
+        setHeadPoint({ x: point.x, y: point.y });
+      }
+      return;
+    }
+
     let frameId = 0;
     let loopAnchor: number | null = null;
 
@@ -165,7 +181,7 @@ export default function Hero() {
       } else {
         setDrawProgress(1);
 
-        if (!prefersReducedMotionRef.current && !isHoveredRef.current && path) {
+        if (!prefersReducedMotionRef.current && !isMobileRef.current && !isHoveredRef.current && path) {
           if (loopAnchor === null) loopAnchor = now;
 
           const loopElapsed = (now - loopAnchor) % LOOP_DURATION_MS;

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import styles from "./Footer.module.css";
 
 interface FooterProps {
@@ -36,7 +37,14 @@ export default function Footer({ onScrollClick }: FooterProps) {
         <div className={styles.avatarsGroup}>
           {advisorAvatars.map((advisor) => (
             <div key={advisor.name} className={styles.avatar}>
-              <img src={advisor.photo} alt={advisor.name} className={styles.avatarImage} />
+              <Image
+                src={advisor.photo}
+                alt={advisor.name}
+                className={styles.avatarImage}
+                width={40}
+                height={40}
+                loading="lazy"
+              />
             </div>
           ))}
         </div>

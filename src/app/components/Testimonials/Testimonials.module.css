@@ -325,6 +325,15 @@
   .next { right: 0; }
 }
 
+@media (max-width: 480px) {
+  .section { padding: 96px 16px 32px; }
+  .title { font-size: 28px; }
+  .stage { height: 460px; perspective: 900px; }
+  .card { width: 92vw; height: 440px; }
+  .body { padding: 20px; }
+  .quote { font-size: 16px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card,
   .cardInner,

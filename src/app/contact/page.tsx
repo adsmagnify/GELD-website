@@ -3,24 +3,38 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
-import Background from "../components/Background/Background";
+import { submitContactForm } from "../lib/submitContactForm";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      await submitContactForm({
+        name,
+        email,
+        message,
+        source: "contact-page",
+      });
+      setIsSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className={styles.container}>
-      {/* Dynamic gold-and-black particles and grids background */}
-      <Background />
-
       <div className={styles.wrapper}>
         <div className={styles.cardWrapper}>
           <div className={styles.card}>
@@ -72,9 +86,10 @@ export default function ContactPage() {
                 />
               </div>
 
-              <button type="submit" className={styles.submitBtn}>
-                Send Message
+              <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send Message"}
               </button>
+              {error && <p className={styles.errorText}>{error}</p>}
             </form>
           </>
         ) : (

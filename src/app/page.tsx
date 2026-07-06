@@ -1,16 +1,18 @@
 "use client";
 
 import React, { useRef } from "react";
+import dynamic from "next/dynamic";
 import styles from "./page.module.css";
 import Background from "./components/Background/Background";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer/Footer";
-import About from "./components/About/About";
-import HomeProducts from "./components/HomeProducts/HomeProducts";
-import Stats from "./components/Stats/Stats";
-import Webinar from "./components/Webinar/Webinar";
-import Testimonials from "./components/Testimonials/Testimonials";
-import Contact from "./components/Contact/Contact";
+
+const About = dynamic(() => import("./components/About/About"));
+const HomeProducts = dynamic(() => import("./components/HomeProducts/HomeProducts"));
+const Stats = dynamic(() => import("./components/Stats/Stats"));
+const Webinar = dynamic(() => import("./components/Webinar/Webinar"));
+const Testimonials = dynamic(() => import("./components/Testimonials/Testimonials"));
+const Contact = dynamic(() => import("./components/Contact/Contact"));
 
 export default function Home() {
   const aboutRef = useRef<HTMLElement>(null);
@@ -26,45 +28,37 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {/* Background & Grid Matrix */}
       <Background />
 
       <div id="hero" className={styles.wrapper}>
-        {/* Hero Landing */}
         <Hero />
-
-        {/* Scroll-down cue scrolls to the About section */}
         <Footer onScrollClick={() => scrollTo(aboutRef)} />
       </div>
 
-      {/* About appears after the hero on scroll */}
-      <div id="about">
+      <div id="about" className="deferredSection">
         <About ref={aboutRef} onScrollDown={() => scrollTo(productsRef)} />
       </div>
 
-      <div id="products">
+      <div id="products" className="deferredSection">
         <HomeProducts ref={productsRef} onScrollDown={() => scrollTo(statsRef)} />
       </div>
 
-      {/* Stats Section */}
-      <div id="stats" className={styles.fullSection}>
+      <div id="stats" className={`${styles.fullSection} deferredSection`}>
         <Stats ref={statsRef} isGoldenBg onScrollDown={() => scrollTo(webinarRef)} />
       </div>
 
-      <div id="webinar">
+      <div id="webinar" className="deferredSection">
         <Webinar ref={webinarRef} onScrollDown={() => scrollTo(testimonialsRef)} />
       </div>
 
-      {/* Testimonials Section */}
-      <div id="testimonials">
-        <Testimonials 
-          ref={testimonialsRef} 
-          onScrollDown={() => scrollTo(contactRef)} 
+      <div id="testimonials" className="deferredSection">
+        <Testimonials
+          ref={testimonialsRef}
+          onScrollDown={() => scrollTo(contactRef)}
         />
       </div>
 
-      {/* Contact Section */}
-      <div id="contact">
+      <div id="contact" className="deferredSection">
         <Contact ref={contactRef} />
       </div>
     </div>

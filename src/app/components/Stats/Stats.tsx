@@ -17,11 +17,15 @@ const slides = [
   { value: 100, decimals: 0, prefix: "", suffix: "%", label: "Regulator compliant" }
 ];
 
-const ARC_CX = 500;
-const ARC_CY = 390;
+// const ARC_CX = 500;
+// const ARC_CY = 390;
+// const ARC_RX = 430;
+// const ARC_RY = 330;
 
-const ARC_RX = 430;
-const ARC_RY = 330;
+const ARC_CX = 500;
+const ARC_CY = 380;
+const ARC_RX = 410;
+const ARC_RY = 370;
 const SEGMENT_GAP = 0.07;
 
 function getArcPoint(angle: number) {
@@ -164,9 +168,17 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     return () => cancelAnimationFrame(frameId);
   }, [displaySlide, isVisible]);
 
-  // Powder particles animation on slide transition - Constant and Slow
+  // Powder particles animation on slide transition - desktop only
   useEffect(() => {
     if (!isVisible) return;
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (isMobile || reducedMotion) {
+      setParticles([]);
+      return;
+    }
     
     // Generate subtle gold powder particles
     const count = 24;
@@ -229,7 +241,7 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
           </div>
 
           <div className={styles.archWrapper}>
-          <svg className={styles.archSvg} viewBox="0 0 1000 420" 
+          <svg className={styles.archSvg} viewBox="0 0 1000 400" 
           preserveAspectRatio="xMidYMid meet"
           fill="none" aria-label="Stat navigation">
             <defs>
@@ -260,15 +272,14 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
 
           {/* Slide Text Content */}
           <div className={styles.contentViewport}>
-            <div 
+            {/* <div 
                className={styles.slideContent}
-    style={{
-        position: "absolute",
-        left: "50%",
-        top: "52%",
-        transform: "translate(-50%, -50%)"
-    }}
-            >
+            > */}
+
+            <div
+  key={displaySlide}
+  className={`${styles.slideContent} ${isTransitioning ? styles.exiting : styles.entering}`}
+>
               <div className={styles.valueWrapper}>
                 <div className={styles.value}>{formattedNumber}</div>
                 {particles.map((p) => (

@@ -2,7 +2,7 @@
 
 import React, { useState, forwardRef, useEffect, useRef } from "react";
 import styles from "./Contact.module.css";
-import Background from "../Background/Background";
+import { submitContactForm } from "../../lib/submitContactForm";
 
 interface ContactProps {
   // Optional props
@@ -13,6 +13,8 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
   const fallbackRef = useRef<HTMLElement>(null);
@@ -40,14 +42,28 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
     };
   }, [activeRef]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      await submitContactForm({
+        name,
+        email,
+        message,
+        source: "home-page",
+      });
+      setIsSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section ref={ref} className={styles.section}>
-      <Background />
       <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
         <div className={styles.head}>
           <span className={styles.label}>GET IN TOUCH</span>
@@ -101,9 +117,10 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
                 />
               </div>
 
-              <button type="submit" className={styles.submitBtn}>
-                Send Message
+              <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send Message"}
               </button>
+              {error && <p className={styles.errorText}>{error}</p>}
             </form>
           ) : (
             <div className={styles.successState}>
@@ -120,6 +137,7 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
               <button 
                 onClick={() => {
                   setIsSubmitted(false);
+                  setError("");
                   setName("");
                   setEmail("");
                   setMessage("");

@@ -86,13 +86,16 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
   );
   const goTo = useCallback((i: number) => setActiveIndex(((i % n) + n) % n), [n]);
 
-  // Autoplay, paused on hover / drag / reduced-motion
+  // Autoplay, paused on hover / drag / reduced-motion / mobile
   useEffect(() => {
     if (!AUTOPLAY_MS) return;
     const reduced =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
+    const mobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 768px)").matches;
+    if (reduced || mobile) return;
     const id = window.setInterval(() => {
       if (!pausedRef.current) go(1);
     }, AUTOPLAY_MS);

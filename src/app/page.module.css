@@ -1,5 +1,6 @@
 .container {
   min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
   background-color: var(--background-dark);
   display: flex;
@@ -18,8 +19,28 @@
   margin: 0 auto;
   padding: 100px 40px 0 40px;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .wrapper {
+    padding: 88px 24px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 80px 16px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 72px 12px 0;
+  }
 }
 
 .blankSection {

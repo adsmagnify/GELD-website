@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import styles from "./FundManagers.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
 
@@ -143,7 +144,14 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
             {managers.map((m, idx) => (
               <div key={idx} className={styles.card} style={{ transitionDelay: `${idx * 80}ms` }}>
                 <div className={styles.avatarWrapper}>
-                  <img src={m.avatar} alt={m.name} className={styles.avatarImg} />
+                  <Image
+                    src={m.avatar}
+                    alt={m.name}
+                    className={styles.avatarImg}
+                    width={88}
+                    height={88}
+                    loading="lazy"
+                  />
                   <div className={styles.avatarGlow}></div>
                 </div>
                 

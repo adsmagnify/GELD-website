@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Suspense } from "react";
-import styles from "../page.module.css";
+import styles from "../../shared/subpageShell.module.css";
 import Background from "../../components/Background/Background";
 import Products from "../../components/Products/Products";
 
