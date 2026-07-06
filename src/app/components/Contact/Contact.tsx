@@ -66,11 +66,13 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
     <section ref={ref} className={styles.section}>
       <div className={`${styles.container} ${isVisible ? styles.revealedContainer : ""}`}>
         <div className={styles.head}>
-          <span className={styles.label}>GET IN TOUCH</span>
+          <div className={styles.badge}>
+            <span className={styles.badgeText}>Get In Touch</span>
+          </div>
           <h2 className={styles.title}>
             Let's build your <span className={styles.goldText}>financial future</span>
           </h2>
-          <p className={styles.subtitle}>
+          <p className={styles.subheading}>
             Our experts are ready to assist you. Fill out the form below.
           </p>
         </div>

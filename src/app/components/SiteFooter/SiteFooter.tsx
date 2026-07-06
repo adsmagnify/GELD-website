@@ -114,6 +114,17 @@ export default function SiteFooter() {
         <div className={styles.bottomContainer}>
           <p className={styles.copyright} suppressHydrationWarning>
             © {new Date().getFullYear()} GELD. All rights reserved.
+            {" | "}
+            Made by{" "}
+            <a 
+              href="https://adsmagnify.com/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={styles.adsmagnifyLink}
+            >
+              adsmagnify
+            </a> {" "}
+            <span style={{ color: "#e25555" }}>♥</span>
           </p>
           <div className={styles.bottomLinks}>
             <Link href="/docs">Terms of Service</Link>

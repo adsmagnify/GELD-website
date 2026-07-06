@@ -190,10 +190,15 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
     >
       <div className={styles.container}>
         <div className={styles.head}>
-          <span className={styles.label}>HEAR FROM OUR CLIENTS</span>
+          <div className={styles.badge}>
+            <span className={styles.badgeText}>Testimonials</span>
+          </div>
           <h2 className={styles.title}>
             What partners <span className={styles.goldText}>say</span>
           </h2>
+          <p className={styles.subheading}>
+            Read honest feedback and stories from our clients who transitioned to GELD.
+          </p>
         </div>
 
         <div

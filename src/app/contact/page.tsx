@@ -42,8 +42,11 @@ export default function ContactPage() {
           <>
             <div className={styles.header}>
               <div className={styles.logo}>GELD</div>
-              <h2 className={styles.title}>Contact Us</h2>
-              <p className={styles.subtitle}>Get in touch with our financial experts</p>
+              <div className={styles.badge}>
+                <span className={styles.badgeText}>Contact Us</span>
+              </div>
+              <h2 className={styles.title}>Get in touch</h2>
+              <p className={styles.subheading}>Get in touch with our financial experts</p>
             </div>
 
             <form className={styles.form} onSubmit={handleSubmit}>

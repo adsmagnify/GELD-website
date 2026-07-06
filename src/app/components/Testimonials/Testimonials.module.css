@@ -41,15 +41,26 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 12px;
+  gap: 16px;
 }
 
-.label {
+.badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 18px;
+  border-radius: 9999px;
+}
+
+.badgeText {
+  font-family: monospace;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 3px;
+  color: #FEFE7B;
 }
 
 .title {
@@ -58,6 +69,14 @@
   color: #ffffff;
   line-height: 1.1;
   letter-spacing: -1.5px;
+}
+
+.subheading {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  max-width: 560px;
 }
 
 .goldText {

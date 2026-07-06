@@ -97,7 +97,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   text-align: center;
 }
 
@@ -108,6 +108,26 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
+  margin-bottom: -4px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 18px;
+  border-radius: 9999px;
+}
+
+.badgeText {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #FEFE7B;
 }
 
 .title {
@@ -117,9 +137,12 @@
   letter-spacing: -0.5px;
 }
 
-.subtitle {
+.subheading {
   font-size: 14px;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  max-width: 320px;
 }
 
 .form {

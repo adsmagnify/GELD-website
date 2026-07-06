@@ -41,15 +41,26 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 6px;
+  gap: 16px;
 }
 
-.label {
+.badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 18px;
+  border-radius: 9999px;
+}
+
+.badgeText {
+  font-family: monospace;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--accent-gold);
+  letter-spacing: 3px;
+  color: #FEFE7B;
 }
 
 .title {
@@ -67,9 +78,11 @@
   -webkit-text-fill-color: transparent;
 }
 
-.subtitle {
-  font-size: 16px;
+.subheading {
+  font-size: 15px;
+  line-height: 1.65;
   color: rgba(255, 255, 255, 0.5);
+  margin: 0;
   max-width: 500px;
 }
 
