@@ -1,4 +1,4 @@
-﻿/* .section {
+/* .section {
   height: 100vh;
   height:100dvh;
   scroll-snap-align: start;
@@ -402,6 +402,48 @@
   }
 }
 
+@media (max-width: 1200px) {
+  .archWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1000 / 400;
+    max-width: 1000px;
+  }
+  .value {
+    font-size: clamp(80px, 9.5vw, 115px);
+    white-space: nowrap;
+  }
+  .label {
+    font-size: clamp(18px, 2vw, 22px);
+    max-width: 550px;
+    margin: 14px auto 0 auto;
+  }
+  .slideContent {
+    transform: translateY(4.5vw);
+  }
+}
+
+@media (max-width: 1024px) {
+  .archWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1000 / 400;
+    max-width: 900px;
+  }
+  .value {
+    font-size: clamp(70px, 9.5vw, 95px);
+    white-space: nowrap;
+  }
+  .label {
+    font-size: clamp(17px, 2vw, 20px);
+    max-width: 480px;
+    margin: 14px auto 0 auto;
+  }
+  .slideContent {
+    transform: translateY(4.5vw);
+  }
+}
+
 @media (max-width: 768px) {
   .section {
     padding: 0 24px;
@@ -414,13 +456,23 @@
     height: 40px;
   }
   .value {
-    font-size: 80px;
+    font-size: clamp(58px, 11vw, 85px);
+    white-space: nowrap;
   }
   .label {
-    font-size: 18px;
+    font-size: clamp(16px, 2.5vw, 19px);
+    line-height: 1.4;
+    max-width: clamp(280px, 75vw, 420px);
+    margin: 14px auto 0 auto;
+    padding: 0 20px;
   }
   .archWrapper {
-    height: 260px;
+    width: 118vw;
+    max-width: 118vw;
+    margin-left: calc(-59vw + 50%);
+    margin-right: calc(-59vw + 50%);
+    height: auto;
+    aspect-ratio: 1000 / 400;
   }
   .contentViewport {
     inset: 0 0 18px 0;
@@ -432,7 +484,46 @@
     stroke-width: 3.5;
   }
   .slideContent {
-    transform:translate(18px);
+    transform: translateY(clamp(15px, 5.5vw, 35px));
+  }
+}
+
+@media (max-width: 480px) {
+  .statsStage {
+    padding-bottom: 60px;
+  }
+  .pill {
+    margin-top: 40px;
+  }
+  .dashedLine {
+    height: 30px;
+    margin-top: -30px;
+    margin-bottom: 10px;
+  }
+  .archWrapper {
+    width: 120vw;
+    max-width: 120vw;
+    margin-left: calc(-60vw + 50%);
+    margin-right: calc(-60vw + 50%);
+    height: auto;
+    aspect-ratio: 1000 / 400;
+  }
+  .value {
+    font-size: clamp(48px, 15vw, 70px);
+    white-space: nowrap;
+  }
+  .label {
+    font-size: clamp(14px, 4vw, 16px);
+    line-height: 1.45;
+    max-width: clamp(240px, 75vw, 300px);
+    margin: 10px auto 0 auto;
+    padding: 0 16px;
+  }
+  .contentViewport {
+    inset: 0 0 12px 0;
+  }
+  .slideContent {
+    transform: translateY(clamp(10px, 6vw, 25px));
   }
 }
 
