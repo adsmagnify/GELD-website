@@ -1,5 +1,5 @@
 .aboutSection {
-  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   background: linear-gradient(
     135deg,
@@ -11,21 +11,22 @@
   z-index: 20;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 100px 40px 40px 40px;
+  padding: var(--subpage-hero-top) var(--subpage-h-padding) 64px;
   box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
 }
 
 .aboutContainer {
-  max-width: 960px;
+  max-width: var(--subpage-hero-max-width);
   width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: var(--subpage-hero-inner-gap);
   text-align: center;
-  margin: auto 0;
   opacity: 0;
   transform: translateY(60px) scale(0.98);
   filter: blur(10px);
@@ -71,16 +72,16 @@
 
 .aboutBadgeText {
   font-family: monospace;
-  font-size: 12px;
+  font-size: var(--subpage-badge-size);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: var(--subpage-badge-tracking);
   color: #FEFE7B;
 }
 
 /* About Text */
 .aboutText {
-  font-size: 38px;
+  font-size: var(--subpage-editorial-size);
   line-height: 1.55;
   font-weight: 400;
   color: rgba(10, 6, 2, 0.65);
@@ -123,10 +124,10 @@
 /* Responsiveness for About Us text */
 @media (max-width: 768px) {
   .aboutSection {
-    padding: 60px 24px;
+    padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) 32px;
   }
   .aboutText {
-    font-size: 26px;
+    font-size: var(--subpage-editorial-size-mobile);
     line-height: 1.5;
     letter-spacing: -0.4px;
   }

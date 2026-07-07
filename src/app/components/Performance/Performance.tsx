@@ -7,12 +7,13 @@ import ScrollButton from "../ScrollButton/ScrollButton";
 interface PerformanceProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
+  isSubpage?: boolean;
   [key: string]: any;
 }
 
 type PeriodType = "Inception" | "3Yr" | "1Yr" | "6M" | "3M" | "1M";
 
-export default function Performance({ ref, onScrollDown }: PerformanceProps) {
+export default function Performance({ ref, onScrollDown, isSubpage }: PerformanceProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>("Inception");
   
@@ -90,7 +91,7 @@ export default function Performance({ ref, onScrollDown }: PerformanceProps) {
     <section ref={activeRef} className={`${styles.aboutSection} ${isVisible ? styles.revealed : ""}`} id="performance-view">
       
       {/* 1. Centered Editorial Statement (Same formatting as About Us) */}
-      <div className={styles.statementWrapper}>
+      <div className={`${styles.statementWrapper} ${isSubpage ? styles.statementWrapperSubpage : ""}`}>
         <div className={styles.aboutContainer}>
           <div className={styles.aboutBadge}>
             <span className={styles.aboutBadgeText}>Performance Track Record</span>

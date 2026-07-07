@@ -8,6 +8,26 @@
   --bp-desktop: 1024px;
   --bp-tablet: 768px;
   --bp-mobile: 480px;
+  --header-clearance: 104px;
+  --subpage-top-gap: 32px;
+  --subpage-hero-top: calc(var(--header-clearance) + var(--subpage-top-gap));
+  --subpage-h-padding: 40px;
+  --subpage-h-padding-mobile: 24px;
+  --subpage-hero-min-height: calc(100dvh - var(--header-clearance));
+  --subpage-hero-compact-height: auto;
+  --subpage-hero-bottom: 56px;
+  --subpage-hero-bottom-mobile: 28px;
+  --subpage-hero-inner-gap: 24px;
+  --subpage-hero-max-width: 1140px;
+  --subpage-content-max-width: 1140px;
+  --subpage-content-gap: 48px;
+  --subpage-content-gap-mobile: 32px;
+  --subpage-section-bottom: 100px;
+  --subpage-section-bottom-mobile: 72px;
+  --subpage-editorial-size: 38px;
+  --subpage-editorial-size-mobile: 26px;
+  --subpage-badge-size: 11px;
+  --subpage-badge-tracking: 3px;
   
   --font-sans-fallback: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-serif-fallback: Georgia, Cambria, "Times New Roman", Times, serif;
@@ -103,6 +123,7 @@ a {
   z-index: 100;
   pointer-events: none;
   transition: padding 0.3s ease;
+  background: transparent;
 }
 
 @media (max-width: 1024px) {
@@ -126,6 +147,19 @@ a {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
+  padding-top: 0;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-clearance: 88px;
+    --subpage-top-gap: 24px;
+    --subpage-h-padding-mobile: 24px;
+    --subpage-hero-bottom: var(--subpage-hero-bottom-mobile);
+    --subpage-content-gap: var(--subpage-content-gap-mobile);
+    --subpage-section-bottom-mobile: 72px;
+    --subpage-editorial-size-mobile: 26px;
+  }
 }
 
 .deferredSection {

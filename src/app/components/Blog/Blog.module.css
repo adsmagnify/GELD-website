@@ -13,15 +13,39 @@
   box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.25);
 }
 
-.aboutContainer {
-  max-width: 960px;
+.aboutSectionSubpage {
+  min-height: auto;
   width: 100%;
+  padding: 0 var(--subpage-h-padding);
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.statementWrapper {
+  width: 100%;
+  max-width: var(--subpage-content-max-width);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.statementWrapperSubpage {
+  min-height: auto;
+  padding: var(--subpage-hero-top) 0 var(--subpage-hero-bottom);
+}
+
+.aboutContainer {
+  max-width: var(--subpage-hero-max-width);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--subpage-hero-inner-gap);
   text-align: center;
-  margin: auto 0;
   opacity: 0;
   transform: translateY(60px) scale(0.98);
   filter: blur(10px);
@@ -65,15 +89,15 @@
 
 .aboutBadgeText {
   font-family: monospace;
-  font-size: 12px;
+  font-size: var(--subpage-badge-size);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: var(--subpage-badge-tracking);
   color: #FEFE7B;
 }
 
 .aboutText {
-  font-size: 38px;
+  font-size: var(--subpage-editorial-size);
   line-height: 1.55;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.35);
@@ -114,8 +138,17 @@
   .aboutSection {
     padding: 60px 24px;
   }
+
+  .aboutSectionSubpage {
+    padding: 0 var(--subpage-h-padding-mobile);
+  }
+
+  .statementWrapperSubpage {
+    padding: var(--subpage-hero-top) 0 var(--subpage-hero-bottom-mobile);
+  }
+
   .aboutText {
-    font-size: 26px;
+    font-size: var(--subpage-editorial-size-mobile);
     line-height: 1.5;
     letter-spacing: -0.4px;
   }

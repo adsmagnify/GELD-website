@@ -186,7 +186,7 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
   return (
     <section
       ref={activeRef as any}
-      className={`${styles.section} ${isGoldenBg ? styles.goldenBg : ""} ${isVisible ? styles.revealed : ""}`}
+      className={`${styles.section} ${isGoldenBg ? styles.goldenBg : ""} ${isSubpage ? styles.subpage : ""} ${isVisible ? styles.revealed : ""}`}
     >
       <div className={styles.container}>
         <div className={styles.head}>

@@ -47,9 +47,9 @@ export const catalogProducts: CatalogProduct[] = [
     value: "₹50 Lakhs",
     featured: true,
     bullets: [
-      "Investments in upto 25 large/ multicap stocks",
-      "Consistent Compounder for 2 decades , the Warren Buffett Way",
-      "Access to top fund managers",
+      "Focused portfolio of 20–25 handpicked stocks by India's top fund managers — not 100+ holdings like a typical mutual fund",
+      "Historically delivered 11–31% annualised returns, outperforming mutual fund benchmarks on average",
+      "Access to elite PMS houses — Abakkus, Carnelian, MOAMC, Renaissance, Buoyant & more",
     ],
   },
   {

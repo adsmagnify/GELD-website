@@ -52,6 +52,31 @@ export default function SiteFooter() {
               </svg>
             </a>
           </div>
+
+          <div className={styles.officeBlock}>
+            <h4 className={styles.officeTitle}>Office Address</h4>
+            <p className={styles.officeAddress}>
+              Lodha Signet, A-618, Senapati Bapat Marg, next to Kamala Mills,
+              Lower Parel, Mumbai, Maharashtra 400013
+            </p>
+            <div className={styles.mapFrameWrap}>
+              <iframe
+                title="GELD Office Location Map"
+                src="https://www.google.com/maps?q=Lodha%20Signet%2C%20A-618%2C%20Senapati%20Bapat%20Marg%2C%20next%20to%20Kamala%20Mills%2C%20Lower%20Parel%2C%20Mumbai%2C%20Maharashtra%20400013&z=16&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className={styles.mapFrame}
+              />
+            </div>
+            <a
+              href="https://www.google.com/maps/place/Lodha+Signet,+A-618,+Senapati+Bapat+Marg,+next+to+Kamala+Mills,+Lower+Parel,+Mumbai,+Maharashtra+400013"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.mapLink}
+            >
+              View on Google Maps
+            </a>
+          </div>
         </div>
 
         {/* Right Columns: Links Grid */}

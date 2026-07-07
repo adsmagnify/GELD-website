@@ -14,7 +14,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 100px 40px 0 40px;
+  padding: var(--subpage-hero-top) 40px 0 40px;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -25,13 +25,13 @@
 
 @media (max-width: 1024px) {
   .wrapper {
-    padding: 88px 24px 0;
+    padding: var(--subpage-hero-top) 24px 0;
   }
 }
 
 @media (max-width: 768px) {
   .wrapper {
-    padding: 80px 16px 0;
+    padding: var(--subpage-hero-top) 16px 0;
   }
 
   .card {
@@ -46,7 +46,7 @@
 
 @media (max-width: 480px) {
   .wrapper {
-    padding: 72px 12px 0;
+    padding: var(--subpage-hero-top) 12px 0;
   }
 
   .title {

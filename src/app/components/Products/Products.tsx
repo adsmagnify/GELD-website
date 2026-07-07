@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import styles from "./Products.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
 import ProductChargesNote from "../ProductChargesNote/ProductChargesNote";
+import PmsCarousel from "../PmsCarousel/PmsCarousel";
 import { catalogProducts, MINI_STOCK_PORTFOLIOS_NAME } from "../../data/catalogProducts";
+import { PMS_RETURN_RANGE } from "../../data/pmsData";
 
 interface ProductsProps {
   mode?: "catalog" | "detail" | "all";
@@ -21,6 +22,7 @@ type ProductType = (typeof PRODUCT_TYPES)[number];
 
 export default function Products({ mode = "all", defaultProduct, ref, onScrollDown }: ProductsProps) {
   const router = useRouter();
+  const isSubpage = mode === "catalog" || mode === "detail";
   const [isVisible, setIsVisible] = useState(false);
   const [activeProduct, setActiveProduct] = useState<ProductType>(defaultProduct || MINI_STOCK_PORTFOLIOS_NAME);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -118,8 +120,9 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
     },
     PMS: {
       title: "Why Settle For Average When You Can Have The Best?",
-      subtitle: "PMS: Join the ranks of elite investors with our Portfolio Management Services",
-      paragraph: "Experience the benefits of a focused, expertly managed portfolio. Tailored for high-growth capital with active risk hedges and institutional execution from India's finest AMCs.",
+      subtitle: "PMS: Concentrated conviction, professionally managed for superior growth",
+      paragraph:
+        "While mutual funds spread across 100+ stocks, PMS invests in just 20–25 handpicked companies — focused, not over-diversified — so your portfolio fully benefits from each high-conviction pick.",
       badge: "Portfolio Management Services",
       primaryCta: "Start My PMS Journey",
       secondaryCta: "Review My Portfolio Today",
@@ -145,15 +148,12 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
     }
   };
 
-  // Partner AMCs for the orbital ring layout
-  const amcPartners = ["Abakkus", "Renaissance", "Marathon", "Whiteoak", "Buoyant", "First Bridge", "Unifi", "MOSL"];
-
   return (
     <section ref={activeRef} className={`${styles.aboutSection} ${isVisible ? styles.revealed : ""}`} id="products-master">
       
       {/* 1. Centered Editorial Statement (Only shown in catalog or all mode) */}
       {(mode === "all" || mode === "catalog") && (
-        <div className={styles.statementWrapper}>
+        <div className={`${styles.statementWrapper} ${isSubpage ? styles.statementWrapperSubpage : ""}`}>
           <div className={styles.aboutContainer}>
             <div className={styles.aboutBadge}>
               <span className={styles.aboutBadgeText}>Wealth Vaults</span>
@@ -234,6 +234,33 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
             </div>
 
             <div className={styles.explorerRight}>
+              {activeProduct === "PMS" && (
+                <div className={styles.pmsRightStack}>
+                  <div className={styles.pmsCompareColumn}>
+                    <div className={`${styles.pmsCompareCard} ${styles.pmsCompareCardHighlight}`}>
+                      <span className={styles.pmsCompareLabel}>PMS</span>
+                      <span className={styles.pmsCompareVal}>20–25 stocks</span>
+                      <span className={styles.pmsCompareNote}>Handpicked by fund managers</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.pmsPerfGrid}>
+                    <div className={`${styles.assetBlock} ${styles.goldGlow}`}>
+                      <span className={styles.blockVal}>{PMS_RETURN_RANGE.sinceInception}</span>
+                      <span className={styles.blockLbl}>Since Inception Returns</span>
+                    </div>
+                    <div className={styles.assetBlock}>
+                      <span className={styles.blockVal}>{PMS_RETURN_RANGE.threeYearRolling}</span>
+                      <span className={styles.blockLbl}>Avg. Rolling 3Y Returns</span>
+                    </div>
+                    <div className={styles.assetBlock}>
+                      <span className={styles.blockVal}>₹50 Lakhs+</span>
+                      <span className={styles.blockLbl}>Minimum Ticket</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {activeProduct === MINI_STOCK_PORTFOLIOS_NAME && (
                 /* High-end structured asset-class grid cards representation for IAP */
                 <div className={styles.aifAssetGrid}>
@@ -252,26 +279,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
                 </div>
               )}
 
-              {activeProduct === "PMS" && (
-                /* High-end structured asset-class grid cards representation for PMS */
-                <div className={styles.aifAssetGrid}>
-                  <div className={`${styles.assetBlock} ${styles.goldGlow}`}>
-                    <span className={styles.blockVal}>₹50 Lakhs+</span>
-                    <span className={styles.blockLbl}>Minimum Ticket</span>
-                  </div>
-                  <div className={styles.assetBlock}>
-                    <span className={styles.blockVal}>Bespoke</span>
-                    <span className={styles.blockLbl}>Tailored Portfolios</span>
-                  </div>
-                  <div className={styles.assetBlock}>
-                    <span className={styles.blockVal}>Institutional</span>
-                    <span className={styles.blockLbl}>AMC Execution</span>
-                  </div>
-                </div>
-              )}
-
               {activeProduct === "AIF" && (
-                /* High-end structured asset-class grid cards representation */
                 <div className={styles.aifAssetGrid}>
                   <div className={`${styles.assetBlock} ${styles.goldGlow}`}>
                     <span className={styles.blockVal}>₹1 Cr+</span>
@@ -298,6 +306,8 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
               )}
             </div>
           </div>
+
+          {activeProduct === "PMS" && <PmsCarousel />}
 
           {/* Bottom call strip */}
           <div className={styles.callStrip}>

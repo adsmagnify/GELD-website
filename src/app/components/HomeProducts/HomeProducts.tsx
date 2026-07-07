@@ -25,7 +25,7 @@ const productMeta: Record<
     tierLabel: "Growth",
   },
   PMS: {
-    tagline: "Institutional-grade compounding for serious capital",
+    tagline: "20–25 focused stocks, historically above-average returns vs mutual funds",
     tierLabel: "Elite",
   },
   AIF: {

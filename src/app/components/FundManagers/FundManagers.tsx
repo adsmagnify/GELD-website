@@ -8,10 +8,11 @@ import ScrollButton from "../ScrollButton/ScrollButton";
 interface FundManagersProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
+  isSubpage?: boolean;
   [key: string]: any;
 }
 
-export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
+export default function FundManagers({ ref, onScrollDown, isSubpage }: FundManagersProps) {
   const [isVisible, setIsVisible] = useState(false);
   const fallbackRef = useRef<HTMLElement>(null);
   const activeRef = ref || fallbackRef;
@@ -118,7 +119,7 @@ export default function FundManagers({ ref, onScrollDown }: FundManagersProps) {
   return (
     <section ref={activeRef} className={`${styles.aboutSection} ${isVisible ? styles.revealed : ""}`}>
       {/* 1. Centered Editorial Statement (Formatting exact match to About Us) */}
-      <div className={styles.statementWrapper}>
+      <div className={`${styles.statementWrapper} ${isSubpage ? styles.statementWrapperSubpage : ""}`}>
         <div className={styles.aboutContainer}>
           {/* Badge */}
           <div className={styles.aboutBadge}>

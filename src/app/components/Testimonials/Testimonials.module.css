@@ -1,6 +1,6 @@
 
 .section {
-  min-height: 100vh;
+  min-height: var(--subpage-hero-min-height);
   width: 100%;
   position: relative;
   background-color: var(--background-dark);
@@ -8,9 +8,13 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 120px 40px 20px 40px;
+  padding: var(--subpage-hero-top) var(--subpage-h-padding) var(--subpage-section-bottom);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
+}
+
+.subpage {
+  padding: var(--subpage-hero-top) var(--subpage-h-padding) var(--subpage-section-bottom);
 }
 
 .container {
@@ -56,19 +60,19 @@
 
 .badgeText {
   font-family: monospace;
-  font-size: 11px;
+  font-size: var(--subpage-badge-size);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: var(--subpage-badge-tracking);
   color: #FEFE7B;
 }
 
 .title {
-  font-size: 48px;
+  font-size: var(--subpage-editorial-size);
   font-weight: 700;
   color: #ffffff;
-  line-height: 1.1;
-  letter-spacing: -1.5px;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
 }
 
 .subheading {
@@ -331,8 +335,9 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
-  .section { padding: 110px 20px 40px 20px; }
-  .title { font-size: 34px; }
+  .section,
+  .subpage { padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile); }
+  .title { font-size: var(--subpage-editorial-size-mobile); }
   .stage { height: 520px; perspective: 1200px; }
   .card { width: 86vw; max-width: 380px; height: 480px; }
   .cardInner { flex-direction: column; }
@@ -345,8 +350,9 @@
 }
 
 @media (max-width: 480px) {
-  .section { padding: 96px 16px 32px; }
-  .title { font-size: 28px; }
+  .section,
+  .subpage { padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile); }
+  .title { font-size: var(--subpage-editorial-size-mobile); }
   .stage { height: 460px; perspective: 900px; }
   .card { width: 92vw; height: 440px; }
   .body { padding: 20px; }

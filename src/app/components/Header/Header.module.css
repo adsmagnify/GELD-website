@@ -77,19 +77,13 @@
   width: max-content;
   max-width: 100%;
   gap: clamp(14px, 1.5vw, 28px);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.03) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(3, 3, 3, 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 9999px;
   padding: 12px 28px;
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: none;
 }
 
 .navLink {
@@ -409,9 +403,11 @@
 }
 
 .headerDark .nav {
-  border-color: rgba(10, 6, 2, 0.15) !important;
-  background: rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 10px 30px rgba(10, 6, 2, 0.05) !important;
+  border-color: rgba(10, 6, 2, 0.08) !important;
+  background: rgba(254, 254, 123, 0.1) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .headerDark .navLink {

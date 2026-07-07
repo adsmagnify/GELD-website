@@ -8,23 +8,31 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 var(--subpage-h-padding);
   box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
 }
 
 .statementWrapper {
-  min-height: 100vh;
   width: 100%;
+  max-width: var(--subpage-content-max-width);
+  margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   box-sizing: border-box;
 }
 
+.statementWrapperSubpage {
+  min-height: auto;
+  padding: var(--subpage-hero-top) 0 var(--subpage-hero-bottom);
+}
+
 .aboutContainer {
-  max-width: 960px;
+  max-width: var(--subpage-hero-max-width);
   width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,15 +81,15 @@
 
 .aboutBadgeText {
   font-family: monospace;
-  font-size: 11px;
+  font-size: var(--subpage-badge-size);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: var(--subpage-badge-tracking);
   color: #FEFE7B;
 }
 
 .aboutText {
-  font-size: 38px;
+  font-size: var(--subpage-editorial-size);
   line-height: 1.55;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.35);
@@ -545,6 +553,84 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+/* PMS right panel */
+.pmsRightStack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.pmsCompareColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.pmsPerfGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.pmsPerfGrid .goldGlow {
+  grid-column: span 2;
+}
+
+.pmsCompareRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.pmsCompareCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.pmsCompareCardHighlight {
+  border-color: rgba(212, 175, 55, 0.35);
+  background: rgba(212, 175, 55, 0.05);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.08);
+}
+
+.pmsCompareLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.pmsCompareVal {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pmsCompareCardHighlight .pmsCompareVal {
+  color: #FEFE7B;
+}
+
+.pmsCompareNote {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.4;
+}
+
 /* Mutual Funds Curve representation */
 .growthChartVisual {
   display: flex;
@@ -641,8 +727,9 @@
 /* Full Catalog Grid section */
 .gridSection {
   width: 100%;
-  max-width: 1280px;
-  margin: -100px auto 140px auto;
+  max-width: var(--subpage-content-max-width);
+  margin: var(--subpage-content-gap) auto var(--subpage-section-bottom) auto;
+  padding: 0 var(--subpage-h-padding);
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -845,10 +932,16 @@
     flex-direction: column;
     padding: 40px;
     gap: 40px;
+    align-items: stretch;
   }
   .explorerLeft {
     align-items: center;
     text-align: center;
+  }
+  .pmsCompareRow {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .grid {
     grid-template-columns: repeat(2, 1fr);
@@ -913,16 +1006,15 @@
 }
 
 .detailModeView {
-  min-height: 100vh;
-  min-height: 100dvh;
-  justify-content: center;
+  min-height: auto;
+  justify-content: flex-start;
   margin-bottom: 0;
-  padding: 180px 0 100px 0;
+  padding: var(--subpage-hero-top) var(--subpage-h-padding) var(--subpage-section-bottom);
 }
 
 @media (max-width: 768px) {
   .detailModeView {
-    padding: 120px 0 72px;
+    padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile);
   }
 
   .explorerHeader {
@@ -949,7 +1041,7 @@
 
 @media (max-width: 480px) {
   .detailModeView {
-    padding: 108px 0 64px;
+    padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile);
   }
 
   .managerStack,

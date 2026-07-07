@@ -1,0 +1,143 @@
+/* Shared subpage layout tokens — compose these classes in nav-bar page components */
+
+.heroSection {
+  width: 100%;
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.heroSectionSubpage {
+  min-height: auto;
+  padding: 0 var(--subpage-h-padding);
+}
+
+.heroStatement {
+  width: 100%;
+  max-width: var(--subpage-content-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.heroStatementSubpage {
+  min-height: auto;
+  padding: var(--subpage-hero-top) 0 var(--subpage-hero-bottom);
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.heroInner {
+  max-width: var(--subpage-hero-max-width);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--subpage-hero-inner-gap);
+  text-align: center;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.heroBadgeText {
+  font-family: monospace;
+  font-size: var(--subpage-badge-size);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--subpage-badge-tracking);
+  color: #fefe7b;
+}
+
+.heroEditorial {
+  font-size: var(--subpage-editorial-size);
+  line-height: 1.55;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: -0.8px;
+}
+
+.contentSection {
+  width: 100%;
+  max-width: var(--subpage-content-max-width);
+  margin: var(--subpage-content-gap) auto 0;
+  padding: 0 var(--subpage-h-padding) var(--subpage-section-bottom);
+  box-sizing: border-box;
+}
+
+.pageSection {
+  width: 100%;
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: auto;
+  padding: var(--subpage-hero-top) var(--subpage-h-padding) var(--subpage-section-bottom);
+  box-sizing: border-box;
+}
+
+.pageHead {
+  width: 100%;
+  max-width: var(--subpage-hero-max-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--subpage-hero-inner-gap);
+  margin: 0 auto;
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: var(--subpage-editorial-size);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.pageSubtitle {
+  margin: 0;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .heroSectionSubpage {
+    padding: 0 var(--subpage-h-padding-mobile);
+  }
+
+  .heroStatementSubpage {
+    padding: var(--subpage-hero-top) 0 var(--subpage-hero-bottom-mobile);
+  }
+
+  .heroEditorial,
+  .pageTitle {
+    font-size: var(--subpage-editorial-size-mobile);
+    line-height: 1.5;
+    letter-spacing: -0.4px;
+  }
+
+  .contentSection,
+  .pageSection {
+    padding-left: var(--subpage-h-padding-mobile);
+    padding-right: var(--subpage-h-padding-mobile);
+    padding-bottom: var(--subpage-section-bottom-mobile);
+  }
+}

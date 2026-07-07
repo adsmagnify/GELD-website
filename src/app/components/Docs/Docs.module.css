@@ -17,26 +17,30 @@
 
 .aboutSectionSubpage {
   min-height: auto;
-  padding: 0 40px 64px;
+  padding: 0 var(--subpage-h-padding) var(--subpage-section-bottom);
 }
 
 .statementWrapper {
   width: 100%;
+  max-width: var(--subpage-content-max-width);
+  margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   box-sizing: border-box;
 }
 
 .statementWrapperSubpage {
-  min-height: 40vh;
-  padding: 100px 0 20px;
+  min-height: auto;
+  padding: var(--subpage-hero-top) 0 var(--subpage-hero-bottom);
 }
 
 .contentWrapper {
   width: 100%;
-  max-width: 960px;
-  margin: -12px auto 0;
+  max-width: var(--subpage-content-max-width);
+  margin: var(--subpage-content-gap) auto 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -55,14 +59,14 @@
 }
 
 .aboutContainer {
-  max-width: 720px;
+  max-width: var(--subpage-hero-max-width);
   width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
   text-align: center;
-  margin: 0;
   opacity: 0;
   transform: translateY(60px) scale(0.98);
   filter: blur(10px);
@@ -318,10 +322,10 @@
 
 .aboutBadgeText {
   font-family: monospace;
-  font-size: 12px;
+  font-size: var(--subpage-badge-size);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: var(--subpage-badge-tracking);
   color: #FEFE7B;
 }
 
@@ -373,16 +377,17 @@
 
   .aboutSectionSubpage {
     min-height: auto;
-    padding: 0 16px 40px;
+    padding: 0 var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile);
   }
 
   .statementWrapperSubpage {
-    min-height: 34vh;
-    padding: 80px 0 16px;
+    min-height: auto;
+    padding: var(--subpage-hero-top) 0 var(--subpage-hero-bottom-mobile);
   }
 
   .contentWrapper {
-    margin-top: 0;
+    margin-top: var(--subpage-content-gap);
+    padding: 0 var(--subpage-h-padding-mobile);
     gap: 14px;
   }
 

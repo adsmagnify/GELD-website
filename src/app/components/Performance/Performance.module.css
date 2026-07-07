@@ -8,27 +8,35 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 var(--subpage-h-padding);
   box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
 }
 
 .statementWrapper {
-  min-height: 100vh;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-.aboutContainer {
-  max-width: 960px;
-  width: 100%;
+  max-width: var(--subpage-content-max-width);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.statementWrapperSubpage {
+  min-height: auto;
+  padding: var(--subpage-hero-top) 0 var(--subpage-hero-bottom);
+}
+
+.aboutContainer {
+  max-width: var(--subpage-hero-max-width);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--subpage-hero-inner-gap);
   text-align: center;
   opacity: 0;
   transform: translateY(30px);
@@ -73,15 +81,15 @@
 
 .aboutBadgeText {
   font-family: monospace;
-  font-size: 11px;
+  font-size: var(--subpage-badge-size);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: var(--subpage-badge-tracking);
   color: #FEFE7B;
 }
 
 .aboutText {
-  font-size: 38px;
+  font-size: var(--subpage-editorial-size);
   line-height: 1.55;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.35);
@@ -121,8 +129,9 @@
 /* Graphical Performance Dashboard styling */
 .dashboardContainer {
   width: 100%;
-  max-width: 1280px;
-  margin: -100px auto 80px auto;
+  max-width: var(--subpage-content-max-width);
+  margin: var(--subpage-content-gap) auto var(--subpage-section-bottom) auto;
+  padding: 0 var(--subpage-h-padding);
   display: flex;
   gap: 40px;
   opacity: 0;
@@ -454,7 +463,7 @@
     padding: 0 24px;
   }
   .aboutText {
-    font-size: 26px;
+    font-size: var(--subpage-editorial-size-mobile);
     line-height: 1.5;
     letter-spacing: -0.4px;
   }
@@ -463,7 +472,9 @@
     font-size: 12px;
   }
   .dashboardContainer {
-    margin-top: -60px;
+    margin-top: var(--subpage-content-gap);
+    padding: 0 var(--subpage-h-padding-mobile);
+    margin-bottom: var(--subpage-section-bottom-mobile);
   }
   .chartBlock {
     padding: 24px;

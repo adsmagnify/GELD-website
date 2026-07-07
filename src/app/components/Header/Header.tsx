@@ -59,6 +59,14 @@ export default function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Allow route-specific layout spacing (home keeps hero behind nav).
+  useEffect(() => {
+    document.body.dataset.route = pathname === "/" ? "home" : "inner";
+    return () => {
+      delete document.body.dataset.route;
+    };
+  }, [pathname]);
+
   // Highlight the nav item matching the current route.
   // On the home page ("/") we scroll-spy the hero; on every other route
   // the active item is derived from the pathname.

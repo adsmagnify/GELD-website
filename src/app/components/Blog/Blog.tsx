@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Blog.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
@@ -5,10 +6,11 @@ import ScrollButton from "../ScrollButton/ScrollButton";
 interface BlogProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
+  isSubpage?: boolean;
   [key: string]: any;
 }
 
-export default function Blog({ ref, onScrollDown }: BlogProps) {
+export default function Blog({ ref, onScrollDown, isSubpage }: BlogProps) {
   const [isVisible, setIsVisible] = useState(false);
   const fallbackRef = useRef<HTMLElement>(null);
   const activeRef = ref || fallbackRef;
@@ -36,20 +38,25 @@ export default function Blog({ ref, onScrollDown }: BlogProps) {
   }, [activeRef]);
 
   return (
-    <section ref={activeRef} className={`${styles.aboutSection} ${isVisible ? styles.revealed : ""}`}>
-      <div className={styles.aboutContainer}>
-        {/* Badge */}
-        <div className={styles.aboutBadge}>
-          <span className={styles.aboutBadgeText}>Research & Insights</span>
-        </div>
+    <section
+      ref={activeRef}
+      className={`${styles.aboutSection} ${isSubpage ? styles.aboutSectionSubpage : ""} ${isVisible ? styles.revealed : ""}`}
+    >
+      <div className={`${styles.statementWrapper} ${isSubpage ? styles.statementWrapperSubpage : ""}`}>
+        <div className={styles.aboutContainer}>
+          {/* Badge */}
+          <div className={styles.aboutBadge}>
+            <span className={styles.aboutBadgeText}>Research & Insights</span>
+          </div>
 
-        {/* Main Paragraph */}
-        <p className={styles.aboutText}>
-          <span className={styles.serifItalic}>Information is noise, signal is wealth.</span>{" "}
-          <span className={styles.fadeText}>At Geld, our research desk decodes complex macro trends,</span>{" "}
-          <span className={styles.highlightText}>publishing institutional-grade market briefs, derivative analysis, and tactical asset allocations.</span>{" "}
-          <span className={styles.fadeText}>Stay ahead of the curve with insights engineered for the ambitious investor.</span>
-        </p>
+          {/* Main Paragraph */}
+          <p className={styles.aboutText}>
+            <span className={styles.serifItalic}>Information is noise, signal is wealth.</span>{" "}
+            <span className={styles.fadeText}>At Geld, our research desk decodes complex macro trends,</span>{" "}
+            <span className={styles.highlightText}>publishing institutional-grade market briefs, derivative analysis, and tactical asset allocations.</span>{" "}
+            <span className={styles.fadeText}>Stay ahead of the curve with insights engineered for the ambitious investor.</span>
+          </p>
+        </div>
       </div>
 
       {onScrollDown && (
