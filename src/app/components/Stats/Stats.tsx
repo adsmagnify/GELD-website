@@ -17,11 +17,6 @@ const slides = [
   { value: 100, decimals: 0, prefix: "", suffix: "%", label: "Regulator compliant" }
 ];
 
-// const ARC_CX = 500;
-// const ARC_CY = 390;
-// const ARC_RX = 430;
-// const ARC_RY = 330;
-
 const ARC_CX = 500;
 const ARC_CY = 380;
 const ARC_RX = 410;
@@ -61,6 +56,7 @@ function getHighlightPath(center: number) {
 }
 
 const HIGHLIGHT_SLIDE_MS = 550;
+const SLIDE_EXIT_MS = 180;
 
 interface Particle {
   id: number;
@@ -103,7 +99,6 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     };
   }, [activeRef]);
 
-  // Slide highlight along the arc when the active stat changes
   useEffect(() => {
     const targetCenter = SEGMENT_CENTERS[currentSlide];
     const fromCenter = highlightCenterRef.current;
@@ -139,11 +134,10 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     };
   }, [currentSlide]);
 
-  // Count-up animation
   useEffect(() => {
     if (!isVisible) return;
     const slide = slides[displaySlide];
-    const duration = 800; // 800ms count-up
+    const duration = 800;
     const startTime = performance.now();
     const startVal = 0;
     const endVal = slide.value;
@@ -153,10 +147,9 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     const updateNumber = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
       const easeProgress = 1 - Math.pow(1 - progress, 3);
       const current = startVal + easeProgress * (endVal - startVal);
-      
+
       setAnimatedValue(current);
 
       if (progress < 1) {
@@ -168,7 +161,6 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     return () => cancelAnimationFrame(frameId);
   }, [displaySlide, isVisible]);
 
-  // Powder particles animation on slide transition - desktop only
   useEffect(() => {
     if (!isVisible) return;
 
@@ -179,23 +171,20 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
       setParticles([]);
       return;
     }
-    
-    // Generate subtle gold powder particles
+
     const count = 24;
     const newParticles: Particle[] = Array.from({ length: count }).map((_, i) => {
-      const angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.6; // upward floating cone
+      const angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.6;
       const distance = 30 + Math.random() * 50;
       return {
         id: i,
-        // Distributed horizontally across the number bounds
         x: (Math.random() - 0.5) * 240,
         y: (Math.random() - 0.5) * 40,
-        // Slow vertical drift
         dx: Math.sin(angle) * distance,
         dy: -50 - Math.random() * 50,
-        size: 1.0 + Math.random() * 1.5, // fine powder: 1px to 2.5px
-        delay: -Math.random() * 6, // negative delay so they start offset immediately
-        duration: 4.5 + Math.random() * 2.5 // slow duration: 4.5s to 7s
+        size: 1.0 + Math.random() * 1.5,
+        delay: -Math.random() * 6,
+        duration: 4.5 + Math.random() * 2.5
       };
     });
     setParticles(newParticles);
@@ -206,11 +195,10 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     const timer = setTimeout(() => {
       setDisplaySlide(targetIndex);
       setIsTransitioning(false);
-    }, 350); // wait for exit animation to complete (350ms)
+    }, SLIDE_EXIT_MS);
     return () => clearTimeout(timer);
   }, []);
 
-  // Autoplay
   useEffect(() => {
     if (!isVisible) return;
     const timer = setInterval(() => {
@@ -241,67 +229,66 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
           </div>
 
           <div className={styles.archWrapper}>
-          <svg className={styles.archSvg} viewBox="0 0 1000 400" 
-          preserveAspectRatio="xMidYMid meet"
-          fill="none" aria-label="Stat navigation">
-            <defs>
-              <linearGradient id="archSegmentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#FEFE7B" />
-                <stop offset="100%" stopColor="#CE953A" />
-              </linearGradient>
-            </defs>
+            <svg
+              className={styles.archSvg}
+              viewBox="0 0 1000 400"
+              preserveAspectRatio="xMidYMid meet"
+              fill="none"
+              aria-label="Stat navigation"
+            >
+              <defs>
+                <linearGradient id="archSegmentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#FEFE7B" />
+                  <stop offset="100%" stopColor="#CE953A" />
+                </linearGradient>
+              </defs>
 
-            {ARCH_SEGMENT_PATHS.map((d, i) => (
-              <g
-                key={i}
-                className={styles.archSegmentGroup}
-                onClick={() => handleSegmentClick(i)}
-                aria-label={`Show stat ${i + 1}`}
+              {ARCH_SEGMENT_PATHS.map((d, i) => (
+                <g
+                  key={i}
+                  className={styles.archSegmentGroup}
+                  onClick={() => handleSegmentClick(i)}
+                  aria-label={`Show stat ${i + 1}`}
+                >
+                  <path d={d} className={styles.archSegmentHit} />
+                  <path d={d} className={styles.archSegment} />
+                </g>
+              ))}
+
+              <path
+                d={getHighlightPath(highlightCenter)}
+                className={styles.archHighlight}
+                pointerEvents="none"
+              />
+            </svg>
+
+            <div className={styles.contentViewport}>
+              <div
+                key={displaySlide}
+                className={`${styles.slideContent} ${isTransitioning ? styles.exiting : styles.entering}`}
               >
-                <path d={d} className={styles.archSegmentHit} />
-                <path d={d} className={styles.archSegment} />
-              </g>
-            ))}
-
-            <path
-              d={getHighlightPath(highlightCenter)}
-              className={styles.archHighlight}
-              pointerEvents="none"
-            />
-          </svg>
-
-          {/* Slide Text Content */}
-          <div className={styles.contentViewport}>
-            {/* <div 
-               className={styles.slideContent}
-            > */}
-
-            <div
-  key={displaySlide}
-  className={`${styles.slideContent} ${isTransitioning ? styles.exiting : styles.entering}`}
->
-              <div className={styles.valueWrapper}>
-                <div className={styles.value}>{formattedNumber}</div>
-                {particles.map((p) => (
-                  <div
-                    key={p.id}
-                    className={styles.particle}
-                    style={{
-                      left: `calc(50% + ${p.x}px)`,
-                      top: `calc(50% + ${p.y}px)`,
-                      width: `${p.size}px`,
-                      height: `${p.size}px`,
-                      "--dx": `${p.dx}px`,
-                      "--dy": `${p.dy}px`,
-                      animationDelay: `${p.delay}s`,
-                      animationDuration: `${p.duration}s`
-                    } as React.CSSProperties}
-                  />
-                ))}
+                <div className={styles.valueWrapper}>
+                  <div className={styles.value}>{formattedNumber}</div>
+                  {particles.map((p) => (
+                    <div
+                      key={p.id}
+                      className={styles.particle}
+                      style={{
+                        left: `calc(50% + ${p.x}px)`,
+                        top: `calc(50% + ${p.y}px)`,
+                        width: `${p.size}px`,
+                        height: `${p.size}px`,
+                        "--dx": `${p.dx}px`,
+                        "--dy": `${p.dy}px`,
+                        animationDelay: `${p.delay}s`,
+                        animationDuration: `${p.duration}s`
+                      } as React.CSSProperties}
+                    />
+                  ))}
+                </div>
+                <div className={styles.label}>{currentSlideData.label}</div>
               </div>
-              <div className={styles.label}>{currentSlideData.label}</div>
             </div>
-          </div>
           </div>
         </div>
       </div>

@@ -24,13 +24,23 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  margin: auto 0;
+  /* Pin toward top on home (full-height section); was auto, which sat too low */
+  margin: 0 0 auto;
   opacity: 0;
   transform: translateY(50px);
   filter: blur(5px);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
               transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
               filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section:not(.subpage) {
+  justify-content: flex-start;
+  padding-top: calc(var(--subpage-hero-top) - 24px);
+}
+
+.subpage .container {
+  margin: auto 0;
 }
 
 .revealed .container {
@@ -337,8 +347,13 @@
 @media (max-width: 768px) {
   .section,
   .subpage { padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile); }
+
+  .section:not(.subpage) {
+    padding-top: calc(var(--header-clearance) + 8px);
+  }
+
   .title { font-size: var(--subpage-editorial-size-mobile); }
-  .stage { height: 520px; perspective: 1200px; }
+  .stage { height: 520px; perspective: none; }
   .card { width: 86vw; max-width: 380px; height: 480px; }
   .cardInner { flex-direction: column; }
   .media { width: 100%; height: 160px; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
@@ -352,8 +367,13 @@
 @media (max-width: 480px) {
   .section,
   .subpage { padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile); }
+
+  .section:not(.subpage) {
+    padding-top: calc(var(--header-clearance) + 4px);
+  }
+
   .title { font-size: var(--subpage-editorial-size-mobile); }
-  .stage { height: 460px; perspective: 900px; }
+  .stage { height: 460px; perspective: none; }
   .card { width: 92vw; height: 440px; }
   .body { padding: 20px; }
   .quote { font-size: 16px; }

@@ -4,7 +4,9 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh;
+  bottom: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
@@ -17,6 +19,12 @@
     #0c0c0c 0%,
     #020202 100%
   );
+}
+
+:global(body[data-route="home"]) .glowBg {
+  bottom: auto;
+  height: 100vh;
+  min-height: 100vh;
 }
 
 /* Subtly lit 3D perspective grid plane representing financial market structure */
@@ -528,18 +536,22 @@
 
 @media (max-width: 768px) {
   .glowBg {
-    height: 100dvh;
     perspective: none;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(206, 149, 58, 0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(254, 254, 123, 0.06) 0%, transparent 50%),
+      #030303;
+  }
+
+  :global(body[data-route="home"]) .glowBg {
+    height: 100dvh;
+    min-height: 100dvh;
   }
 
   .glowLine1,
   .glowLine2,
   .glowLine3,
-  .glowLine4 {
-    opacity: 0.35;
-    animation: none !important;
-  }
-
+  .glowLine4,
   .grid3d,
   .gridOverlay,
   .orbitalsContainer,

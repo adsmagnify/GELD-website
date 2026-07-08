@@ -215,6 +215,80 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
+.faqs {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.faqsTitle {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faqItem {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.025);
+  overflow: hidden;
+}
+
+.faqItem[open] {
+  border-color: rgba(254, 254, 123, 0.18);
+  background: rgba(254, 254, 123, 0.03);
+}
+
+.faqQuestion {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.88);
+  user-select: none;
+}
+
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+.faqQuestion::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: #fefe7b;
+  transition: transform 0.2s ease;
+}
+
+.faqItem[open] .faqQuestion::after {
+  content: "–";
+}
+
+.faqAnswer {
+  margin: 0;
+  padding: 0 16px 14px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.62);
+  white-space: pre-wrap;
+}
+
 .footer {
   margin-top: 56px;
   padding-top: 28px;
@@ -307,4 +381,105 @@
     padding: 16px 18px;
     font-size: 16px;
   }
+
+  .tableOfContents {
+    margin: 20px 0 24px;
+  }
+
+  .tocTitle {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .tocHeadCell,
+  .tocCell {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .faqs {
+    margin-top: 40px;
+    padding-top: 28px;
+  }
+
+  .faqsTitle {
+    font-size: 18px;
+  }
+
+  .faqQuestion {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .faqAnswer {
+    padding: 0 14px 12px;
+    font-size: 13px;
+  }
+}
+
+.tableOfContents {
+  margin: 24px 0 28px;
+}
+
+.tocTitle {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.tocCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(254, 254, 123, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.tocCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fefe7b 0%, #ce953a 100%);
+}
+
+.tocTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tocHeadCell {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(254, 254, 123, 0.05);
+  font-family: monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-align: left;
+  color: #fefe7b;
+}
+
+.tocCell {
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.72);
+  vertical-align: top;
+}
+
+.tocTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tocTable tbody tr:hover td {
+  background: rgba(254, 254, 123, 0.03);
+  color: rgba(255, 255, 255, 0.88);
 }

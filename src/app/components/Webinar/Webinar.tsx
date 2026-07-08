@@ -144,12 +144,14 @@ export default function Webinar({ ref, onScrollDown, isSubpage }: WebinarProps) 
               <div className={styles.posterGlow} aria-hidden="true" />
               <div className={styles.posterFrame}>
                 <Image
-                  src="/webinar_poster.png"
+                  src="/webinar_poster.jpg"
                   alt="GELD webinar poster — Ask The Expert, Trade Smarter with Chandan Taparia"
                   width={640}
                   height={900}
                   className={styles.posterImg}
+                  sizes="(max-width: 768px) 90vw, 420px"
                   priority={isSubpage}
+                  loading={isSubpage ? "eager" : "lazy"}
                 />
               </div>
               {/* <div className={styles.limitedRibbon}>

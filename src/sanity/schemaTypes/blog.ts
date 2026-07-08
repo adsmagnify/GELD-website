@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const blog = defineType({
   name: "blog",
@@ -21,6 +21,12 @@ export const blog = defineType({
         source: "title",
         maxLength: 96,
       },
+    }),
+
+    defineField({
+      name: "tableOfContents",
+      title: "Table of Contents",
+      type: "table",
     }),
 
     defineField({
@@ -68,6 +74,41 @@ export const blog = defineType({
       name: "content",
       title: "Content",
       type: "blockContent",
+    }),
+
+    defineField({
+      name: "faqs",
+      title: "FAQs",
+      description: "Shown at the end of the blog post",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "faq",
+          title: "FAQ",
+          fields: [
+            defineField({
+              name: "question",
+              title: "Question",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "answer",
+              title: "Answer",
+              type: "text",
+              rows: 4,
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: "question",
+              subtitle: "answer",
+            },
+          },
+        }),
+      ],
     }),
   ],
 });

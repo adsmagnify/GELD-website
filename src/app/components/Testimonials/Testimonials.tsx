@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import Image from "next/image";
 import styles from "./Testimonials.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
 
@@ -23,51 +24,61 @@ interface TestimonialsProps {
   isGoldenBg?: boolean;
 }
 
-const AUTOPLAY_MS = 6000; // set to 0 to disable
-const DRAG_THRESHOLD = 6; // px of movement before a press becomes a drag
+const AUTOPLAY_MS = 6000;
+const DRAG_THRESHOLD = 6;
 
-export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg }: TestimonialsProps) {
-  const testimonials: Testimonial[] = [
-    {
-      comment: "Dezerv's transparency gave me the confidence I needed.",
-      name: "Sudeep Goenka",
-      role: "Director, Goldiee Group",
-      image: "/client_sarah.png",
-    },
-    {
-      comment: "Dezerv simply brought clarity to my investments.",
-      name: "Pooja Jauhar",
-      role: "Founder & CEO, The Glitch",
-      image: "/client_elena.png",
-    },
-    {
-      comment: "GELD's wealth custody models secure our corporate reserves.",
-      name: "Michael Chang",
-      role: "Partner, Apex Capital Partners",
-      image: "/client_michael.png",
-    },
-  ];
+const testimonials: Testimonial[] = [
+  {
+    comment: "Dezerv's transparency gave me the confidence I needed.",
+    name: "Sudeep Goenka",
+    role: "Director, Goldiee Group",
+    image: "/client_sarah.jpg",
+  },
+  {
+    comment: "Dezerv simply brought clarity to my investments.",
+    name: "Pooja Jauhar",
+    role: "Founder & CEO, The Glitch",
+    image: "/client_elena.jpg",
+  },
+  {
+    comment: "GELD's wealth custody models secure our corporate reserves.",
+    name: "Michael Chang",
+    role: "Partner, Apex Capital Partners",
+    image: "/client_michael.jpg",
+  },
+];
 
+export default function Testimonials({
+  ref,
+  onScrollDown,
+  isSubpage,
+  isGoldenBg,
+}: TestimonialsProps) {
   const n = testimonials.length;
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [dragX, setDragX] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const fallbackRef = useRef<HTMLElement>(null);
   const activeRef = ref || fallbackRef;
 
-  // startX is null when no press is active. dragging flips true only after
-  // the pointer moves past DRAG_THRESHOLD, so plain clicks never start a drag.
   const dragState = useRef<{ startX: number | null; dragging: boolean }>({
     startX: null,
     dragging: false,
   });
-  const draggedRef = useRef(false); // true if the gesture that just ended was a drag
+  const draggedRef = useRef(false);
   const pausedRef = useRef(false);
 
-  // Same pattern as About: start hidden, observer flips it on mount (subpage)
-  // or on scroll (homepage). The flip is what plays the entrance transition.
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setIsVisible(true),
@@ -84,30 +95,26 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
     (dir: number) => setActiveIndex((i) => (i + dir + n) % n),
     [n]
   );
-  const goTo = useCallback((i: number) => setActiveIndex(((i % n) + n) % n), [n]);
+  const goTo = useCallback(
+    (i: number) => setActiveIndex(((i % n) + n) % n),
+    [n]
+  );
 
-  // Autoplay, paused on hover / drag / reduced-motion / mobile
   useEffect(() => {
     if (!AUTOPLAY_MS) return;
-    const reduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const mobile =
-      typeof window !== "undefined" &&
-      window.matchMedia("(max-width: 768px)").matches;
-    if (reduced || mobile) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || isMobile) return;
     const id = window.setInterval(() => {
       if (!pausedRef.current) go(1);
     }, AUTOPLAY_MS);
     return () => window.clearInterval(id);
-  }, [go]);
+  }, [go, isMobile]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") go(-1);
     if (e.key === "ArrowRight") go(1);
   };
 
-  // ---- Pointer drag / swipe (movement-gated so clicks pass through) ----
   const onPointerDown = (e: React.PointerEvent) => {
     dragState.current = { startX: e.clientX, dragging: false };
     draggedRef.current = false;
@@ -121,10 +128,11 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
     if (!dragging && Math.abs(dx) > DRAG_THRESHOLD) {
       dragState.current.dragging = true;
       draggedRef.current = true;
-      // Capture only once a real drag begins, so it can track outside the stage
       try {
         (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-      } catch {}
+      } catch {
+        /* ignore */
+      }
     }
     if (dragState.current.dragging) setDragX(dx);
   };
@@ -140,7 +148,6 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
     pausedRef.current = false;
   };
 
-  // Shortest signed distance so cards wrap seamlessly (infinite loop)
   const wrappedOffset = (index: number) => {
     let offset = index - activeIndex;
     if (offset > n / 2) offset -= n;
@@ -154,8 +161,9 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
 
     if (abs > 2) {
       return {
-        transform:
-          "translate(-50%, -50%) translateX(0) translateZ(-900px) scale(0.5)",
+        transform: isMobile
+          ? "translate(-50%, -50%) scale(0.92)"
+          : "translate(-50%, -50%) translateX(0) translateZ(-900px) scale(0.5)",
         opacity: 0,
         zIndex: 0,
         pointerEvents: "none",
@@ -164,6 +172,16 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
 
     const peek = dragX * 0.04;
     const translateX = sign * (abs * 48) + peek;
+
+    if (isMobile) {
+      return {
+        transform: `translate(-50%, -50%) translateX(${translateX}%) scale(${1 - abs * 0.08})`,
+        opacity: abs === 0 ? 1 : abs === 1 ? 0.45 : 0,
+        zIndex: 10 - abs,
+        pointerEvents: abs === 0 ? "auto" : "none",
+      };
+    }
+
     const translateZ = -abs * 240;
     const rotateY = -sign * Math.min(abs * 38, 46);
     const scale = 1 - abs * 0.14;
@@ -177,7 +195,6 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
     };
   };
 
-  // Click a side card to bring it forward — ignored if the gesture was a drag
   const handleCardClick = (i: number, isActive: boolean) => {
     if (draggedRef.current) return;
     if (!isActive) goTo(i);
@@ -185,7 +202,7 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
 
   return (
     <section
-      ref={activeRef as any}
+      ref={activeRef as React.RefObject<HTMLElement>}
       className={`${styles.section} ${isGoldenBg ? styles.goldenBg : ""} ${isSubpage ? styles.subpage : ""} ${isVisible ? styles.revealed : ""}`}
     >
       <div className={styles.container}>
@@ -208,8 +225,12 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
           aria-roledescription="carousel"
           aria-label="Client testimonials"
           onKeyDown={onKeyDown}
-          onMouseEnter={() => (pausedRef.current = true)}
-          onMouseLeave={() => (pausedRef.current = false)}
+          onMouseEnter={() => {
+            pausedRef.current = true;
+          }}
+          onMouseLeave={() => {
+            pausedRef.current = false;
+          }}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={endDrag}
@@ -222,9 +243,7 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
               return (
                 <article
                   key={i}
-                  className={`${styles.card} ${
-                    isActive ? styles.cardActive : ""
-                  }`}
+                  className={`${styles.card} ${isActive ? styles.cardActive : ""}`}
                   style={cardStyle(offset)}
                   aria-hidden={!isActive}
                   onClick={() => handleCardClick(i, isActive)}
@@ -232,11 +251,14 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
                   <div className={styles.cardInner}>
                     <div className={styles.media}>
                       {t.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={t.image}
                           alt={t.name}
                           className={styles.mediaImg}
+                          width={120}
+                          height={120}
+                          sizes="80px"
+                          loading="lazy"
                           draggable={false}
                         />
                       ) : (
@@ -290,9 +312,7 @@ export default function Testimonials({ ref, onScrollDown, isSubpage, isGoldenBg 
             <button
               key={i}
               type="button"
-              className={`${styles.dot} ${
-                i === activeIndex ? styles.dotActive : ""
-              }`}
+              className={`${styles.dot} ${i === activeIndex ? styles.dotActive : ""}`}
               onClick={() => goTo(i)}
               aria-label={`Go to slide ${i + 1}`}
               aria-selected={i === activeIndex}

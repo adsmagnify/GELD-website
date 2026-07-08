@@ -78,6 +78,42 @@ export default function BlogPostView({ blog }: BlogPostViewProps) {
 
         {blog.excerpt ? <p className={styles.excerpt}>{blog.excerpt}</p> : null}
 
+        {blog.tableOfContents?.rows && blog.tableOfContents.rows.length > 0 ? (
+          <nav className={styles.tableOfContents} aria-label="Table of contents">
+            <h2 className={styles.tocTitle}>Table of Content</h2>
+
+            <div className={styles.tocCard}>
+              <table className={styles.tocTable}>
+                {blog.tableOfContents.rows.length > 1 ? (
+                  <thead>
+                    <tr>
+                      {blog.tableOfContents.rows[0].cells.map((cell, cellIndex) => (
+                        <th key={cellIndex} scope="col" className={styles.tocHeadCell}>
+                          {cell}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                ) : null}
+                <tbody>
+                  {(blog.tableOfContents.rows.length > 1
+                    ? blog.tableOfContents.rows.slice(1)
+                    : blog.tableOfContents.rows
+                  ).map((row, index) => (
+                    <tr key={index}>
+                      {row.cells.map((cell, cellIndex) => (
+                        <td key={cellIndex} className={styles.tocCell}>
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </nav>
+        ) : null}
+
         {featuredImageUrl ? (
           <div className={styles.featuredImageWrap}>
             <Image
@@ -99,6 +135,20 @@ export default function BlogPostView({ blog }: BlogPostViewProps) {
             <PortableText value={blog.content} components={portableTextComponents} />
           ) : null}
         </div>
+
+        {blog.faqs && blog.faqs.length > 0 ? (
+          <section className={styles.faqs} aria-label="Frequently asked questions">
+            <h2 className={styles.faqsTitle}>FAQs</h2>
+            <div className={styles.faqList}>
+              {blog.faqs.map((faq) => (
+                <details key={faq._key} className={styles.faqItem}>
+                  <summary className={styles.faqQuestion}>{faq.question}</summary>
+                  <p className={styles.faqAnswer}>{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {blog.author ? (
           <footer className={styles.footer}>

@@ -308,23 +308,23 @@
 
 /* Horizontal text animations */
 .exiting .value {
-  animation: statFadeOutLeft 0.3s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation: statFadeOutLeft 0.18s cubic-bezier(0.76, 0, 0.24, 1) forwards;
 }
 .exiting .label {
-  animation: statFadeOutLeft 0.3s cubic-bezier(0.76, 0, 0.24, 1) 0.05s forwards;
+  animation: statFadeOutLeft 0.18s cubic-bezier(0.76, 0, 0.24, 1) 0.03s forwards;
 }
 .exiting .sublabel {
-  animation: statFadeOutLeft 0.3s cubic-bezier(0.76, 0, 0.24, 1) 0.1s forwards;
+  animation: statFadeOutLeft 0.18s cubic-bezier(0.76, 0, 0.24, 1) 0.06s forwards;
 }
 
 .entering .value {
-  animation: statFadeInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: statFadeInRight 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .entering .label {
-  animation: statFadeInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
+  animation: statFadeInRight 0.28s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards;
 }
 .entering .sublabel {
-  animation: statFadeInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards;
+  animation: statFadeInRight 0.28s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
 }
 
 @keyframes statFadeInRight {

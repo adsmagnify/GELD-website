@@ -7,7 +7,7 @@
   margin-top: auto;
   padding-bottom: 24px;
   opacity: 0;
-  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
   z-index: 10;
 }
 
@@ -44,13 +44,7 @@
 
 /* Advisor Group Badge */
 .advisorBadge {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(18, 18, 18, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 9999px;
   padding: 5px 6px 5px 22px;
@@ -141,6 +135,14 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer {
+    opacity: 1;
+    animation: none;
+    transform: none;
   }
 }
 

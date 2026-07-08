@@ -115,6 +115,20 @@
   display: block;
 }
 
+.mapPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 180px;
+  background:
+    linear-gradient(135deg, rgba(206, 149, 58, 0.12) 0%, rgba(10, 6, 2, 0.06) 100%);
+  color: rgba(10, 6, 2, 0.7);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
 .mapLink {
   font-size: 13px;
   font-weight: 600;

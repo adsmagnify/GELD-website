@@ -123,6 +123,7 @@ export default function Hero() {
 
     requestAnimationFrame(() => {
       if (card.getAnimations().length > 0) beginDraw();
+      else beginDraw();
     });
 
     return () => card.removeEventListener("animationstart", onAnimStart);
@@ -141,6 +142,7 @@ export default function Hero() {
     if (!pathLength) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
     if (reduced) {
       setDrawProgress(1);
@@ -150,6 +152,35 @@ export default function Hero() {
         setHeadPoint({ x: point.x, y: point.y });
       }
       return;
+    }
+
+    // Mobile: draw once then stop — no perpetual rAF loop
+    if (isMobile) {
+      drawReadyRef.current = true;
+      let frameId = 0;
+      const tick = (now: number) => {
+        if (drawStartRef.current === null) drawStartRef.current = now;
+        const elapsed = now - drawStartRef.current;
+        const path = pathRef.current;
+
+        if (elapsed < DRAW_DURATION_MS) {
+          const eased = easeInOutCubic(elapsed / DRAW_DURATION_MS);
+          setDrawProgress(eased);
+          if (path) {
+            const point = path.getPointAtLength(pathLength * eased);
+            setHeadPoint({ x: point.x, y: point.y });
+          }
+          frameId = requestAnimationFrame(tick);
+        } else {
+          setDrawProgress(1);
+          if (path) {
+            const point = path.getPointAtLength(pathLength);
+            setHeadPoint({ x: point.x, y: point.y });
+          }
+        }
+      };
+      frameId = requestAnimationFrame(tick);
+      return () => cancelAnimationFrame(frameId);
     }
 
     let frameId = 0;
