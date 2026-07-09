@@ -1,8 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
 
-import { getBlogImageUrl } from "@/sanity/lib/blogImage";
 import type { BlogPost } from "@/app/types/blog";
 
 import { portableTextComponents } from "./portableTextComponents";
@@ -34,10 +32,6 @@ function getAuthorInitials(author?: string) {
 }
 
 export default function BlogPostView({ blog }: BlogPostViewProps) {
-  const featuredImageUrl = blog.featuredImage
-    ? getBlogImageUrl(blog.featuredImage, 1200, 675)
-    : null;
-
   return (
     <article className={styles.article}>
       <div className={styles.inner}>
@@ -112,20 +106,6 @@ export default function BlogPostView({ blog }: BlogPostViewProps) {
               </table>
             </div>
           </nav>
-        ) : null}
-
-        {featuredImageUrl ? (
-          <div className={styles.featuredImageWrap}>
-            <Image
-              src={featuredImageUrl}
-              alt={blog.featuredImage?.alt || blog.title}
-              width={1200}
-              height={675}
-              className={styles.featuredImage}
-              priority
-              sizes="(max-width: 768px) 100vw, 760px"
-            />
-          </div>
         ) : null}
 
         <div className={styles.divider} aria-hidden="true" />

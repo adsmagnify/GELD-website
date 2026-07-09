@@ -19,7 +19,7 @@ export type BlogPost = {
   };
   faqs?: BlogFaq[];
   featuredImage?: {
-    asset: { _ref: string };
+    asset: { _ref: string; _id?: string; url?: string };
     alt?: string;
   };
   author?: string;

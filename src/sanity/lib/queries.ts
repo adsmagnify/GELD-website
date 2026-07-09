@@ -4,7 +4,10 @@ export const BLOGS_QUERY = `
   title,
   slug,
   excerpt,
-  featuredImage,
+  featuredImage{
+    asset->,
+    alt
+  },
   author,
   category,
   readingTime,
@@ -25,7 +28,6 @@ export const BLOG_QUERY = `
     question,
     answer
   },
-  featuredImage,
   author,
   category,
   readingTime,

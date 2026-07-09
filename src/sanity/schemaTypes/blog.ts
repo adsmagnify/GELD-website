@@ -32,10 +32,18 @@ export const blog = defineType({
     defineField({
       name: "featuredImage",
       title: "Featured Image",
+      description: "Cover image for the blog listing cards only (not shown inside the article).",
       type: "image",
       options: {
         hotspot: true,
       },
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alternative text",
+          type: "string",
+        }),
+      ],
     }),
 
     defineField({

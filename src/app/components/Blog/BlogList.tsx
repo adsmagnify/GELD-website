@@ -4,8 +4,14 @@ import type { BlogPost } from "@/app/types/blog";
 
 import BlogListClient from "./BlogListClient";
 
+export const revalidate = 60;
+
 export default async function BlogList() {
-  const blogs: BlogPost[] = await client.fetch(BLOGS_QUERY);
+  const blogs: BlogPost[] = await client.fetch(
+    BLOGS_QUERY,
+    {},
+    { next: { revalidate: 60 } }
+  );
 
   return <BlogListClient blogs={blogs} />;
 }
