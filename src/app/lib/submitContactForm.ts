@@ -3,6 +3,7 @@ export const CONTACT_EMAIL = "Support@geldwealth.com";
 export interface ContactFormPayload {
   name: string;
   email: string;
+  phone: string;
   message: string;
   source?: string;
 }

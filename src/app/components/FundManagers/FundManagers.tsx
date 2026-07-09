@@ -51,7 +51,7 @@ export default function FundManagers({ ref, onScrollDown, isSubpage }: FundManag
     },
     {
       name: "Chandan Taparia",
-      role: "Head - Derivatives & Technicals",
+      role: "Head, Derivatives & Technicals",
       company: "Motilal Oswal (MOSL)",
       specialty: "Derivatives Desk",
       bio: "Renowned derivatives strategist and momentum research lead.",
@@ -129,7 +129,9 @@ export default function FundManagers({ ref, onScrollDown, isSubpage }: FundManag
           {/* Main Paragraph */}
           <p className={styles.aboutText}>
             <span className={styles.serifItalic}>Great portfolios require visionary minds.</span>{" "}
-            <span className={styles.fadeText}>Guided by legends like Raamdeo Agrawal and Sunil Singhania,</span>{" "}
+            <span className={styles.fadeText}>Guided by legends like Raamdeo Agrawal, Chandan Taparia, Sailesh Saraf, Madhu Runawat, Pankaj Murarka,
+             Shailendra Kumar, Vikas Khemani and
+              Sunil Singhania,</span>{" "}
             <span className={styles.highlightText}>
               our fund management panel brings over 150 combined years of market-beating expertise.
             </span>{" "}

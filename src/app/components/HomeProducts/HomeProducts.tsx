@@ -25,7 +25,7 @@ const productMeta: Record<
     tierLabel: "Growth",
   },
   PMS: {
-    tagline: "20–25 focused stocks, historically above-average returns vs mutual funds",
+    tagline: "20 to 25 focused stocks, historically above-average returns vs mutual funds",
     tierLabel: "Elite",
   },
   AIF: {
@@ -91,7 +91,7 @@ export default function HomeProducts({ ref, onScrollDown }: HomeProductsProps) {
               Climb the <span className={styles.goldText}>capital ladder</span>
             </h2>
             <p className={styles.subheading}>
-              Four curated paths — from your first SIP to alternative investments.
+              Four curated paths, from your first SIP to alternative investments.
               Pick your tier, explore the fit, then dive deeper on our products page.
             </p>
           </div>

@@ -34,7 +34,7 @@ export const catalogProducts: CatalogProduct[] = [
     highlight: true,
     featured: true,
     bullets: [
-      "Investments in 20-25 Largecap / multicap stocks",
+      "Investments in 20 to 25 largecap / multicap stocks",
       "Managed by top fund managers such as Pankaj Murarka, Dipen seth, Sunil Singhania",
       "Outperformed nifty by big margin in last 3 years",
     ],
@@ -47,9 +47,9 @@ export const catalogProducts: CatalogProduct[] = [
     value: "₹50 Lakhs",
     featured: true,
     bullets: [
-      "Focused portfolio of 20–25 handpicked stocks by India's top fund managers — not 100+ holdings like a typical mutual fund",
-      "Historically delivered 11–31% annualised returns, outperforming mutual fund benchmarks on average",
-      "Access to elite PMS houses — Abakkus, Carnelian, MOAMC, Renaissance, Buoyant & more",
+      "Focused portfolio of 20 to 25 handpicked stocks by India's top fund managers, not 100+ holdings like a typical mutual fund",
+      "Historically delivered 11% to 31% annualised returns, outperforming mutual fund benchmarks on average",
+      "Access to elite PMS houses including Abakkus, Carnelian, MOAMC, Renaissance, Buoyant & more",
     ],
   },
   {
@@ -68,9 +68,9 @@ export const catalogProducts: CatalogProduct[] = [
     name: "Fixed Income Offerings",
     iconType: "coin",
     bullets: [
-      "Our fixed income products offer 10-15% returns with top-tier credit ratings.",
+      "Our fixed income products offer 10% to 15% returns with top-tier credit ratings.",
       "Perfect for your debt portfolio and ideal for those who want steady monthly income.",
-      "Safe, consistent, and smart —your money, working stress-free.",
+      "Safe, consistent, and smart. Your money, working stress-free.",
     ],
   },
   {

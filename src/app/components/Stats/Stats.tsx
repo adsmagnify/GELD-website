@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./Stats.module.css";
@@ -209,10 +209,174 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
     return () => clearInterval(timer);
   }, [currentSlide, triggerTransition, isVisible]);
 
+  const lastScrollTime = useRef(0);
+  const touchStartY = useRef(0);
+  const boundaryScrollCount = useRef(0);
+  const SCROLL_COOLDOWN_MS = 1200;
+  const WHEEL_THRESHOLD = 50;
+  const TOUCH_THRESHOLD = 70;
+
+  useEffect(() => {
+    boundaryScrollCount.current = 0;
+  }, [currentSlide, isVisible]);
+
+  const handleScrollButtonClick = () => {
+    boundaryScrollCount.current = 0;
+    if (currentSlide < slides.length - 1) {
+      const nextSlide = currentSlide + 1;
+      setCurrentSlide(nextSlide);
+      triggerTransition(nextSlide);
+    } else {
+      if (onScrollDown) onScrollDown();
+    }
+  };
+
+  useEffect(() => {
+    const sectionElement = activeRef.current;
+    if (!sectionElement || !isVisible) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      const now = performance.now();
+
+      if (now - lastScrollTime.current < SCROLL_COOLDOWN_MS) {
+        if (
+          (e.deltaY > 0 && (currentSlide < slides.length - 1 || boundaryScrollCount.current < 1)) ||
+          (e.deltaY < 0 && (currentSlide > 0 || boundaryScrollCount.current < 1))
+        ) {
+          e.preventDefault();
+        }
+        return;
+      }
+
+      if (Math.abs(e.deltaY) < WHEEL_THRESHOLD) {
+        if (
+          (e.deltaY > 0 && (currentSlide < slides.length - 1 || boundaryScrollCount.current < 1)) ||
+          (e.deltaY < 0 && (currentSlide > 0 || boundaryScrollCount.current < 1))
+        ) {
+          e.preventDefault();
+        }
+        return;
+      }
+
+      if (e.deltaY > 0) {
+        // Scroll Down
+        if (currentSlide < slides.length - 1) {
+          e.preventDefault();
+          const nextSlide = currentSlide + 1;
+          setCurrentSlide(nextSlide);
+          triggerTransition(nextSlide);
+          lastScrollTime.current = now;
+        } else {
+          if (boundaryScrollCount.current < 1) {
+            e.preventDefault();
+            boundaryScrollCount.current += 1;
+            lastScrollTime.current = now;
+          }
+        }
+      } else if (e.deltaY < 0) {
+        // Scroll Up
+        if (currentSlide > 0) {
+          e.preventDefault();
+          const prevSlide = currentSlide - 1;
+          setCurrentSlide(prevSlide);
+          triggerTransition(prevSlide);
+          lastScrollTime.current = now;
+        } else {
+          if (boundaryScrollCount.current < 1) {
+            e.preventDefault();
+            boundaryScrollCount.current += 1;
+            lastScrollTime.current = now;
+          }
+        }
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        touchStartY.current = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+
+      const now = performance.now();
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchStartY.current - touchY;
+
+      if (Math.abs(deltaY) < TOUCH_THRESHOLD) {
+        if (
+          (deltaY > 0 && (currentSlide < slides.length - 1 || boundaryScrollCount.current < 1)) ||
+          (deltaY < 0 && (currentSlide > 0 || boundaryScrollCount.current < 1))
+        ) {
+          e.preventDefault();
+        }
+        return;
+      }
+
+      if (now - lastScrollTime.current < SCROLL_COOLDOWN_MS) {
+        if (
+          (deltaY > 0 && (currentSlide < slides.length - 1 || boundaryScrollCount.current < 1)) ||
+          (deltaY < 0 && (currentSlide > 0 || boundaryScrollCount.current < 1))
+        ) {
+          e.preventDefault();
+        }
+        return;
+      }
+
+      if (deltaY > 0) {
+        // Scroll Down
+        if (currentSlide < slides.length - 1) {
+          e.preventDefault();
+          const nextSlide = currentSlide + 1;
+          setCurrentSlide(nextSlide);
+          triggerTransition(nextSlide);
+          lastScrollTime.current = now;
+          touchStartY.current = touchY;
+        } else {
+          if (boundaryScrollCount.current < 1) {
+            e.preventDefault();
+            boundaryScrollCount.current += 1;
+            lastScrollTime.current = now;
+            touchStartY.current = touchY;
+          }
+        }
+      } else if (deltaY < 0) {
+        // Scroll Up
+        if (currentSlide > 0) {
+          e.preventDefault();
+          const prevSlide = currentSlide - 1;
+          setCurrentSlide(prevSlide);
+          triggerTransition(prevSlide);
+          lastScrollTime.current = now;
+          touchStartY.current = touchY;
+        } else {
+          if (boundaryScrollCount.current < 1) {
+            e.preventDefault();
+            boundaryScrollCount.current += 1;
+            lastScrollTime.current = now;
+            touchStartY.current = touchY;
+          }
+        }
+      }
+    };
+
+    sectionElement.addEventListener("wheel", handleWheel, { passive: false });
+    sectionElement.addEventListener("touchstart", handleTouchStart, { passive: true });
+    sectionElement.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    return () => {
+      sectionElement.removeEventListener("wheel", handleWheel);
+      sectionElement.removeEventListener("touchstart", handleTouchStart);
+      sectionElement.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [currentSlide, isVisible, triggerTransition]);
+
   const handleSegmentClick = (index: number) => {
     if (isTransitioning || index === currentSlide) return;
     setCurrentSlide(index);
     triggerTransition(index);
+    boundaryScrollCount.current = 0;
   };
 
   const currentSlideData = slides[displaySlide];
@@ -295,7 +459,7 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
 
       {onScrollDown && (
         <div className={`${styles.scrollWrapper} scrollWrapperCentered`}>
-          <ScrollButton onClick={onScrollDown} darkText={isGoldenBg} />
+          <ScrollButton onClick={handleScrollButtonClick} darkText={isGoldenBg} />
         </div>
       )}
     </section>

@@ -11,6 +11,7 @@ interface ContactProps {
 const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,6 +52,7 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
       await submitContactForm({
         name,
         email,
+        phone,
         message,
         source: "home-page",
       });
@@ -102,6 +104,19 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
                   placeholder="name@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label className={styles.inputLabel} htmlFor="home-phone">Contact Number</label>
+                <input
+                  id="home-phone"
+                  type="tel"
+                  className={styles.input}
+                  placeholder="+91 99999 99999"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   required
                 />
               </div>

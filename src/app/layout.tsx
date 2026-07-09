@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "GELD Wealth — Precision instruments for capital expansion",
+  title: "GELD Wealth: Precision instruments for capital expansion",
   description: "Empowering investors with expert portfolio management, alternative funds, and tailored wealth strategies.",
 };
 

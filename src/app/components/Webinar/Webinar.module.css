@@ -1,5 +1,5 @@
 .section {
-  min-height: auto;
+  min-height: 100dvh;
   width: 100%;
   background-color: var(--background-dark);
   position: relative;
@@ -426,6 +426,9 @@
 }
 
 @media (max-width: 720px) {
+  .section {
+    min-height: auto;
+  }
   .section,
   .subpage {
     padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile);

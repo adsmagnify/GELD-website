@@ -179,4 +179,34 @@ a {
   box-sizing: border-box;
 }
 
+/* CSS Scroll Snapping for Home Page */
+@media (min-width: 769px) {
+  .page-scroll-container.homeSnapContainer {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-scroll-container.homeSnapContainer {
+    scroll-snap-type: y proximity;
+    scroll-behavior: auto;
+  }
+}
+
+.page-scroll-container.homeSnapContainer #hero,
+.page-scroll-container.homeSnapContainer #about,
+.page-scroll-container.homeSnapContainer #products,
+.page-scroll-container.homeSnapContainer #stats,
+.page-scroll-container.homeSnapContainer #webinar,
+.page-scroll-container.homeSnapContainer #testimonials,
+.page-scroll-container.homeSnapContainer #contact {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.page-scroll-container.homeSnapContainer > footer {
+  scroll-snap-align: end;
+}
+
 

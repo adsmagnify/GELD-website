@@ -253,32 +253,7 @@ export default function Performance({ ref, onScrollDown, isSubpage }: Performanc
         </div>
       </div>
 
-      {/* 4. SEBI Regulatory & Fund Manager details */}
-      <div className={styles.sebiSection}>
-        <div className={styles.sebiGrid}>
-          {/* <div className={styles.sebiBlock}>
-            <h4>Fund Manager Details</h4>
-            <p><strong>Manager:</strong> Mr. Shailesh Saraf</p>
-            <p>Managing Director - Dynamic Equities Pvt Limited. Certification on Value Investing from Columbia University. Over 25 Years of institutional market experience.</p>
-          </div> */}
-          <div className={styles.sebiBlock}>
-            <h4>Registered Address</h4>
-            <p><strong>Dynamic Equities Pvt. Ltd</strong></p>
-            <p>Technopolis, 14th Floor, Plot No. BP-4, Sector V, Salt Lake, Kolkata- 700091</p>
-            <p><strong>SEBI Reg No:</strong> INA300002022 | <strong>BASL Member ID:</strong> BASL1505</p>
-          </div>
-          <div className={styles.sebiBlock}>
-            <h4>Grievance Redressal</h4>
-            <p><strong>Principal Officer:</strong> Rishav Roy (Contact: 8240771478)</p>
-            <p><strong>Compliance Officer:</strong> Mr. Jibachh Prasad (Contact: 9874421921)</p>
-          </div>
-        </div>
 
-        <div className={styles.disclaimerText}>
-          <p><strong>STANDARD WARNING:</strong> Investment in securities market is subject to market risks. Read all the related documents carefully before investing.</p>
-          <p><strong>DISCLAIMER:</strong> The performance data presented herein are not verified by Past Risk and Return Verification Agency (PaRRVA) or any other agency recognized by SEBI for this purpose. Past performance is no guarantee of future results.</p>
-        </div>
-      </div>
 
       {onScrollDown && (
         <div className={styles.scrollWrapper}>

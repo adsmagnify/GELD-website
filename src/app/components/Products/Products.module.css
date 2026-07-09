@@ -636,24 +636,43 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   height: 150px;
-  width: 220px;
+  width: 100%;
+  max-width: 240px;
 }
 
 .growthBar {
   flex: 1;
+  min-width: 0;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 6px 6px 0 0;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding-bottom: 12px;
+  padding: 0 4px 10px;
+  overflow: hidden;
   opacity: 0;
   transform: scaleY(0);
   transform-origin: bottom;
   animation: growVertical 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.growthBarLabel {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-align: center;
+  color: #ffffff;
+  white-space: normal;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .goldBar {
@@ -662,15 +681,7 @@
   box-shadow: 0 8px 25px rgba(206, 149, 58, 0.25);
 }
 
-.barLabel {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #ffffff;
-}
-
-.goldBar .barLabel {
+.goldBar .growthBarLabel {
   color: #0c0d12;
 }
 
@@ -1048,4 +1059,98 @@
   .pmsDialContainer {
     transform: scale(0.72);
   }
+}
+
+/* Product Performance Chart */
+.productPerfChart {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.chartMiniTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin: 0 0 4px 0;
+  text-align: left;
+}
+
+.chartCanvas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.barRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.barLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  text-align: left;
+}
+
+.barTrack {
+  width: 100%;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  border-radius: 6px;
+  min-width: 60px;
+  box-sizing: border-box;
+}
+
+.strategyBar {
+  background: linear-gradient(90deg, #CE953A 0%, #FEFE7B 100%);
+  box-shadow: 0 4px 15px rgba(206, 149, 58, 0.2);
+}
+
+.benchmarkBar {
+  background: rgba(255, 255, 255, 0.08);
+  border-right: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.barValue {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.barValue2 {
+  font-size: 11px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.chartMiniFooter {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: left;
 }

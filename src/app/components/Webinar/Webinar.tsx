@@ -28,7 +28,7 @@ const topics = [
   },
   {
     title: "Derivatives decoded",
-    desc: "F&O simplified — without the confusion.",
+    desc: "F&O simplified, without the confusion.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path
@@ -133,7 +133,7 @@ export default function Webinar({ ref, onScrollDown, isSubpage }: WebinarProps) 
             <span className={styles.goldText}>Trade Smarter</span>
           </h2>
           <p className={styles.subSubtitle}>
-            Join a live session with one of India's most watched market voices — and get your
+            Join a live session with one of India's most watched market voices, and get your
             trading questions answered directly.
           </p>
         </header>
@@ -145,7 +145,7 @@ export default function Webinar({ ref, onScrollDown, isSubpage }: WebinarProps) 
               <div className={styles.posterFrame}>
                 <Image
                   src="/webinar_poster.jpg"
-                  alt="GELD webinar poster — Ask The Expert, Trade Smarter with Chandan Taparia"
+                  alt="GELD webinar poster: Ask The Expert, Trade Smarter with Chandan Taparia"
                   width={640}
                   height={900}
                   className={styles.posterImg}
@@ -186,7 +186,7 @@ export default function Webinar({ ref, onScrollDown, isSubpage }: WebinarProps) 
 
             <div className={styles.ctaPanel}>
               <p className={styles.ctaCopy}>
-                Whether you trade on your own or are just starting out —{" "}
+                Whether you trade on your own or are just starting out,{" "}
                 <strong>this is the session you don't want to miss.</strong>
               </p>
               <button

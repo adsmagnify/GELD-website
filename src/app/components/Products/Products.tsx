@@ -103,7 +103,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
       paragraph: string;
       badge: string;
       primaryCta: string;
-      secondaryCta: string;
+      secondaryCta?: string;
       anchorId: string;
     }
   > = {
@@ -112,7 +112,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
       subtitle:
         "Mini stock portfolios: India's Top Fund Managers, Known For Buffett-Like Returns",
       paragraph:
-        "Starting at just ₹2 lakhs, your money is invested in a focused portfolio of 20-30 Best stocks—giving you expert management without the hassle of doing it yourself.",
+        "Starting at just ₹2.5 lakhs, your money is invested in a focused portfolio of 20 to 30 best stocks, giving you expert management without the hassle of doing it yourself.",
       badge: MINI_STOCK_PORTFOLIOS_NAME,
       primaryCta: "Start My Portfolio Journey",
       secondaryCta: "Review My Portfolio Today",
@@ -122,7 +122,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
       title: "Why Settle For Average When You Can Have The Best?",
       subtitle: "PMS: Concentrated conviction, professionally managed for superior growth",
       paragraph:
-        "While mutual funds spread across 100+ stocks, PMS invests in just 20–25 handpicked companies — focused, not over-diversified — so your portfolio fully benefits from each high-conviction pick.",
+        "While mutual funds spread across 100+ stocks, PMS invests in just 20 to 25 handpicked companies, focused and not over-diversified, so your portfolio fully benefits from each high-conviction pick.",
       badge: "Portfolio Management Services",
       primaryCta: "Start My PMS Journey",
       secondaryCta: "Review My Portfolio Today",
@@ -131,7 +131,8 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
     AIF: {
       title: "Alternative Alpha, Maximum Leverage",
       subtitle: "AIF: Alternative Investment Funds for Sophisticated Yields",
-      paragraph: "Access high-yield alternative opportunities including pre-IPO equity, structured debt, and commercial real estate starting at ₹1 Crore. Tailored for ultra-high-net-worth portfolios seeking non-correlated alpha.",
+      paragraph:"Who makes the biggest returns after a business owner? Private equity investors who invest before the IPO. Our AIF partners invest in high quality companies before they go public, giving you access to the same growth opportunity. No IPO allotment uncertainty. Just long term value creation until the IPO exit. This opportunity is designed for sophisticated investors. Minimum investment: ₹1 crore as per SEBI guidelines. AIF investments are subject to market and liquidity risks. Please read all offer documents carefully before investing.",
+      // paragraph: "Access high-yield alternative opportunities including pre-IPO equity, structured debt, and commercial real estate starting at ₹1 Crore. Tailored for ultra-high-net-worth portfolios seeking non-correlated alpha.",
       badge: "Alternative Investment Fund",
       primaryCta: "Explore AIF Vaults",
       secondaryCta: "Consult AIF Advisor",
@@ -139,11 +140,11 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
     },
     "Mutual Funds": {
       title: "Diversification Simplified, Wealth Amplified",
-      subtitle: "Direct Mutual Funds: Zero Commissions, Compounded Growth",
-      paragraph: "A curated list of direct mutual funds across large, mid, and small-cap segments. Invest directly with zero-commission platforms to maximize your compound growth and simplify portfolio distribution.",
-      badge: "Direct Mutual Funds",
-      primaryCta: "View Direct Funds",
-      secondaryCta: "Start a SIP Today",
+      subtitle: "Mutual Funds: Curated Schemes, Compounded Growth",
+      paragraph:
+        "Most people own too many schemes and think too little about which ones. At Geld, we do it differently. Three to four carefully selected schemes. Right allocation for your age. Fund managers we actually believe in. And a fund size filter that most advisers never think about. Because a well-chosen SIP in the right three funds beats a cluttered portfolio of fifteen every single time. Minimum investment: Rs 500 per month.",
+      badge: "Mutual Funds",
+      primaryCta: "Start a SIP Today",
       anchorId: "mutual-funds-section"
     }
   };
@@ -227,9 +228,11 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
                 <button type="button" className={styles.primaryCtaBtn} onClick={goToContact}>
                   {productData[activeProduct].primaryCta}
                 </button>
-                <button type="button" className={styles.secondaryCtaBtn} onClick={goToContact}>
-                  {productData[activeProduct].secondaryCta}
-                </button>
+                {productData[activeProduct].secondaryCta ? (
+                  <button type="button" className={styles.secondaryCtaBtn} onClick={goToContact}>
+                    {productData[activeProduct].secondaryCta}
+                  </button>
+                ) : null}
               </div>
             </div>
 
@@ -239,7 +242,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
                   <div className={styles.pmsCompareColumn}>
                     <div className={`${styles.pmsCompareCard} ${styles.pmsCompareCardHighlight}`}>
                       <span className={styles.pmsCompareLabel}>PMS</span>
-                      <span className={styles.pmsCompareVal}>20–25 stocks</span>
+                      <span className={styles.pmsCompareVal}>20 to 25 stocks</span>
                       <span className={styles.pmsCompareNote}>Handpicked by fund managers</span>
                     </div>
                   </div>
@@ -262,20 +265,35 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
               )}
 
               {activeProduct === MINI_STOCK_PORTFOLIOS_NAME && (
-                /* High-end structured asset-class grid cards representation for IAP */
-                <div className={styles.aifAssetGrid}>
-                  <div className={`${styles.assetBlock} ${styles.goldGlow}`}>
-                    <span className={styles.blockVal}>₹2 Lakhs+</span>
-                    <span className={styles.blockLbl}>Minimum Ticket</span>
+                <div className={styles.productPerfChart}>
+                  <h4 className={styles.chartMiniTitle}>Returns since Inception (Dec 2020)</h4>
+                  <div className={styles.chartCanvas}>
+                    <div className={styles.barRow}>
+                      <div className={styles.barLabel}>Bluechip High Growth Strategy</div>
+                      <div className={styles.barTrack}>
+                        <div className={`${styles.barFill} ${styles.strategyBar}`} style={{ width: "95%" }}>
+                          <span className={styles.barValue2}>+325.63%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.barRow}>
+                      <div className={styles.barLabel}>Nifty 500 Index</div>
+                      <div className={styles.barTrack}>
+                        <div className={`${styles.barFill} ${styles.benchmarkBar}`} style={{ width: "35%" }}>
+                          <span className={styles.barValue}>+99.53%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.barRow}>
+                      <div className={styles.barLabel}>Nifty 50 Index</div>
+                      <div className={styles.barTrack}>
+                        <div className={`${styles.barFill} ${styles.benchmarkBar}`} style={{ width: "27%" }}>
+                          <span className={styles.barValue}>+71.13%</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className={styles.assetBlock}>
-                    <span className={styles.blockVal}>20-30</span>
-                    <span className={styles.blockLbl}>Curated Best Stocks</span>
-                  </div>
-                  <div className={styles.assetBlock}>
-                    <span className={styles.blockVal}>Active</span>
-                    <span className={styles.blockLbl}>Expert Rebalancing</span>
-                  </div>
+                  <span className={styles.chartMiniFooter}>* Returns as on 30th May 2026. Gross returns.</span>
                 </div>
               )}
 
@@ -299,9 +317,15 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
               {activeProduct === "Mutual Funds" && (
                 /* Growth curve / compounding visual representation */
                 <div className={styles.growthChartVisual}>
-                  <div className={styles.growthBar} style={{ height: "40%", animationDelay: "0.1s" }}><span className={styles.barLabel}>SIP</span></div>
-                  <div className={styles.growthBar} style={{ height: "65%", animationDelay: "0.2s" }}><span className={styles.barLabel}>Direct</span></div>
-                  <div className={`${styles.growthBar} ${styles.goldBar}`} style={{ height: "90%", animationDelay: "0.3s" }}><span className={styles.barLabel}>Compound</span></div>
+                  <div className={styles.growthBar} style={{ height: "40%", animationDelay: "0.1s" }}>
+                    <span className={styles.growthBarLabel}>SIP</span>
+                  </div>
+                  <div className={styles.growthBar} style={{ height: "65%", animationDelay: "0.2s" }}>
+                    <span className={styles.growthBarLabel}>Curated</span>
+                  </div>
+                  <div className={`${styles.growthBar} ${styles.goldBar}`} style={{ height: "90%", animationDelay: "0.3s" }}>
+                    <span className={styles.growthBarLabel}>Compound</span>
+                  </div>
                 </div>
               )}
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import styles from "../../page.module.css";
 import Background from "../Background/Background";
@@ -29,6 +29,18 @@ export default function HomeClient() {
   const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const scrollContainer = document.querySelector(".page-scroll-container");
+    if (scrollContainer) {
+      scrollContainer.classList.add("homeSnapContainer");
+    }
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.classList.remove("homeSnapContainer");
+      }
+    };
+  }, []);
 
   return (
     <div className={styles.container}>

@@ -5,9 +5,7 @@
   background-color: var(--background-dark);
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-behavior: smooth;
+  overflow: visible;
 }
 
 /* Wrapper Layout */

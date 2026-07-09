@@ -90,19 +90,27 @@ export default function Header() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setVisibleSection(entry.target.id);
+          if (window.history && window.history.replaceState) {
+            const hash = entry.target.id === "hero" ? "" : `#${entry.target.id}`;
+            window.history.replaceState(null, "", window.location.pathname + hash);
+          }
         }
       });
     }, observerOptions);
 
     const hero = document.getElementById("hero");
     const about = document.getElementById("about");
+    const products = document.getElementById("products");
     const stats = document.getElementById("stats");
+    const webinar = document.getElementById("webinar");
     const testimonials = document.getElementById("testimonials");
     const contact = document.getElementById("contact");
 
     if (hero) observer.observe(hero);
     if (about) observer.observe(about);
+    if (products) observer.observe(products);
     if (stats) observer.observe(stats);
+    if (webinar) observer.observe(webinar);
     if (testimonials) observer.observe(testimonials);
     if (contact) observer.observe(contact);
 

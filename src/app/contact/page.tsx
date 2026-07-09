@@ -8,6 +8,7 @@ import { submitContactForm } from "../lib/submitContactForm";
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,6 +23,7 @@ export default function ContactPage() {
       await submitContactForm({
         name,
         email,
+        phone,
         message,
         source: "contact-page",
       });
@@ -72,6 +74,19 @@ export default function ContactPage() {
                   placeholder="name@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="phone">Contact Number</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  className={styles.input}
+                  placeholder="+91 99999 99999"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   required
                 />
               </div>

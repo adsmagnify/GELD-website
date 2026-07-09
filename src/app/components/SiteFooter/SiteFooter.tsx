@@ -82,7 +82,7 @@ export default function SiteFooter() {
             GELD
           </Link>
           <p className={styles.description}>
-            Empowering institutions and individuals with next-generation digital wealth custody and custody-grade execution models.
+            GELD is a brand of Dynamic Equities Pvt. Ltd., a SEBI registered Investment Adviser (INA300002022). We build custody-grade digital wealth execution models and multi-cap investment portfolios designed for consistent long-term wealth creation.
           </p>
           <div className={styles.socials}>
             <a href="https://www.instagram.com/geldwealth/" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Instagram">
@@ -106,22 +106,24 @@ export default function SiteFooter() {
             </a>
           </div>
 
-          <div className={styles.officeBlock}>
-            <h4 className={styles.officeTitle}>Office Address</h4>
-            <p className={styles.officeAddress}>
-              Lodha Signet, A-618, Senapati Bapat Marg, next to Kamala Mills,
-              Lower Parel, Mumbai, Maharashtra 400013
-            </p>
-            <LazyMap />
-            <a
-              href={MAP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.mapLink}
-            >
-              View on Google Maps
-            </a>
-          </div>
+          {pathname !== "/performance" && (
+            <div className={styles.officeBlock}>
+              <h4 className={styles.officeTitle}>Office Address</h4>
+              <p className={styles.officeAddress}>
+                Lodha Signet, A-618, Senapati Bapat Marg, next to Kamala Mills,
+                Lower Parel, Mumbai, Maharashtra 400013
+              </p>
+              <LazyMap />
+              <a
+                href={MAP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.mapLink}
+              >
+                View on Google Maps
+              </a>
+            </div>
+          )}
         </div>
 
         <div className={styles.linksGrid}>
@@ -171,6 +173,23 @@ export default function SiteFooter() {
                 <Link href="/#contact" onClick={(e) => handleScrollTo("contact", e)}>Contact us</Link>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.disclaimerSection}>
+        <div className={styles.disclaimerContainer}>
+          <div className={styles.disclaimerBlock}>
+            <span className={styles.disclaimerTitle}>Standard Warning</span>
+            <p className={styles.disclaimerText}>
+              Investment in securities market is subject to market risks. Read all the related documents carefully before investing.
+            </p>
+          </div>
+          <div className={styles.disclaimerBlock}>
+            <span className={styles.disclaimerTitle}>Disclaimer</span>
+            <p className={styles.disclaimerText}>
+              Registration granted by SEBI, membership of BASL and certification from NISM in no way guarantee performance of the intermediary or provide any assurance of returns to investors. GELD (brand of Dynamic Equities Pvt. Ltd.) is a registered Investment Adviser. Past performance is no guarantee of future results.
+            </p>
           </div>
         </div>
       </div>

@@ -142,7 +142,6 @@ export default function Hero() {
     if (!pathLength) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
     if (reduced) {
       setDrawProgress(1);
@@ -152,35 +151,6 @@ export default function Hero() {
         setHeadPoint({ x: point.x, y: point.y });
       }
       return;
-    }
-
-    // Mobile: draw once then stop — no perpetual rAF loop
-    if (isMobile) {
-      drawReadyRef.current = true;
-      let frameId = 0;
-      const tick = (now: number) => {
-        if (drawStartRef.current === null) drawStartRef.current = now;
-        const elapsed = now - drawStartRef.current;
-        const path = pathRef.current;
-
-        if (elapsed < DRAW_DURATION_MS) {
-          const eased = easeInOutCubic(elapsed / DRAW_DURATION_MS);
-          setDrawProgress(eased);
-          if (path) {
-            const point = path.getPointAtLength(pathLength * eased);
-            setHeadPoint({ x: point.x, y: point.y });
-          }
-          frameId = requestAnimationFrame(tick);
-        } else {
-          setDrawProgress(1);
-          if (path) {
-            const point = path.getPointAtLength(pathLength);
-            setHeadPoint({ x: point.x, y: point.y });
-          }
-        }
-      };
-      frameId = requestAnimationFrame(tick);
-      return () => cancelAnimationFrame(frameId);
     }
 
     let frameId = 0;
@@ -211,7 +181,7 @@ export default function Hero() {
       } else {
         setDrawProgress(1);
 
-        if (!prefersReducedMotionRef.current && !isMobileRef.current && !isHoveredRef.current && path) {
+        if (!prefersReducedMotionRef.current && !isHoveredRef.current && path) {
           if (loopAnchor === null) loopAnchor = now;
 
           const loopElapsed = (now - loopAnchor) % LOOP_DURATION_MS;
@@ -266,9 +236,12 @@ export default function Hero() {
           We help your money find direction no matter what the market is doing.
         </p>
         <div className={styles.heroActions}>
-          <Link href="/webinar" className={styles.primaryCta}>
-            Attend Weekly Webinar
-          </Link>
+          <div className={styles.primaryCtaWrapper}>
+            <div className={styles.primaryCtaGlow}></div>
+            <Link href="/webinar" className={styles.primaryCta}>
+              Attend Weekly Webinar
+            </Link>
+          </div>
           <div className={styles.divider}></div>
           <Link href="/products" className={styles.secondaryCta}>
             Learn more

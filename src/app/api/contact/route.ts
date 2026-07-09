@@ -5,6 +5,7 @@ import { CONTACT_EMAIL } from "../../lib/submitContactForm";
 interface ContactRequestBody {
   name?: string;
   email?: string;
+  phone?: string;
   message?: string;
   source?: string;
 }
@@ -33,11 +34,12 @@ export async function POST(request: Request) {
 
   const name = body.name?.trim();
   const email = body.email?.trim();
+  const phone = body.phone?.trim();
   const message = body.message?.trim();
   const source = body.source?.trim() || "website";
 
-  if (!name || !email || !message) {
-    return NextResponse.json({ error: "Name, email, and message are required." }, { status: 400 });
+  if (!name || !email || !phone || !message) {
+    return NextResponse.json({ error: "Name, email, phone number, and message are required." }, { status: 400 });
   }
 
   if (!isValidEmail(email)) {
@@ -79,6 +81,7 @@ export async function POST(request: Request) {
       text: [
         `Name: ${name}`,
         `Email: ${email}`,
+        `Phone Number: ${phone}`,
         `Source: ${source}`,
         "",
         "Message:",
@@ -87,6 +90,7 @@ export async function POST(request: Request) {
       html: `
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Phone Number:</strong> ${escapeHtml(phone)}</p>
         <p><strong>Source:</strong> ${escapeHtml(source)}</p>
         <p><strong>Message:</strong></p>
         <p>${escapeHtml(message).replace(/\n/g, "<br />")}</p>

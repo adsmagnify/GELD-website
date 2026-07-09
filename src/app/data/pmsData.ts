@@ -122,6 +122,6 @@ export const PMS_SCHEME_HIGHLIGHTS: PmsSchemeHighlight[] = [
 ];
 
 export const PMS_RETURN_RANGE = {
-  sinceInception: "11% – 31%",
-  threeYearRolling: "20% – 29%",
+  sinceInception: "11% to 31%",
+  threeYearRolling: "20% to 29%",
 };

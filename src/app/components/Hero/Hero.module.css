@@ -1,3 +1,9 @@
+@property --glow-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /* Hero Section */
 .hero {
   display: grid;
@@ -73,7 +79,51 @@
   animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
 }
 
+.primaryCtaWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.primaryCtaGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 9999px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    rgba(254, 254, 123, 0) 0deg,
+    #FEFE7B 90deg,
+    rgba(254, 254, 123, 0) 180deg,
+    #FEFE7B 270deg,
+    rgba(254, 254, 123, 0) 360deg
+  );
+  z-index: 1;
+  animation: rotateGlow 4s linear infinite;
+  pointer-events: none;
+}
+
+/* Soft outer glow */
+.primaryCtaGlow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0.75;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.3s ease, filter 0.3s ease, inset 0.3s ease;
+}
+
 .primaryCta {
+  position: relative;
   background-color: #ffffff;
   color: #02040b;
   font-size: 15px;
@@ -81,12 +131,32 @@
   padding: 14px 28px;
   border-radius: 9999px;
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .primaryCta:hover {
   background-color: #f1f5f9;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(255, 255, 255, 0.12);
+}
+
+.primaryCtaWrapper:hover .primaryCtaGlow::after {
+  filter: blur(12px);
+  opacity: 0.95;
+  inset: -2px;
+}
+
+@keyframes rotateGlow {
+  0% {
+    --glow-angle: 0deg;
+  }
+  100% {
+    --glow-angle: 360deg;
+  }
 }
 
 .divider {
@@ -487,6 +557,9 @@
     flex-direction: column;
     width: 100%;
     gap: 16px;
+  }
+  .primaryCtaWrapper {
+    width: 100%;
   }
   .primaryCta {
     width: 100%;
