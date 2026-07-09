@@ -4,5 +4,5 @@
   position: relative;
   background-color: var(--background-dark);
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: visible;
 }

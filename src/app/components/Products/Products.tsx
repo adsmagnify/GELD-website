@@ -46,7 +46,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
       const matched = PRODUCT_TYPES.find(
         (p) =>
           p.toLowerCase() === selectParam.toLowerCase() ||
-          (selectParam.toLowerCase() === "iap" && p === MINI_STOCK_PORTFOLIOS_NAME)
+          ((selectParam.toLowerCase() === "iap" || selectParam.toLowerCase() === "mini-stock-portfolio") && p === MINI_STOCK_PORTFOLIOS_NAME)
       );
       if (matched) {
         setActiveProduct(matched as ProductType);
@@ -83,7 +83,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
     
     if (mode === "detail" || mode === "catalog") {
       const slugMap: Record<ProductType, string> = {
-        [MINI_STOCK_PORTFOLIOS_NAME]: "iap",
+        [MINI_STOCK_PORTFOLIOS_NAME]: "mini-stock-portfolio",
         PMS: "pms",
         AIF: "aif",
         "Mutual Funds": "mutual-funds",
@@ -337,8 +337,8 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
           <div className={styles.callStrip}>
             <span className={styles.callText}>Call Our Wealth Managers Now!</span>
             <button type="button" className={styles.callBtn} onClick={goToContact}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className={styles.phoneIcon}>
-                <path d="M20 22.622l-8-5.32c-3.197-2.128-5.457-4.457-7.585-7.585l-5.32-8h5.604c.966 0 1.75.79 1.75 1.764v2.476c0 .966-.784 1.75-1.75 1.75h-.622c.962 1.62 1.47 3.197 1.47 4.757 0 5.293 4.299 9.593 9.591 9.596v-.622c0-.966.784-1.75 1.75-1.75h2.476c.966 0 1.75.784 1.75 1.75v5.604z"/>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={styles.phoneIcon}>
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
               <span>Schedule an Expert Call</span>
             </button>

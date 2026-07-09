@@ -84,13 +84,14 @@ export default function Stats({ ref, onScrollDown, isGoldenBg }: StatsProps) {
   const highlightAnimRef = useRef<number | null>(null);
 
   useEffect(() => {
+    const isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
+    const thresholdVal = isMobileDevice ? 0.85 : 0.15;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { threshold: thresholdVal }
     );
     const current = activeRef.current;
     if (current) observer.observe(current);

@@ -176,7 +176,7 @@ export default function Header() {
             </svg>
           </Link>
           <div className={styles.navDropdown}>
-            <Link href="/products/iap" className={styles.navDropdownItem}>{MINI_STOCK_PORTFOLIOS_NAME}</Link>
+            <Link href="/products/mini-stock-portfolio" className={styles.navDropdownItem}>{MINI_STOCK_PORTFOLIOS_NAME}</Link>
             <Link href="/products/pms" className={styles.navDropdownItem}>PMS (Portfolio Management Services)</Link>
             <Link href="/products/aif" className={styles.navDropdownItem}>AIF (Alternative Investment Fund)</Link>
             <Link href="/products/mutual-funds" className={styles.navDropdownItem}>Mutual Funds</Link>
@@ -278,7 +278,7 @@ export default function Header() {
               Products
             </Link>
             <div className={styles.mobileSublinks}>
-              <Link href="/products/iap" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>{MINI_STOCK_PORTFOLIOS_NAME}</Link>
+              <Link href="/products/mini-stock-portfolio" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>{MINI_STOCK_PORTFOLIOS_NAME}</Link>
               <Link href="/products/pms" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>PMS</Link>
               <Link href="/products/aif" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>AIF</Link>
               <Link href="/products/mutual-funds" className={styles.mobileSublink} onClick={() => setIsMobileMenuOpen(false)}>Mutual Funds</Link>
