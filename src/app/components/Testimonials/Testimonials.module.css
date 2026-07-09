@@ -433,3 +433,101 @@
 .goldenBg .dotActive {
   background-color: #0a0602 !important;
 }
+
+/* Social Embed Details */
+.socialIframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.socialVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.iframeOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background: transparent;
+}
+
+/* Social Platform Details & Badges */
+.platformBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.platformBadge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(254, 254, 123, 0.3);
+}
+
+.profileLink {
+  font-size: 13px;
+  font-weight: 600;
+  color: #FEFE7B;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.profileLink:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Video overlay hint */
+.videoOverlayHint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 6, 2, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  z-index: 6;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover .videoOverlayHint {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.redirectIcon {
+  color: #FEFE7B;
+  width: 14px;
+  height: 14px;
+}
+
+.hintText {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  white-space: nowrap;
+}

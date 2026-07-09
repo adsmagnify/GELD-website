@@ -204,7 +204,7 @@ export default function Header() {
           href="/testimonials"
           className={`${styles.navLink} ${isLinkActive("testimonials") ? styles.activeNavLink : ""}`}
         >
-          Testimonials
+          Social Media
         </Link>
         <Link
           href="/blog"
@@ -310,7 +310,7 @@ export default function Header() {
             className={`${styles.mobileNavLink} ${isLinkActive("testimonials") ? styles.activeNavLink : ""}`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            Testimonials
+            Social Media
           </Link>
           <Link
             href="/blog"

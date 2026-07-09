@@ -11,11 +11,43 @@ import styles from "./Testimonials.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
 
 interface Testimonial {
+  embedUrl: string;
+  postUrl: string;
+  title: string;
   comment: string;
   name: string;
   role: string;
-  image?: string;
+  profileUrl: string;
+  platform: "instagram" | "youtube" | "linkedin";
 }
+
+const getPlatformIcon = (platform: "instagram" | "youtube" | "linkedin") => {
+  switch (platform) {
+    case "instagram":
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#FEFE7B" }}>
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+        </svg>
+      );
+    case "youtube":
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#FEFE7B" }}>
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+          <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+        </svg>
+      );
+    case "linkedin":
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#FEFE7B" }}>
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-13h4v2" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
+        </svg>
+      );
+  }
+};
 
 interface TestimonialsProps {
   ref?: React.RefObject<HTMLElement | null>;
@@ -29,23 +61,35 @@ const DRAG_THRESHOLD = 6;
 
 const testimonials: Testimonial[] = [
   {
-    comment: "Dezerv's transparency gave me the confidence I needed.",
-    name: "Sudeep Goenka",
-    role: "Director, Goldiee Group",
-    image: "/client_sarah.jpg",
+    embedUrl: "/videos/instagram_reel.mp4",
+    postUrl: "https://www.instagram.com/reel/DYXTlf5NkLJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    title: "Instagram Reel",
+    comment: "Insights into our execution model and digital wealth custody architecture.",
+    name: "Instagram Reel",
+    role: "@geldwealth",
+    profileUrl: "https://www.instagram.com/geldwealth/",
+    platform: "instagram",
   },
   {
-    comment: "Dezerv simply brought clarity to my investments.",
-    name: "Pooja Jauhar",
-    role: "Founder & CEO, The Glitch",
-    image: "/client_elena.jpg",
+    embedUrl: "/videos/youtube_short.mp4",
+    postUrl: "https://youtube.com/shorts/_7fooMC6aks?si=_XQsRYMbBA4_-FB2",
+    title: "YouTube Short",
+    comment: "Starting Stock Market Investing or Picking?",
+    name: "YouTube Short",
+    role: "@GeldWealthmanagement",
+    profileUrl: "https://www.youtube.com/@GeldWealthmanagement",
+    platform: "youtube",
   },
   {
-    comment: "GELD's wealth custody models secure our corporate reserves.",
-    name: "Michael Chang",
-    role: "Partner, Apex Capital Partners",
-    image: "/client_michael.jpg",
-  },
+    embedUrl: "/videos/linkedin_post.mp4",
+    postUrl: "https://www.linkedin.com/posts/geldwealth_starting-stock-market-investing-or-picking-activity-7477590114441969665-O-MV?utm_source=li_share&utm_content=feedcontent&utm_medium=g_dt_web&utm_campaign=copy",
+    title: "LinkedIn Post",
+    comment: "Long-term investment strategies and picking the right multi-cap portfolios.",
+    name: "LinkedIn Update",
+    role: "GeldWealth",
+    profileUrl: "https://in.linkedin.com/company/geldwealth",
+    platform: "linkedin",
+  }
 ];
 
 export default function Testimonials({
@@ -197,7 +241,11 @@ export default function Testimonials({
 
   const handleCardClick = (i: number, isActive: boolean) => {
     if (draggedRef.current) return;
-    if (!isActive) goTo(i);
+    if (!isActive) {
+      goTo(i);
+    } else {
+      window.open(testimonials[i].postUrl, "_blank", "noopener,noreferrer");
+    }
   };
 
   return (
@@ -208,13 +256,13 @@ export default function Testimonials({
       <div className={styles.container}>
         <div className={styles.head}>
           <div className={styles.badge}>
-            <span className={styles.badgeText}>Testimonials</span>
+            <span className={styles.badgeText}>Social Media</span>
           </div>
           <h2 className={styles.title}>
-            What partners <span className={styles.goldText}>say</span>
+            GELD on <span className={styles.goldText}>Social Media</span>
           </h2>
           <p className={styles.subheading}>
-            Read honest feedback and stories from our clients who transitioned to GELD.
+            Check out what we've been sharing and what the community is saying about GELD. Click the active card to view on social media.
           </p>
         </div>
 
@@ -250,33 +298,41 @@ export default function Testimonials({
                 >
                   <div className={styles.cardInner}>
                     <div className={styles.media}>
-                      {t.image ? (
-                        <Image
-                          src={t.image}
-                          alt={t.name}
-                          className={styles.mediaImg}
-                          width={120}
-                          height={120}
-                          sizes="80px"
-                          loading="lazy"
-                          draggable={false}
-                        />
-                      ) : (
-                        <span className={styles.monogram}>
-                          {t.name
-                            .split(" ")
-                            .map((w) => w[0])
-                            .slice(0, 2)
-                            .join("")}
-                        </span>
-                      )}
+                      <video
+                        src={t.embedUrl}
+                        className={styles.socialVideo}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                      <div className={styles.videoOverlayHint}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={styles.redirectIcon}>
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <polyline points="15 3 21 3 21 9" />
+                          <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
+                        <span className={styles.hintText}>View Post</span>
+                      </div>
+                      <div className={styles.iframeOverlay}></div>
                     </div>
                     <div className={styles.body}>
                       <span className={styles.quoteMark}>&ldquo;</span>
                       <p className={styles.quote}>{t.comment}</p>
                       <div className={styles.author}>
                         <h4 className={styles.name}>{t.name}</h4>
-                        <p className={styles.role}>{t.role}</p>
+                        <div className={styles.platformBadge}>
+                          {getPlatformIcon(t.platform)}
+                          <a
+                            href={t.profileUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.profileLink}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {t.role}
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>

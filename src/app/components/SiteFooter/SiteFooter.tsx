@@ -71,7 +71,7 @@ export default function SiteFooter() {
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  
   const isDarkFooter = pathname === "/about";
 
   return (
@@ -82,7 +82,9 @@ export default function SiteFooter() {
             GELD
           </Link>
           <p className={styles.description}>
-            GELD is a brand of Dynamic Equities Pvt. Ltd., a SEBI registered Investment Adviser (INA300002022). We build custody-grade digital wealth execution models and multi-cap investment portfolios designed for consistent long-term wealth creation.
+            At Geld, we believe you don’t need to know stock picking to invest in Equity markets. We give you access to Indias Top fund managers with no additional costs.
+Experts manage our money with concentrated bets in 20-25 stocks in a portfolio.
+Let the Pros do the work while you relax and let your money work harder than you!
           </p>
           <div className={styles.socials}>
             <a href="https://www.instagram.com/geldwealth/" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Instagram">
@@ -167,7 +169,7 @@ export default function SiteFooter() {
                 <Link href="/webinar">Webinar</Link>
               </li>
               <li>
-                <Link href="/testimonials">Testimonials</Link>
+                <Link href="/testimonials">Social Media</Link>
               </li>
               <li>
                 <Link href="/#contact" onClick={(e) => handleScrollTo("contact", e)}>Contact us</Link>
@@ -206,9 +208,9 @@ export default function SiteFooter() {
               rel="noopener noreferrer"
               className={styles.adsmagnifyLink}
             >
-              adsmagnify
+              adsmagnify <span style={{ color: "#e25555" }}>♥</span>
             </a>{" "}
-            <span style={{ color: "#e25555" }}>♥</span>
+            {/* <span style={{ color: "#e25555" }}>♥</span> */}
           </p>
           <div className={styles.bottomLinks}>
             <Link href="/docs">Terms of Service</Link>
