@@ -126,7 +126,7 @@ export default function Header() {
       <Link href="/" className={styles.logoLink} onClick={() => setIsMobileMenuOpen(false)}>
         <div className={styles.logoWrapper}>
           <Image
-            src="/geld_logo_g.png"
+            src="/new_geld_g_logo.png"
             alt="G"
             className={styles.logoG}
             width={45}
@@ -135,7 +135,7 @@ export default function Header() {
             sizes="(max-width: 768px) 32px, 45px"
           />
           <Image
-            src="/geld_logo_text.png"
+            src="/new_geld_eld_logo.png"
             alt="ELD WEALTH"
             className={styles.logoText}
             width={140}
