@@ -6,17 +6,25 @@ export interface ContactFormPayload {
   phone: string;
   message: string;
   source?: string;
+  intent?: string;
 }
 
-export async function submitContactForm(payload: ContactFormPayload): Promise<void> {
+export async function submitContactForm(
+  payload: ContactFormPayload
+): Promise<{ intent: string }> {
   const response = await fetch("/api/contact", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 
+  const data = (await response.json().catch(() => null)) as
+    | { error?: string; intent?: string }
+    | null;
+
   if (!response.ok) {
-    const data = (await response.json().catch(() => null)) as { error?: string } | null;
     throw new Error(data?.error ?? "Failed to send message. Please try again.");
   }
+
+  return { intent: data?.intent || payload.intent || "general" };
 }

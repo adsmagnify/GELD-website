@@ -169,7 +169,7 @@ Let the Pros do the work while you relax and let your money work harder than you
                 <Link href="/webinar">Webinar</Link>
               </li>
               <li>
-                <Link href="/testimonials">Social Media</Link>
+                <Link href="/socialmedia">Social Media</Link>
               </li>
               <li>
                 <Link href="/#contact" onClick={(e) => handleScrollTo("contact", e)}>Contact us</Link>

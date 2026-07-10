@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import Image from "next/image";
-import styles from "./Testimonials.module.css";
+import styles from "./SocialMedia.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
 
 interface Testimonial {
@@ -65,7 +65,7 @@ const testimonials: Testimonial[] = [
     postUrl: "https://www.instagram.com/reel/DYXTlf5NkLJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
     title: "Instagram Reel",
     comment: "Insights into our execution model and digital wealth custody architecture.",
-    name: "Instagram Reel",
+    name: "Official Instagram",
     role: "@geldwealth",
     profileUrl: "https://www.instagram.com/geldwealth/",
     platform: "instagram",
@@ -75,7 +75,7 @@ const testimonials: Testimonial[] = [
     postUrl: "https://youtube.com/shorts/_7fooMC6aks?si=_XQsRYMbBA4_-FB2",
     title: "YouTube Short",
     comment: "Starting Stock Market Investing or Picking?",
-    name: "YouTube Short",
+    name: "Official YouTube",
     role: "@GeldWealthmanagement",
     profileUrl: "https://www.youtube.com/@GeldWealthmanagement",
     platform: "youtube",
@@ -85,7 +85,7 @@ const testimonials: Testimonial[] = [
     postUrl: "https://www.linkedin.com/posts/geldwealth_starting-stock-market-investing-or-picking-activity-7477590114441969665-O-MV?utm_source=li_share&utm_content=feedcontent&utm_medium=g_dt_web&utm_campaign=copy",
     title: "LinkedIn Post",
     comment: "Long-term investment strategies and picking the right multi-cap portfolios.",
-    name: "LinkedIn Update",
+    name: "Official LinkedIn",
     role: "GeldWealth",
     profileUrl: "https://in.linkedin.com/company/geldwealth",
     platform: "linkedin",

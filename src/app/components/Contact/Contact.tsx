@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, forwardRef, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./Contact.module.css";
+import { thankYouPageHref } from "../../lib/contactContext";
 import { submitContactForm } from "../../lib/submitContactForm";
 
 interface ContactProps {
@@ -9,11 +11,11 @@ interface ContactProps {
 }
 
 const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [isVisible, setIsVisible] = useState(false);
@@ -49,14 +51,15 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
     setIsSubmitting(true);
 
     try {
-      await submitContactForm({
+      const result = await submitContactForm({
         name,
         email,
         phone,
         message,
         source: "home-page",
+        intent: "home",
       });
-      setIsSubmitted(true);
+      router.push(thankYouPageHref(result.intent));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to send message. Please try again.");
     } finally {
@@ -80,7 +83,6 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
         </div>
 
         <div className={styles.card}>
-          {!isSubmitted ? (
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.inputGroup}>
                 <label className={styles.inputLabel} htmlFor="home-name">Full Name</label>
@@ -139,32 +141,6 @@ const Contact = forwardRef<HTMLElement, ContactProps>((props, ref) => {
               </button>
               {error && <p className={styles.errorText}>{error}</p>}
             </form>
-          ) : (
-            <div className={styles.successState}>
-              <div className={styles.successIcon}>
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-              </div>
-              <h3 className={styles.successTitle}>Thank You!</h3>
-              <p className={styles.successText}>
-                Your message has been sent successfully. We will get back to you shortly.
-              </p>
-              <button 
-                onClick={() => {
-                  setIsSubmitted(false);
-                  setError("");
-                  setName("");
-                  setEmail("");
-                  setMessage("");
-                }} 
-                className={styles.resetBtn}
-              >
-                Send another message
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </section>

@@ -13,7 +13,7 @@ const HomeProducts = dynamic(() => import("../HomeProducts/HomeProducts"), {
 });
 const Stats = dynamic(() => import("../Stats/Stats"), { ssr: false });
 const Webinar = dynamic(() => import("../Webinar/Webinar"), { ssr: false });
-const Testimonials = dynamic(() => import("../Testimonials/Testimonials"), {
+const Testimonials = dynamic(() => import("../SocialMedia/SocialMedia"), {
   ssr: false,
 });
 const Contact = dynamic(() => import("../Contact/Contact"), { ssr: false });

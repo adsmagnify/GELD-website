@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { formatEmailSubject, getContactIntent } from "../../lib/contactContext";
 import { CONTACT_EMAIL } from "../../lib/submitContactForm";
 
 interface ContactRequestBody {
@@ -8,6 +9,7 @@ interface ContactRequestBody {
   phone?: string;
   message?: string;
   source?: string;
+  intent?: string;
 }
 
 function isValidEmail(email: string): boolean {
@@ -37,6 +39,8 @@ export async function POST(request: Request) {
   const phone = body.phone?.trim();
   const message = body.message?.trim();
   const source = body.source?.trim() || "website";
+  const intent = body.intent?.trim() || "general";
+  const intentConfig = getContactIntent(intent);
 
   if (!name || !email || !phone || !message) {
     return NextResponse.json({ error: "Name, email, phone number, and message are required." }, { status: 400 });
@@ -60,7 +64,8 @@ export async function POST(request: Request) {
 
   const smtpPort = Number(process.env.SMTP_PORT || "587");
   const smtpSecure = process.env.SMTP_SECURE === "true";
-  const smtpFrom = process.env.SMTP_FROM || smtpUser;
+  const recipient =
+    process.env.CONTACT_EMAIL?.trim() || CONTACT_EMAIL;
 
   try {
     const transporter = nodemailer.createTransport({
@@ -74,15 +79,23 @@ export async function POST(request: Request) {
     });
 
     await transporter.sendMail({
-      from: smtpFrom,
-      to: CONTACT_EMAIL,
+      from: {
+        name,
+        address: email,
+      },
+      to: recipient,
       replyTo: email,
-      subject: `GELD Contact Form: ${name}`,
+      envelope: {
+        from: smtpUser,
+        to: recipient,
+      },
+      subject: formatEmailSubject(intentConfig.emailSubject, name),
       text: [
         `Name: ${name}`,
         `Email: ${email}`,
         `Phone Number: ${phone}`,
         `Source: ${source}`,
+        `Intent: ${intentConfig.formBadge}`,
         "",
         "Message:",
         message,
@@ -92,12 +105,13 @@ export async function POST(request: Request) {
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Phone Number:</strong> ${escapeHtml(phone)}</p>
         <p><strong>Source:</strong> ${escapeHtml(source)}</p>
+        <p><strong>Intent:</strong> ${escapeHtml(intentConfig.formBadge)}</p>
         <p><strong>Message:</strong></p>
         <p>${escapeHtml(message).replace(/\n/g, "<br />")}</p>
       `,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, intent: intentConfig.id });
   } catch (error) {
     console.error("Failed to send contact form email:", error);
     return NextResponse.json(

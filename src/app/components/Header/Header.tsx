@@ -7,6 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
 import { MINI_STOCK_PORTFOLIOS_NAME } from "../../data/catalogProducts";
+import { contactPageHref } from "../../lib/contactContext";
 
 export default function Header() {
   const pathname = usePathname();
@@ -201,8 +202,8 @@ export default function Header() {
           Webinar
         </Link>
         <Link
-          href="/testimonials"
-          className={`${styles.navLink} ${isLinkActive("testimonials") ? styles.activeNavLink : ""}`}
+          href="/socialmedia"
+          className={`${styles.navLink} ${isLinkActive("socialmedia") ? styles.activeNavLink : ""}`}
         >
           Social Media
         </Link>
@@ -222,7 +223,7 @@ export default function Header() {
 
       <div className={styles.headerActions}>
         <Link 
-          href="/contact" 
+          href={contactPageHref()} 
           className={styles.contactBtn}
           onClick={(e) => {
             if (pathname === "/") {
@@ -306,8 +307,8 @@ export default function Header() {
             Webinar
           </Link>
           <Link
-            href="/testimonials"
-            className={`${styles.mobileNavLink} ${isLinkActive("testimonials") ? styles.activeNavLink : ""}`}
+            href="/socialmedia"
+            className={`${styles.mobileNavLink} ${isLinkActive("socialmedia") ? styles.activeNavLink : ""}`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Social Media
@@ -327,7 +328,7 @@ export default function Header() {
             Docs(Privacy Policy)
           </Link>
           <Link
-            href="/contact"
+            href={contactPageHref()}
             className={`${styles.mobileNavLink} ${styles.mobileContactLink}`}
             onClick={(e) => {
               setIsMobileMenuOpen(false);

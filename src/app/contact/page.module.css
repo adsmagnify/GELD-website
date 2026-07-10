@@ -264,6 +264,25 @@
   box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
 }
 
+.thankYouActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+}
+
+.secondaryReturnBtn {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.secondaryReturnBtn:hover {
+  color: #FEFE7B;
+}
+
 @keyframes slideInUp {
   from {
     opacity: 0;

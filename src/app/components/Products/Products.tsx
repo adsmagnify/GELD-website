@@ -8,6 +8,14 @@ import ProductChargesNote from "../ProductChargesNote/ProductChargesNote";
 import PmsCarousel from "../PmsCarousel/PmsCarousel";
 import { catalogProducts, MINI_STOCK_PORTFOLIOS_NAME } from "../../data/catalogProducts";
 import { PMS_RETURN_RANGE } from "../../data/pmsData";
+import {
+  CATALOG_CONTACT_INTENT,
+  contactPageHref,
+  DEFAULT_CONTACT_INTENT,
+  persistContactIntent,
+  PRODUCT_REVIEW_INTENT,
+  PRODUCT_TYPE_INTENT,
+} from "../../lib/contactContext";
 
 interface ProductsProps {
   mode?: "catalog" | "detail" | "all";
@@ -76,7 +84,14 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
     };
   }, [activeRef]);
 
-  const goToContact = () => router.push("/contact");
+  const goToContact = (intent?: string) => {
+    const resolvedIntent =
+      (typeof intent === "string" ? intent : undefined) ||
+      PRODUCT_TYPE_INTENT[activeProduct] ||
+      DEFAULT_CONTACT_INTENT;
+    persistContactIntent(resolvedIntent);
+    router.push(contactPageHref(resolvedIntent));
+  };
 
   const selectProduct = (prod: ProductType) => {
     setIsDropdownOpen(false);
@@ -225,11 +240,23 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
               <p className={styles.productDesc}>{productData[activeProduct].paragraph}</p>
               
               <div className={styles.productActions}>
-                <button type="button" className={styles.primaryCtaBtn} onClick={goToContact}>
+                <button
+                  type="button"
+                  className={styles.primaryCtaBtn}
+                  onClick={() => goToContact(PRODUCT_TYPE_INTENT[activeProduct])}
+                >
                   {productData[activeProduct].primaryCta}
                 </button>
                 {productData[activeProduct].secondaryCta ? (
-                  <button type="button" className={styles.secondaryCtaBtn} onClick={goToContact}>
+                  <button
+                    type="button"
+                    className={styles.secondaryCtaBtn}
+                    onClick={() =>
+                      goToContact(
+                        PRODUCT_REVIEW_INTENT[activeProduct] || PRODUCT_TYPE_INTENT[activeProduct]
+                      )
+                    }
+                  >
                     {productData[activeProduct].secondaryCta}
                   </button>
                 ) : null}
@@ -336,7 +363,7 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
           {/* Bottom call strip */}
           <div className={styles.callStrip}>
             <span className={styles.callText}>Call Our Wealth Managers Now!</span>
-            <button type="button" className={styles.callBtn} onClick={goToContact}>
+            <button type="button" className={styles.callBtn} onClick={() => goToContact("expert-call")}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={styles.phoneIcon}>
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
@@ -390,7 +417,10 @@ export default function Products({ mode = "all", defaultProduct, ref, onScrollDo
                     if (p.slug) {
                       router.push(`/products/${p.slug}`);
                     } else {
-                      router.push("/contact");
+                      const catalogIntent =
+                        CATALOG_CONTACT_INTENT[p.name] || DEFAULT_CONTACT_INTENT;
+                      persistContactIntent(catalogIntent);
+                      router.push(contactPageHref(catalogIntent));
                     }
                   }}
                   aria-label={`Know more about ${p.name}`}
