@@ -167,6 +167,11 @@ a {
   contain-intrinsic-size: auto 800px;
 }
 
+.page-scroll-container.homeSnapContainer .deferredSection {
+  content-visibility: visible;
+  contain-intrinsic-size: none;
+}
+
 .scrollWrapperCentered {
   justify-content: center !important;
   margin-left: auto !important;
@@ -199,10 +204,12 @@ a {
 .page-scroll-container.homeSnapContainer #products,
 .page-scroll-container.homeSnapContainer #stats,
 .page-scroll-container.homeSnapContainer #webinar,
-.page-scroll-container.homeSnapContainer #testimonials,
+.page-scroll-container.homeSnapContainer #socialmedia,
 .page-scroll-container.homeSnapContainer #contact {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  min-height: 100dvh;
+  content-visibility: visible;
 }
 
 .page-scroll-container.homeSnapContainer > footer {

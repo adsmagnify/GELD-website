@@ -3,11 +3,36 @@ import { PortableText } from "next-sanity";
 
 import type { BlogPost } from "@/app/types/blog";
 
-import { portableTextComponents } from "./portableTextComponents";
+import { headingAnchorId, portableTextComponents } from "./portableTextComponents";
+import TocAnchorLink from "./TocAnchorLink";
 import styles from "./BlogPost.module.css";
 
 interface BlogPostViewProps {
   blog: BlogPost;
+}
+
+/**
+ * The CMS table-of-contents is free-typed text with no explicit link to a
+ * heading, and its wording rarely matches the heading text verbatim. So we
+ * match positionally instead: the table's rows list the article's main "h2"
+ * sections in order, so we zip them against the trailing N "h2" blocks in
+ * the content (trailing, because posts often open with unlisted intro
+ * headings before the numbered sections start). If the content doesn't have
+ * at least as many h2 headings as TOC rows, we skip linking entirely rather
+ * than risk pointing at the wrong section.
+ */
+function getTocHeadingIds(content: BlogPost["content"], rowCount: number): (string | null)[] {
+  if (!content || rowCount === 0) return [];
+
+  const h2Keys = content
+    .filter((block): block is typeof block & { style: string; _key: string } =>
+      block._type === "block" && (block as { style?: string }).style === "h2"
+    )
+    .map((block) => block._key);
+
+  if (h2Keys.length < rowCount) return new Array(rowCount).fill(null);
+
+  return h2Keys.slice(h2Keys.length - rowCount);
 }
 
 function formatDate(dateString?: string) {
@@ -32,6 +57,10 @@ function getAuthorInitials(author?: string) {
 }
 
 export default function BlogPostView({ blog }: BlogPostViewProps) {
+  const tocRows = blog.tableOfContents?.rows ?? [];
+  const tocDataRows = tocRows.length > 1 ? tocRows.slice(1) : tocRows;
+  const tocHeadingIds = getTocHeadingIds(blog.content, tocDataRows.length);
+
   return (
     <article className={styles.article}>
       <div className={styles.inner}>
@@ -72,16 +101,16 @@ export default function BlogPostView({ blog }: BlogPostViewProps) {
 
         {blog.excerpt ? <p className={styles.excerpt}>{blog.excerpt}</p> : null}
 
-        {blog.tableOfContents?.rows && blog.tableOfContents.rows.length > 0 ? (
+        {tocRows.length > 0 ? (
           <nav className={styles.tableOfContents} aria-label="Table of contents">
             <h2 className={styles.tocTitle}>Table of Content</h2>
 
             <div className={styles.tocCard}>
               <table className={styles.tocTable}>
-                {blog.tableOfContents.rows.length > 1 ? (
+                {tocRows.length > 1 ? (
                   <thead>
                     <tr>
-                      {blog.tableOfContents.rows[0].cells.map((cell, cellIndex) => (
+                      {tocRows[0].cells.map((cell, cellIndex) => (
                         <th key={cellIndex} scope="col" className={styles.tocHeadCell}>
                           {cell}
                         </th>
@@ -90,18 +119,26 @@ export default function BlogPostView({ blog }: BlogPostViewProps) {
                   </thead>
                 ) : null}
                 <tbody>
-                  {(blog.tableOfContents.rows.length > 1
-                    ? blog.tableOfContents.rows.slice(1)
-                    : blog.tableOfContents.rows
-                  ).map((row, index) => (
-                    <tr key={index}>
-                      {row.cells.map((cell, cellIndex) => (
-                        <td key={cellIndex} className={styles.tocCell}>
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
+                  {tocDataRows.map((row, index) => {
+                    const headingId = tocHeadingIds[index];
+                    const lastCellIndex = row.cells.length - 1;
+
+                    return (
+                      <tr key={index}>
+                        {row.cells.map((cell, cellIndex) => (
+                          <td key={cellIndex} className={styles.tocCell}>
+                            {headingId && cellIndex === lastCellIndex ? (
+                              <TocAnchorLink targetId={headingAnchorId(headingId)} className={styles.tocLink}>
+                                {cell}
+                              </TocAnchorLink>
+                            ) : (
+                              cell
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

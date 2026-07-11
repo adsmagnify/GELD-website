@@ -13,7 +13,7 @@ const HomeProducts = dynamic(() => import("../HomeProducts/HomeProducts"), {
 });
 const Stats = dynamic(() => import("../Stats/Stats"), { ssr: false });
 const Webinar = dynamic(() => import("../Webinar/Webinar"), { ssr: false });
-const Testimonials = dynamic(() => import("../SocialMedia/SocialMedia"), {
+const SocialMedia = dynamic(() => import("../SocialMedia/SocialMedia"), {
   ssr: false,
 });
 const Contact = dynamic(() => import("../Contact/Contact"), { ssr: false });
@@ -23,7 +23,7 @@ export default function HomeClient() {
   const productsRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
   const webinarRef = useRef<HTMLElement>(null);
-  const testimonialsRef = useRef<HTMLElement>(null);
+  const socialMediaRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
 
   const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
@@ -64,17 +64,17 @@ export default function HomeClient() {
       </div>
 
       <div id="webinar" className="deferredSection">
-        <Webinar ref={webinarRef} onScrollDown={() => scrollTo(testimonialsRef)} />
+        <Webinar ref={webinarRef} onScrollDown={() => scrollTo(socialMediaRef)} />
       </div>
 
-      <div id="testimonials" className="deferredSection">
-        <Testimonials
-          ref={testimonialsRef}
+      <div id="socialmedia" className={`${styles.fullSection} deferredSection`}>
+        <SocialMedia
+          ref={socialMediaRef}
           onScrollDown={() => scrollTo(contactRef)}
         />
       </div>
 
-      <div id="contact" className="deferredSection">
+      <div id="contact" className={`${styles.fullSection} deferredSection`}>
         <Contact ref={contactRef} />
       </div>
     </div>

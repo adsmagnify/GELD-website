@@ -104,7 +104,7 @@ export default function Header() {
     const products = document.getElementById("products");
     const stats = document.getElementById("stats");
     const webinar = document.getElementById("webinar");
-    const testimonials = document.getElementById("testimonials");
+    const socialMedia = document.getElementById("socialmedia");
     const contact = document.getElementById("contact");
 
     if (hero) observer.observe(hero);
@@ -112,7 +112,7 @@ export default function Header() {
     if (products) observer.observe(products);
     if (stats) observer.observe(stats);
     if (webinar) observer.observe(webinar);
-    if (testimonials) observer.observe(testimonials);
+    if (socialMedia) observer.observe(socialMedia);
     if (contact) observer.observe(contact);
 
     return () => observer.disconnect();
@@ -120,7 +120,7 @@ export default function Header() {
 
   const isLinkActive = (id: string) => activeSection === id;
 
-  const isHeaderDark = (pathname === "/" && (visibleSection === "about" || visibleSection === "testimonials")) || pathname === "/about";
+  const isHeaderDark = (pathname === "/" && (visibleSection === "about" || visibleSection === "socialmedia")) || pathname === "/about";
 
   return (
     <header className={`${styles.header} ${isHeaderDark ? styles.headerDark : ""} ${showHeader ? "" : styles.headerHidden} ${isMobileMenuOpen ? styles.headerMobileOpen : ""}`}>

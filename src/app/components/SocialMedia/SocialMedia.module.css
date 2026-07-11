@@ -11,6 +11,7 @@
   padding: var(--subpage-hero-top) var(--subpage-h-padding) var(--subpage-section-bottom);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .subpage {
@@ -24,8 +25,7 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  /* Pin toward top on home (full-height section); was auto, which sat too low */
-  margin: 0 0 auto;
+  margin: auto 0;
   opacity: 0;
   transform: translateY(50px);
   filter: blur(5px);
@@ -34,9 +34,29 @@
               filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Home page: same padding/centering as the subpage (.subpage, reached via
+   the nav bar). Additionally hard-capped to exactly one viewport (height,
+   not min-height, plus flex:none/min-height:0 to defeat the flex-basis:0
+   stretch from .fullSection > section in page.module.css) so the section's
+   box can never be taller than the mandatory scroll-snap viewport — a
+   taller box was the trigger for a scroll-snap rendering glitch against the
+   fixed header when arriving via an upward scroll. Scroll button sits out
+   of flex flow. */
 .section:not(.subpage) {
-  justify-content: flex-start;
-  padding-top: calc(var(--subpage-hero-top) - 24px);
+  position: relative;
+  height: 100dvh;
+  min-height: 0;
+  flex: none;
+  overflow: hidden;
+}
+
+.section:not(.subpage) .scrollWrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: 0;
+  justify-content: center;
 }
 
 .subpage .container {
@@ -345,15 +365,8 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
-  .section {
-    min-height: auto;
-  }
   .section,
   .subpage { padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile); }
-
-  .section:not(.subpage) {
-    padding-top: calc(var(--header-clearance) + 8px);
-  }
 
   .title { font-size: var(--subpage-editorial-size-mobile); }
   .stage { height: 520px; perspective: none; }
@@ -370,10 +383,6 @@
 @media (max-width: 480px) {
   .section,
   .subpage { padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile); }
-
-  .section:not(.subpage) {
-    padding-top: calc(var(--header-clearance) + 4px);
-  }
 
   .title { font-size: var(--subpage-editorial-size-mobile); }
   .stage { height: 460px; perspective: none; }

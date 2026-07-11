@@ -5,12 +5,22 @@ import { getBlogImageUrl } from "@/sanity/lib/blogImage";
 
 import styles from "./BlogPost.module.css";
 
+export const headingAnchorId = (key: string) => `heading-${key}`;
+
 export const portableTextComponents: PortableTextComponents = {
   block: {
-    h1: ({ children }) => <h2 className={styles.contentH1}>{children}</h2>,
-    h2: ({ children }) => <h3 className={styles.contentH2}>{children}</h3>,
-    h3: ({ children }) => <h4 className={styles.contentH3}>{children}</h4>,
-    h4: ({ children }) => <h5 className={styles.contentH4}>{children}</h5>,
+    h1: ({ children, value }) => (
+      <h2 id={headingAnchorId(value._key)} className={styles.contentH1}>{children}</h2>
+    ),
+    h2: ({ children, value }) => (
+      <h3 id={headingAnchorId(value._key)} className={styles.contentH2}>{children}</h3>
+    ),
+    h3: ({ children, value }) => (
+      <h4 id={headingAnchorId(value._key)} className={styles.contentH3}>{children}</h4>
+    ),
+    h4: ({ children, value }) => (
+      <h5 id={headingAnchorId(value._key)} className={styles.contentH4}>{children}</h5>
+    ),
     normal: ({ children }) => <p className={styles.contentP}>{children}</p>,
     blockquote: ({ children }) => (
       <blockquote className={styles.contentBlockquote}>{children}</blockquote>

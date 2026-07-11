@@ -10,7 +10,7 @@ import Image from "next/image";
 import styles from "./SocialMedia.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
 
-interface Testimonial {
+interface SocialMediaPost {
   embedUrl: string;
   postUrl: string;
   title: string;
@@ -49,7 +49,7 @@ const getPlatformIcon = (platform: "instagram" | "youtube" | "linkedin") => {
   }
 };
 
-interface TestimonialsProps {
+interface SocialMediaProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
   isSubpage?: boolean;
@@ -59,7 +59,7 @@ interface TestimonialsProps {
 const AUTOPLAY_MS = 6000;
 const DRAG_THRESHOLD = 6;
 
-const testimonials: Testimonial[] = [
+const socialMediaPosts: SocialMediaPost[] = [
   {
     embedUrl: "/videos/instagram_reel.mp4",
     postUrl: "https://www.instagram.com/reel/DYXTlf5NkLJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
@@ -92,13 +92,13 @@ const testimonials: Testimonial[] = [
   }
 ];
 
-export default function Testimonials({
+export default function SocialMedia({
   ref,
   onScrollDown,
   isSubpage,
   isGoldenBg,
-}: TestimonialsProps) {
-  const n = testimonials.length;
+}: SocialMediaProps) {
+  const n = socialMediaPosts.length;
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -244,7 +244,7 @@ export default function Testimonials({
     if (!isActive) {
       goTo(i);
     } else {
-      window.open(testimonials[i].postUrl, "_blank", "noopener,noreferrer");
+      window.open(socialMediaPosts[i].postUrl, "_blank", "noopener,noreferrer");
     }
   };
 
@@ -271,7 +271,7 @@ export default function Testimonials({
           tabIndex={0}
           role="region"
           aria-roledescription="carousel"
-          aria-label="Client testimonials"
+          aria-label="GELD social media posts"
           onKeyDown={onKeyDown}
           onMouseEnter={() => {
             pausedRef.current = true;
@@ -285,7 +285,7 @@ export default function Testimonials({
           onPointerCancel={endDrag}
         >
           <div className={styles.deck}>
-            {testimonials.map((t, i) => {
+            {socialMediaPosts.map((t, i) => {
               const offset = wrappedOffset(i);
               const isActive = offset === 0;
               return (
@@ -345,7 +345,7 @@ export default function Testimonials({
             type="button"
             className={`${styles.arrow} ${styles.prev}`}
             onClick={() => go(-1)}
-            aria-label="Previous testimonial"
+            aria-label="Previous social media post"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6" />
@@ -355,7 +355,7 @@ export default function Testimonials({
             type="button"
             className={`${styles.arrow} ${styles.next}`}
             onClick={() => go(1)}
-            aria-label="Next testimonial"
+            aria-label="Next social media post"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 18 15 12 9 6" />
@@ -363,8 +363,8 @@ export default function Testimonials({
           </button>
         </div>
 
-        <div className={styles.dots} role="tablist" aria-label="Select testimonial">
-          {testimonials.map((_, i) => (
+        <div className={styles.dots} role="tablist" aria-label="Select social media post">
+          {socialMediaPosts.map((_, i) => (
             <button
               key={i}
               type="button"

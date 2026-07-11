@@ -119,6 +119,7 @@
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: -0.4px;
   line-height: 1.3;
+  scroll-margin-top: calc(var(--header-clearance) + 24px);
 }
 
 .contentH1 {
@@ -482,4 +483,17 @@
 .tocTable tbody tr:hover td {
   background: rgba(254, 254, 123, 0.03);
   color: rgba(255, 255, 255, 0.88);
+}
+
+.tocLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tocLink:hover {
+  color: #fefe7b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
