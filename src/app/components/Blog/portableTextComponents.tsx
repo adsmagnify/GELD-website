@@ -5,7 +5,11 @@ import { getBlogImageUrl } from "@/sanity/lib/blogImage";
 
 import styles from "./BlogPost.module.css";
 
-export const headingAnchorId = (key: string) => `heading-${key}`;
+export function headingAnchorId(key: string): string;
+export function headingAnchorId(key: string | undefined): string | undefined;
+export function headingAnchorId(key?: string): string | undefined {
+  return key ? `heading-${key}` : undefined;
+}
 
 export const portableTextComponents: PortableTextComponents = {
   block: {
