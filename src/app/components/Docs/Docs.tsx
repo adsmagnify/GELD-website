@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Docs.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";

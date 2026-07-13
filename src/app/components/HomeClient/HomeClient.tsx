@@ -62,11 +62,11 @@ export default function HomeClient() {
         <Footer onScrollClick={() => scrollTo(aboutRef)} centerScroll />
       </div>
 
-      <div id="about" className="deferredSection">
+      <div id="about" className={`${styles.fullSection} deferredSection`}>
         <About ref={aboutRef} onScrollDown={() => scrollTo(productsRef)} />
       </div>
 
-      <div id="products" className="deferredSection">
+      <div id="products" className={`${styles.fullSection} deferredSection`}>
         <HomeProducts ref={productsRef} onScrollDown={() => scrollTo(statsRef)} />
       </div>
 
@@ -74,7 +74,7 @@ export default function HomeClient() {
         <Stats ref={statsRef} isGoldenBg onScrollDown={() => scrollTo(webinarRef)} />
       </div>
 
-      <div id="webinar" className="deferredSection">
+      <div id="webinar" className={`${styles.fullSection} deferredSection`}>
         <Webinar ref={webinarRef} onScrollDown={() => scrollTo(socialMediaRef)} />
       </div>
 

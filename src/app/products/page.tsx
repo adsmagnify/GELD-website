@@ -1,5 +1,3 @@
-"use client";
-
 import React, { Suspense } from "react";
 import styles from "../shared/subpageShell.module.css";
 import Background from "../components/Background/Background";

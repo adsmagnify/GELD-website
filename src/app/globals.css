@@ -164,7 +164,7 @@ a {
 
 .deferredSection {
   content-visibility: auto;
-  contain-intrinsic-size: auto 800px;
+  contain-intrinsic-size: auto 100dvh;
 }
 
 .page-scroll-container.homeSnapContainer .deferredSection {
