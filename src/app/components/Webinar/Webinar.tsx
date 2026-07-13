@@ -4,6 +4,12 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./Webinar.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
+import { buildMailtoHref, openSupportEmail } from "../../lib/openSupportEmail";
+
+const WEBINAR_MAIL = {
+  subject: "Webinar Registration Help",
+  body: "Hi GELD team,\n\nI need help with webinar registration.\n\n",
+} as const;
 
 interface WebinarProps {
   ref?: React.RefObject<HTMLElement | null>;
@@ -205,9 +211,19 @@ export default function Webinar({ ref, onScrollDown, isSubpage }: WebinarProps) 
                   />
                 </svg>
               </button>
-              <a href="mailto:Support@geldwealth.com" className={styles.supportLink}>
-                For registration help, contact Support@geldwealth.com
-              </a>
+              <p className={styles.supportLine}>
+                For registration help, contact{" "}
+                <a
+                  href={buildMailtoHref(WEBINAR_MAIL.subject, WEBINAR_MAIL.body)}
+                  className={styles.supportLink}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openSupportEmail(WEBINAR_MAIL.subject, WEBINAR_MAIL.body);
+                  }}
+                >
+                  Support@geldwealth.com
+                </a>
+              </p>
             </div>
           </div>
         </div>

@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { formatEmailSubject, getContactIntent } from "../../lib/contactContext";
+import {
+  firstContactError,
+  validateContactFields,
+} from "../../lib/contactValidation";
 import { CONTACT_EMAIL } from "../../lib/submitContactForm";
 
 interface ContactRequestBody {
@@ -10,10 +14,6 @@ interface ContactRequestBody {
   message?: string;
   source?: string;
   intent?: string;
-}
-
-function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function escapeHtml(value: string): string {
@@ -34,20 +34,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  const name = body.name?.trim();
-  const email = body.email?.trim();
-  const phone = body.phone?.trim();
-  const message = body.message?.trim();
+  const name = body.name?.trim() || "";
+  const email = body.email?.trim() || "";
+  const phone = body.phone?.trim() || "";
+  const message = body.message?.trim() || "";
   const source = body.source?.trim() || "website";
   const intent = body.intent?.trim() || "general";
   const intentConfig = getContactIntent(intent);
 
-  if (!name || !email || !phone || !message) {
-    return NextResponse.json({ error: "Name, email, phone number, and message are required." }, { status: 400 });
-  }
-
-  if (!isValidEmail(email)) {
-    return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
+  const fieldErrors = validateContactFields({ name, email, phone, message });
+  if (Object.keys(fieldErrors).length > 0) {
+    return NextResponse.json(
+      { error: firstContactError(fieldErrors) },
+      { status: 400 }
+    );
   }
 
   const smtpHost = process.env.SMTP_HOST;

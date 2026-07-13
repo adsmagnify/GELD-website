@@ -370,15 +370,24 @@
   box-shadow: 0 12px 28px rgba(206, 149, 58, 0.38);
 }
 
-.supportLink {
+.supportLine {
+  margin: 0;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.45);
-  text-decoration: none;
-  transition: color 0.2s ease;
+  line-height: 1.5;
+}
+
+.supportLink {
+  color: #fefe7b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
 }
 
 .supportLink:hover {
-  color: #fefe7b;
+  color: #ffffff;
+  opacity: 0.95;
 }
 
 .disclaimerText {

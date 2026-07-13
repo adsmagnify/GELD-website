@@ -3,6 +3,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Docs.module.css";
 import ScrollButton from "../ScrollButton/ScrollButton";
+import { buildMailtoHref, openSupportEmail } from "../../lib/openSupportEmail";
+
+const PRIVACY_MAIL = {
+  subject: "Privacy / Data Request",
+  body: "Hi GELD team,\n\nI have a question about my data / privacy.\n\n",
+} as const;
 
 interface DocsProps {
   ref?: React.RefObject<HTMLElement | null>;
@@ -138,7 +144,14 @@ export default function Docs({ ref, onScrollDown, isSubpage }: DocsProps) {
               Reach our team for privacy requests, corrections, or any concerns about how your information is handled.
             </p>
           </div>
-          <a href="mailto:Support@geldwealth.com" className={styles.contactButton}>
+          <a
+            href={buildMailtoHref(PRIVACY_MAIL.subject, PRIVACY_MAIL.body)}
+            className={styles.contactButton}
+            onClick={(e) => {
+              e.preventDefault();
+              openSupportEmail(PRIVACY_MAIL.subject, PRIVACY_MAIL.body);
+            }}
+          >
             Support@geldwealth.com
           </a>
         </article>
