@@ -18,9 +18,9 @@
   transform: translateY(60px) scale(0.98);
   filter: blur(10px);
   transition:
-    opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+    transform 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+    filter 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .revealed .header {
@@ -67,9 +67,9 @@
   transform: translateY(60px) scale(0.98);
   filter: blur(10px);
   transition:
-    opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+    transform 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+    filter 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .revealed .cardReveal {
@@ -88,9 +88,9 @@
   transform: translateY(40px);
   filter: blur(8px);
   transition:
-    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.12s,
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.12s,
-    filter 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
+    opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.12s,
+    transform 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.12s,
+    filter 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.12s;
 }
 
 .revealed .empty {

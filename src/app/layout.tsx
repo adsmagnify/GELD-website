@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import SmoothScroll from "./components/SmoothScroll/SmoothScroll";
 import SiteFooter from "./components/SiteFooter/SiteFooter";
 import SocialRail from "./components/SocialRail/SocialRail";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
           <SocialRail />
           <div className="page-scroll-container">
             <ScrollToTop />
+            <SmoothScroll />
             {children}
             <SiteFooter />
           </div>

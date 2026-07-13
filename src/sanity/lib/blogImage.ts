@@ -7,7 +7,7 @@ export function getBlogImageUrl(
   width = 800,
   height?: number
 ) {
-  const builder = urlFor(source).width(width).auto("format").quality(85);
+  const builder = urlFor(source).width(width).auto("format").quality(100);
 
   if (height) {
     builder.height(height);

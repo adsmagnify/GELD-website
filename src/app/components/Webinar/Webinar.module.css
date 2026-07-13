@@ -50,9 +50,9 @@
   opacity: 0;
   transform: translateY(40px);
   filter: blur(6px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+    transform 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+    filter 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .revealed .webinarContainer {
@@ -189,7 +189,7 @@
     0 28px 60px rgba(0, 0, 0, 0.55),
     0 0 0 1px rgba(255, 255, 255, 0.04) inset;
   transform: rotateY(-4deg) rotateX(2deg);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .posterShell:hover .posterFrame {

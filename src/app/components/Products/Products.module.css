@@ -41,9 +41,9 @@
   opacity: 0;
   transform: translateY(30px);
   filter: blur(4px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              transform 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              filter 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .revealed .aboutContainer {
@@ -114,7 +114,7 @@
   font-weight: 700;
   display: inline;
   color: rgba(255, 255, 255, 0.15);
-  transition: color 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  transition: color 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.5s;
 }
 
 .revealed .serifItalic,
@@ -138,9 +138,9 @@
   opacity: 0;
   transform: translateY(40px);
   filter: blur(4px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.2s,
+              transform 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.2s,
+              filter 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.2s;
 }
 
 .revealed .explorerSection {
@@ -188,7 +188,7 @@
   gap: 12px;
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1.8s cubic-bezier(0.2, 1, 0.3, 1);
   outline: none;
   min-width: 160px;
   justify-content: space-between;
@@ -325,7 +325,7 @@
   padding: 12px 28px;
   border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1.8s cubic-bezier(0.2, 1, 0.3, 1);
   box-shadow: 0 4px 15px rgba(206, 149, 58, 0.25);
   outline: none;
 }
@@ -656,7 +656,7 @@
   opacity: 0;
   transform: scaleY(0);
   transform-origin: bottom;
-  animation: growVertical 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: growVertical 1.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
 }
 
 .growthBarLabel {
@@ -748,9 +748,9 @@
   opacity: 0;
   transform: translateY(40px);
   filter: blur(4px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.3s,
+              transform 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.3s,
+              filter 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.3s;
 }
 
 .revealed .gridSection {
@@ -803,8 +803,8 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   opacity: 0;
   transform: translateY(25px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              transform 1.8s cubic-bezier(0.2, 1, 0.3, 1),
               border-color 0.4s ease,
               box-shadow 0.4s ease;
 }

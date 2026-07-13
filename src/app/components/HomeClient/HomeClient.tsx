@@ -27,7 +27,18 @@ export default function HomeClient() {
   const contactRef = useRef<HTMLElement>(null);
 
   const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
+    if (ref.current) {
+      let el: HTMLElement | null = ref.current;
+      while (el && !el.id) {
+        el = el.parentElement;
+      }
+      const id = el ? el.id : null;
+      if (id && typeof window !== "undefined" && (window as any).__customScrollTo) {
+        (window as any).__customScrollTo(id);
+      } else {
+        ref.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
 
   useEffect(() => {

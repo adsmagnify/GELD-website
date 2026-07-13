@@ -38,9 +38,9 @@
   opacity: 0;
   transform: translateY(40px);
   filter: blur(6px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              transform 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              filter 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .revealed .container {
@@ -157,7 +157,7 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 16px;
   cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1.8s cubic-bezier(0.2, 1, 0.3, 1);
   position: relative;
   text-align: center;
 }
@@ -254,7 +254,7 @@
   border-radius: 24px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.02);
-  animation: spotlightIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: spotlightIn 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 @keyframes spotlightIn {

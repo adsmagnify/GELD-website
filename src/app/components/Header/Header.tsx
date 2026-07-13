@@ -154,7 +154,11 @@ export default function Header() {
           onClick={(e) => {
             if (pathname === "/") {
               e.preventDefault();
-              document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+              if (typeof window !== "undefined" && (window as any).__customScrollTo) {
+                (window as any).__customScrollTo("hero");
+              } else {
+                document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+              }
             }
           }}
         >
@@ -228,7 +232,11 @@ export default function Header() {
           onClick={(e) => {
             if (pathname === "/") {
               e.preventDefault();
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              if (typeof window !== "undefined" && (window as any).__customScrollTo) {
+                (window as any).__customScrollTo("contact");
+              } else {
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              }
             }
           }}
         >
@@ -257,7 +265,11 @@ export default function Header() {
               setIsMobileMenuOpen(false);
               if (pathname === "/") {
                 e.preventDefault();
-                document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+                if (typeof window !== "undefined" && (window as any).__customScrollTo) {
+                  (window as any).__customScrollTo("hero");
+                } else {
+                  document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+                }
               }
             }}
           >
@@ -334,7 +346,11 @@ export default function Header() {
               setIsMobileMenuOpen(false);
               if (pathname === "/") {
                 e.preventDefault();
-                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                if (typeof window !== "undefined" && (window as any).__customScrollTo) {
+                  (window as any).__customScrollTo("contact");
+                } else {
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }
               }
             }}
           >

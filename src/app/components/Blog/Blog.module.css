@@ -49,9 +49,9 @@
   opacity: 0;
   transform: translateY(60px) scale(0.98);
   filter: blur(10px);
-  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              transform 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              filter 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .revealed .aboutContainer {
@@ -122,7 +122,7 @@
   font-weight: 700;
   display: inline;
   color: rgba(255, 255, 255, 0.15);
-  transition: color 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  transition: color 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.5s;
 }
 
 .revealed .serifItalic,

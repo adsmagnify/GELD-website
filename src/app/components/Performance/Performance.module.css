@@ -41,9 +41,9 @@
   opacity: 0;
   transform: translateY(30px);
   filter: blur(4px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              transform 1.8s cubic-bezier(0.2, 1, 0.3, 1),
+              filter 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .revealed .aboutContainer {
@@ -114,7 +114,7 @@
   font-weight: 700;
   display: inline;
   color: rgba(255, 255, 255, 0.15);
-  transition: color 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  transition: color 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.5s;
 }
 
 .revealed .serifItalic,
@@ -137,9 +137,9 @@
   opacity: 0;
   transform: translateY(40px);
   filter: blur(4px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  transition: opacity 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.2s,
+              transform 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.2s,
+              filter 1.8s cubic-bezier(0.2, 1, 0.3, 1) 0.2s;
   box-sizing: border-box;
 }
 
@@ -200,7 +200,7 @@
   font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1.8s cubic-bezier(0.2, 1, 0.3, 1);
   outline: none;
 }
 
@@ -253,7 +253,7 @@
   justify-content: flex-end;
   padding-right: 8px;
   border-radius: 6px;
-  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 1.8s cubic-bezier(0.2, 1, 0.3, 1);
   min-width: 68px;
   box-sizing: border-box;
 }
@@ -320,7 +320,7 @@
   gap: 6px;
   text-align: center;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .metricCard:hover {
