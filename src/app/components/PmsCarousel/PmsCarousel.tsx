@@ -96,12 +96,21 @@ export default function PmsCarousel() {
       programmaticUntilRef.current = performance.now() + 64;
     };
 
+    // Reading scrollWidth right after writing scrollLeft forces a synchronous
+    // layout flush every animation frame (60x/sec). scrollWidth only actually
+    // changes on resize, so cache it and keep it fresh via ResizeObserver
+    // instead of re-reading it on every frame.
+    let loopPoint = viewport.scrollWidth / 2;
+    const resizeObserver = new ResizeObserver(() => {
+      loopPoint = viewport.scrollWidth / 2;
+    });
+    resizeObserver.observe(viewport);
+
     const autoScroll = () => {
       if (!isPausedRef.current && !dragRef.current.active && viewport) {
         markProgrammaticScroll();
         viewport.scrollLeft += SCROLL_SPEED;
 
-        const loopPoint = viewport.scrollWidth / 2;
         if (loopPoint > 0 && viewport.scrollLeft >= loopPoint - 1) {
           viewport.scrollLeft -= loopPoint;
         }
@@ -182,6 +191,7 @@ export default function PmsCarousel() {
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
       }
+      resizeObserver.disconnect();
       viewport.removeEventListener("scroll", onScroll);
       viewport.removeEventListener("pointerdown", onPointerDown);
       viewport.removeEventListener("pointermove", onPointerMove);
