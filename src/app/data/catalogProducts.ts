@@ -27,7 +27,7 @@ export const catalogProducts: CatalogProduct[] = [
   },
   {
     name: MINI_STOCK_PORTFOLIOS_NAME,
-    slug: "iap",
+    slug: "mini-stock-portfolio",
     iconType: "crown",
     badge: "Lumpsum Investment",
     value: "₹2.5 Lakhs",
