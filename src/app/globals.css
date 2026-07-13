@@ -185,18 +185,9 @@ a {
 }
 
 /* CSS Scroll Snapping for Home Page */
-@media (min-width: 769px) {
-  .page-scroll-container.homeSnapContainer {
-    scroll-snap-type: none; /* Disable native snapping on desktop to let JS handle it smoothly */
-    scroll-behavior: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .page-scroll-container.homeSnapContainer {
-    scroll-snap-type: y proximity;
-    scroll-behavior: auto;
-  }
+.page-scroll-container.homeSnapContainer {
+  scroll-snap-type: none !important; /* Disable native snapping globally to let JS handle it smoothly */
+  scroll-behavior: auto;
 }
 
 .page-scroll-container.homeSnapContainer #hero,

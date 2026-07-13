@@ -9,6 +9,9 @@ export default function SmoothScroll() {
   const activeIndex = useRef(0);
   const rafId = useRef<number | null>(null);
 
+  const touchStartY = useRef(0);
+  const isTouchActive = useRef(false);
+
   const sections = ["hero", "about", "products", "stats", "webinar", "socialmedia", "contact", "footer"];
 
   // Custom animation function for homepage snapping
@@ -47,11 +50,6 @@ export default function SmoothScroll() {
       return;
     }
 
-    // Disable smooth scroll on mobile devices (width <= 768px)
-    if (typeof window !== "undefined" && window.innerWidth <= 768) {
-      return;
-    }
-
     const container = document.querySelector(".page-scroll-container") as HTMLElement;
     if (!container) return;
 
@@ -64,6 +62,7 @@ export default function SmoothScroll() {
     isScrolling.current = false;
 
     const WHEEL_THRESHOLD = 50;
+    const TOUCH_THRESHOLD = 50;
 
     // Wheel event listener for programmatic snap scroll
     const handleWheel = (e: WheelEvent) => {
@@ -82,8 +81,7 @@ export default function SmoothScroll() {
 
       e.preventDefault();
 
-      // Dynamically calculate the active section based on current scrollTop.
-      // This is 100% immune to mount race conditions, dynamic imports, or resizing.
+      // Dynamically calculate the active section based on current scrollTop
       let currentIdx = 0;
       let minDiff = Infinity;
 
@@ -130,7 +128,87 @@ export default function SmoothScroll() {
       }
     };
 
+    // Touch event listeners for mobile swipe snapping
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.defaultPrevented) return;
+      if (isScrolling.current) return;
+
+      if (e.touches.length === 1) {
+        touchStartY.current = e.touches[0].clientY;
+        isTouchActive.current = true;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.defaultPrevented) return;
+
+      // Prevent native touch scrolling completely to let JS animator handle it smoothly
+      e.preventDefault();
+
+      // Lock swipe gestures completely during active scroll transitions
+      if (isScrolling.current || !isTouchActive.current || e.touches.length !== 1) {
+        return;
+      }
+
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchStartY.current - touchY; // positive means swiping UP (scrolling down)
+
+      if (Math.abs(deltaY) < TOUCH_THRESHOLD) {
+        return;
+      }
+
+      isTouchActive.current = false; // consume this touch event
+
+      // Dynamically calculate active section index based on current scrollTop
+      let currentIdx = 0;
+      let minDiff = Infinity;
+
+      for (let i = 0; i < sections.length; i++) {
+        let offset = 0;
+        if (sections[i] === "footer") {
+          offset = container.scrollHeight - container.clientHeight;
+        } else {
+          const el = document.getElementById(sections[i]);
+          if (el) offset = el.offsetTop;
+        }
+
+        const diff = Math.abs(container.scrollTop - offset);
+        if (diff < minDiff) {
+          minDiff = diff;
+          currentIdx = i;
+        }
+      }
+
+      activeIndex.current = currentIdx;
+
+      const direction = deltaY > 0 ? 1 : -1;
+      const nextIndex = activeIndex.current + direction;
+
+      if (nextIndex >= 0 && nextIndex < sections.length) {
+        isScrolling.current = true;
+        activeIndex.current = nextIndex;
+
+        let targetOffset = 0;
+        if (sections[nextIndex] === "footer") {
+          targetOffset = container.scrollHeight - container.clientHeight;
+        } else {
+          const targetElement = document.getElementById(sections[nextIndex]);
+          if (targetElement) {
+            targetOffset = targetElement.offsetTop;
+          } else {
+            isScrolling.current = false;
+            return;
+          }
+        }
+
+        // 1400ms to match the desktop look and feel exactly
+        snapScrollTo(container, targetOffset, 1400);
+      }
+    };
+
     container.addEventListener("wheel", handleWheel, { passive: false });
+    container.addEventListener("touchstart", handleTouchStart, { passive: true });
+    container.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     // Expose the custom scroll function to global window
     (window as any).__customScrollTo = (targetId: string) => {
@@ -155,6 +233,8 @@ export default function SmoothScroll() {
 
     return () => {
       container.removeEventListener("wheel", handleWheel);
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
       delete (window as any).__customScrollTo;
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
