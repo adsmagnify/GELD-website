@@ -365,6 +365,18 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
+  .section:not(.subpage) {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .section:not(.subpage) .scrollWrapper {
+    position: relative;
+    bottom: auto;
+    margin-top: 24px;
+  }
+
   .section,
   .subpage { padding: var(--subpage-hero-top) var(--subpage-h-padding-mobile) var(--subpage-section-bottom-mobile); }
 
