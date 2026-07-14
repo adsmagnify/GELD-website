@@ -18,7 +18,11 @@ const SocialMedia = dynamic(() => import("../SocialMedia/SocialMedia"), {
 });
 const Contact = dynamic(() => import("../Contact/Contact"), { ssr: false });
 
-export default function HomeClient() {
+export default function HomeClient({
+  webinarPoster,
+}: {
+  webinarPoster?: { src: string; alt: string };
+}) {
   const aboutRef = useRef<HTMLElement>(null);
   const productsRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
@@ -75,7 +79,12 @@ export default function HomeClient() {
       </div>
 
       <div id="webinar" className={`${styles.fullSection} deferredSection`}>
-        <Webinar ref={webinarRef} onScrollDown={() => scrollTo(socialMediaRef)} />
+        <Webinar
+          ref={webinarRef}
+          onScrollDown={() => scrollTo(socialMediaRef)}
+          posterSrc={webinarPoster?.src}
+          posterAlt={webinarPoster?.alt}
+        />
       </div>
 
       <div id="socialmedia" className={`${styles.fullSection} deferredSection`}>

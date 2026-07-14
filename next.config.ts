@@ -22,6 +22,21 @@ const nextConfig: NextConfig = {
   },
   // @ts-ignore
   allowedDevOrigins: ["192.168.29.244", "localhost", "192.168.0.167", "192.168.1.14"],
+  async headers() {
+    return [
+      {
+        // Allow Sanity Dashboard (manage.sanity.io) to embed /studio in an iframe
+        source: "/studio/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value:
+              "frame-ancestors 'self' https://www.sanity.io https://*.sanity.io;",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

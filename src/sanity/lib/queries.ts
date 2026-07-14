@@ -34,3 +34,14 @@ export const BLOG_QUERY = `
   publishedAt
 }
 `;
+
+export const WEBINAR_QUERY = `
+*[_id == "webinar"][0]{
+  poster{
+    asset->,
+    alt,
+    hotspot,
+    crop
+  }
+}
+`;

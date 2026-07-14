@@ -15,6 +15,8 @@ interface WebinarProps {
   ref?: React.RefObject<HTMLElement | null>;
   onScrollDown?: () => void;
   isSubpage?: boolean;
+  posterSrc?: string;
+  posterAlt?: string;
 }
 
 const REGISTER_URL =
@@ -25,10 +27,25 @@ const topics = [
     title: "High probability trades",
     desc: "Spot and execute setups with stronger win rates.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
-        <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {/* Connected Line Graph on top */}
+        <path d="M4 10l5-4 5 4 6-5" strokeWidth="1.5" />
+        <circle cx="4" cy="10" r="1.5" fill="currentColor" stroke="none" />
+        <circle cx="9" cy="6" r="1.5" fill="currentColor" stroke="none" />
+        <circle cx="14" cy="10" r="1.5" fill="currentColor" stroke="none" />
+        <circle cx="20" cy="5" r="1.5" fill="currentColor" stroke="none" />
+
+        {/* Candlestick 1 */}
+        <line x1="6" y1="12" x2="6" y2="20" strokeWidth="1.5" />
+        <rect x="4.5" y="14" width="3" height="4" fill="none" rx="0.5" />
+
+        {/* Candlestick 2 */}
+        <line x1="12" y1="11" x2="12" y2="21" strokeWidth="1.5" />
+        <rect x="10.5" y="13" width="3" height="6" fill="currentColor" fillOpacity="0.2" rx="0.5" />
+
+        {/* Candlestick 3 */}
+        <line x1="18" y1="9" x2="18" y2="19" strokeWidth="1.5" />
+        <rect x="16.5" y="11" width="3" height="5" fill="none" rx="0.5" />
       </svg>
     ),
   },
@@ -36,14 +53,14 @@ const topics = [
     title: "Derivatives decoded",
     desc: "F&O simplified, without the confusion.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M8 4l-4 4 4 4M16 20l4-4-4-4M4 12h16"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {/* Circle of magnifying glass */}
+        <circle cx="11.5" cy="10.5" r="7" />
+        {/* Vertical handle going down */}
+        <line x1="11.5" y1="17.5" x2="11.5" y2="22" />
+        {/* Letters 'd' and 'X' drawn with paths inside the circle */}
+        <path d="M9.5 7.5v5M9.5 12.5a2 2 0 110-4h.01" strokeWidth="1.5" />
+        <path d="M12.5 8.5l3.5 3.5M16 8.5l-3.5 3.5" strokeWidth="1.5" />
       </svg>
     ),
   },
@@ -51,14 +68,15 @@ const topics = [
     title: "Risk management",
     desc: "Protect capital before the market moves against you.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {/* Warning Triangle on top left */}
+        <path d="M9 2.5l6.5 11h-13z" />
+        <line x1="9" y1="6" x2="9" y2="10" strokeWidth="1.5" />
+        <circle cx="9" cy="12" r="0.6" fill="currentColor" stroke="none" />
+
+        {/* Gear on bottom right */}
+        <circle cx="16" cy="16" r="2.5" />
+        <path d="M16 11.5v1M16 19.5v1M11.5 16h1M19.5 16h1M12.8 12.8l.7.7M18.5 18.5l.7.7M19.2 12.8l-.7.7M13.5 18.5l-.7.7" strokeWidth="1.5" />
       </svg>
     ),
   },
@@ -66,8 +84,24 @@ const topics = [
     title: "Read the market",
     desc: "Charts, volume, and trends like a professional.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 18V6M10 18V10M16 18V13M22 18V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {/* Document sheet */}
+        <path d="M4 3h9.5L18 7.5V21H4V3z" />
+        <path d="M13.5 3v4.5H18" strokeWidth="1.5" />
+
+        {/* Bar chart lines inside document */}
+        <line x1="7" y1="8" x2="11" y2="8" strokeWidth="1.5" />
+        <line x1="7" y1="11" x2="9" y2="11" strokeWidth="1.5" />
+
+        {/* Small bars */}
+        <line x1="7" y1="17" x2="7" y2="14" strokeWidth="1.5" />
+        <line x1="10" y1="17" x2="10" y2="12" strokeWidth="1.5" />
+
+        {/* Magnifying glass in bottom right */}
+        <circle cx="15.5" cy="15.5" r="3.5" fill="none" />
+        <line x1="18" y1="18" x2="21" y2="21" strokeWidth="1.5" />
+        {/* Dollar symbol inside */}
+        <path d="M15.5 13.5v4M14.5 14.8c.2-.4.6-.6 1-.6.6 0 1 .4 1 1 0 .6-.4.8-1 1s-1 .4-1 1 .4 1 1 1c.4 0 .8-.2 1-.6" strokeWidth="1.2" />
       </svg>
     ),
   },
@@ -87,7 +121,13 @@ const topics = [
   },
 ];
 
-export default function Webinar({ ref, onScrollDown, isSubpage }: WebinarProps) {
+export default function Webinar({
+  ref,
+  onScrollDown,
+  isSubpage,
+  posterSrc = "/webinar_poster.jpg",
+  posterAlt = "GELD webinar poster: Ask The Expert, Trade Smarter with Chandan Taparia",
+}: WebinarProps) {
   const [isVisible, setIsVisible] = useState(false);
   const fallbackRef = useRef<HTMLElement>(null);
   const activeRef = ref || fallbackRef;
@@ -150,8 +190,8 @@ export default function Webinar({ ref, onScrollDown, isSubpage }: WebinarProps) 
               <div className={styles.posterGlow} aria-hidden="true" />
               <div className={styles.posterFrame}>
                 <Image
-                  src="/webinar_poster.jpg"
-                  alt="GELD webinar poster: Ask The Expert, Trade Smarter with Chandan Taparia"
+                  src={posterSrc}
+                  alt={posterAlt}
                   width={640}
                   height={900}
                   className={styles.posterImg}
