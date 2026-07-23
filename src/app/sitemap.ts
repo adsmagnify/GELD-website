@@ -1,15 +1,14 @@
 import type { MetadataRoute } from "next";
 
-import type { BlogPost } from "@/app/types/blog";
 import { SITE_URL } from "@/app/lib/site";
-import { client } from "@/sanity/lib/client";
-import { BLOGS_QUERY } from "@/sanity/lib/queries";
 
 export const revalidate = 3600;
 
 const staticRoutes: {
   path: string;
-  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  changeFrequency: NonNullable<
+    MetadataRoute.Sitemap[number]["changeFrequency"]
+  >;
   priority: number;
 }[] = [
   { path: "/", changeFrequency: "weekly", priority: 1 },
@@ -37,37 +36,42 @@ const staticRoutes: {
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
+  const lastModified = new Date().toISOString();
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: `${SITE_URL}${route.path === "/" ? "" : route.path}`,
-    lastModified: now,
+    lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
 
-  let blogEntries: MetadataRoute.Sitemap = [];
+  const blogEntries = await getBlogEntries(lastModified);
 
+  return [...staticEntries, ...blogEntries];
+}
+
+async function getBlogEntries(
+  fallbackDate: string
+): Promise<MetadataRoute.Sitemap> {
   try {
-    const blogs: BlogPost[] = await client.fetch(
-      BLOGS_QUERY,
-      {},
-      { next: { revalidate: 3600 } }
-    );
+    const { client } = await import("@/sanity/lib/client");
+    const { BLOGS_QUERY } = await import("@/sanity/lib/queries");
 
-    blogEntries = blogs
+    const blogs = await client.fetch<
+      { slug?: { current?: string }; publishedAt?: string }[]
+    >(BLOGS_QUERY, {}, { next: { revalidate: 3600 } });
+
+    if (!Array.isArray(blogs)) return [];
+
+    return blogs
       .filter((blog) => blog.slug?.current)
       .map((blog) => ({
-        url: `${SITE_URL}/blog/${blog.slug.current}`,
-        lastModified: blog.publishedAt
-          ? new Date(blog.publishedAt)
-          : now,
+        url: `${SITE_URL}/blog/${blog.slug!.current}`,
+        lastModified: blog.publishedAt || fallbackDate,
         changeFrequency: "weekly" as const,
         priority: 0.7,
       }));
   } catch {
-    // Sitemap should still build if Sanity is temporarily unavailable.
+    return [];
   }
-
-  return [...staticEntries, ...blogEntries];
 }

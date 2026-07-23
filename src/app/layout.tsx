@@ -66,8 +66,12 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/new_geld_g_logo.png", type: "image/png" }],
+    icon: [
+      { url: "/favicon.ico?v=2", sizes: "any" },
+      { url: "/new_geld_g_logo.png", type: "image/png" },
+    ],
     apple: [{ url: "/new_geld_g_logo.png", type: "image/png" }],
+    shortcut: "/favicon.ico?v=2",
   },
   category: "finance",
 };
