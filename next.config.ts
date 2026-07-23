@@ -22,6 +22,73 @@ const nextConfig: NextConfig = {
   },
   // @ts-ignore
   allowedDevOrigins: ["192.168.29.244", "localhost", "192.168.0.167", "192.168.1.14"],
+  async redirects() {
+    return [
+      { source: "/home", destination: "/", permanent: true },
+      { source: "/index", destination: "/", permanent: true },
+      { source: "/about-us", destination: "/about", permanent: true },
+      { source: "/contact-us", destination: "/contact", permanent: true },
+      { source: "/blogs", destination: "/blog", permanent: true },
+      { source: "/blog-posts", destination: "/blog", permanent: true },
+      { source: "/aif", destination: "/products/aif", permanent: true },
+      { source: "/pms", destination: "/products/pms", permanent: true },
+      {
+        source: "/mutual-funds",
+        destination: "/products/mutual-funds",
+        permanent: true,
+      },
+      {
+        source: "/mutualfund",
+        destination: "/products/mutual-funds",
+        permanent: true,
+      },
+      {
+        source: "/mutual-fund",
+        destination: "/products/mutual-funds",
+        permanent: true,
+      },
+      {
+        source: "/mini-stock-portfolio",
+        destination: "/products/mini-stock-portfolio",
+        permanent: true,
+      },
+      {
+        source: "/msp",
+        destination: "/products/mini-stock-portfolio",
+        permanent: true,
+      },
+      {
+        source: "/fundmanagers",
+        destination: "/fund-managers",
+        permanent: true,
+      },
+      {
+        source: "/fund-manager",
+        destination: "/fund-managers",
+        permanent: true,
+      },
+      {
+        source: "/social-media",
+        destination: "/socialmedia",
+        permanent: true,
+      },
+      {
+        source: "/webinars",
+        destination: "/webinar",
+        permanent: true,
+      },
+      {
+        source: "/documents",
+        destination: "/docs",
+        permanent: true,
+      },
+      {
+        source: "/documentation",
+        destination: "/docs",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

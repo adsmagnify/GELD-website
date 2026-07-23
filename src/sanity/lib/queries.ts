@@ -28,6 +28,12 @@ export const BLOG_QUERY = `
     question,
     answer
   },
+  featuredImage{
+    asset->{
+      url
+    },
+    alt
+  },
   author,
   category,
   readingTime,
