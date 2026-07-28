@@ -182,17 +182,17 @@ Let the Pros do the work while you relax and let your money work harder than you
       <div className={styles.disclaimerSection}>
         <div className={styles.disclaimerContainer}>
           <div className={styles.disclaimerBlock}>
-            <span className={styles.disclaimerTitle}>Standard Warning</span>
+            <span className={styles.disclaimerTitle}>Disclaimer</span>
             <p className={styles.disclaimerText}>
               Investment in securities market is subject to market risks. Read all the related documents carefully before investing.
             </p>
           </div>
-          <div className={styles.disclaimerBlock}>
+          {/* <div className={styles.disclaimerBlock}>
             <span className={styles.disclaimerTitle}>Disclaimer</span>
             <p className={styles.disclaimerText}>
               Registration granted by SEBI, membership of BASL and certification from NISM in no way guarantee performance of the intermediary or provide any assurance of returns to investors. GELD (brand of Dynamic Equities Pvt. Ltd.) is a registered Investment Adviser. Past performance is no guarantee of future results.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 

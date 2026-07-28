@@ -79,12 +79,17 @@ export async function POST(request: Request) {
     });
 
     await transporter.sendMail({
+      // Gmail requires From to be the authenticated mailbox (SMTP_USER).
+      // Visitor address goes in replyTo so replies reach them.
       from: {
+        name: `${name} via GELD Website`,
+        address: smtpUser,
+      },
+      to: recipient,
+      replyTo: {
         name,
         address: email,
       },
-      to: recipient,
-      replyTo: email,
       envelope: {
         from: smtpUser,
         to: recipient,
